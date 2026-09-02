@@ -7,7 +7,6 @@ export const ja = {
     categories: 'カテゴリ',
     search: '検索',
     createAvatar: 'アバターを作る',
-    npmPackages: 'npm パッケージ',
     github: 'GitHub',
     collapseSidebar: 'サイドバーを閉じる',
     expandSidebar: 'サイドバーを開く',
@@ -29,7 +28,6 @@ export const ja = {
     ctaBody:
       'この一文をプロジェクトで使っているコーディングエージェントに貼り付けると、掲載のプルリクエストを代わりに作成します。',
     orReadContributing: 'または CONTRIBUTING を読む',
-    avatarCreator: 'アバタークリエイター',
     metaDescription:
       '手描きの決定論的アバターエンジン Humation で作られたアプリと Web サービスのカタログ。',
     noListings: 'まだ掲載がありません。',

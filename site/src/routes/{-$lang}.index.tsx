@@ -94,23 +94,6 @@ function Home() {
       <section className="mt-12 rounded-xl bg-surface p-6" aria-label={t.shell.addYourApp}>
         <h2 className="text-xl font-semibold tracking-tight">{t.home.ctaHeading}</h2>
         <p className="mt-2 text-[14px] text-text-muted">{t.home.ctaBody}</p>
-        <p className="mt-2 text-sm text-text-muted">
-          <a
-            href="https://www.npmjs.com/org/humation"
-            rel="noopener"
-            className="hover:text-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
-          >
-            {t.shell.npmPackages}
-          </a>
-          {' · '}
-          <a
-            href="https://humation.app/avatar"
-            rel="noopener"
-            className="hover:text-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
-          >
-            {t.home.avatarCreator}
-          </a>
-        </p>
         <div className="mt-4 flex min-w-0 items-start gap-2">
           <code className="block min-w-0 flex-1 font-mono text-[13px] leading-relaxed break-words rounded-sm bg-surface-2 p-3">
             {ADD_APP_PROMPT}

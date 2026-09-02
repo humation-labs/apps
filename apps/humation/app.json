@@ -2,9 +2,9 @@
   "$schema": "https://apps.humation.app/schema/app.schema.json",
   "name": "Humation",
   "tagline": "Design your own hand-drawn avatar",
-  "description": "Humation is the official avatar creator. Pick a hairstyle, outfit, accessory and colors, or roll a random one from a seed, and download it as SVG or PNG for any profile.\n\nEvery avatar is rendered locally from the Humation 1 asset set with @humation/core. The same packages are open source, so the creator doubles as a live demo of what you can build.",
-  "url": "https://humation.app",
-  "category": "developer-tools",
+  "description": "Humation is a hand-drawn avatar creator. Pick a hairstyle, outfit, accessory and colors, or roll a random one from a seed, and download it as SVG or PNG for any profile picture.\n\nEvery avatar is drawn locally from the Humation 1 asset set, so it looks the same everywhere it is used.",
+  "url": "https://humation.app/avatar",
+  "category": "lifestyle",
   "platforms": [
     "web"
   ],
@@ -15,7 +15,7 @@
       "@humation/react",
       "@humation/assets-humation-1"
     ],
-    "usage": "The creator canvas and every preview tile"
+    "usage": "The creator canvas and every part preview"
   },
   "developer": {
     "name": "Humation Labs",
@@ -27,10 +27,6 @@
     {
       "file": "screenshots/01.png",
       "alt": "The avatar creator with a live preview and the Head part picker"
-    },
-    {
-      "file": "screenshots/02.png",
-      "alt": "The developer docs showing avatars in feed, chat and account screens"
     }
   ],
   "links": {

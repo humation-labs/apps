@@ -3,7 +3,6 @@ import {
   IconApps,
   IconArrowUpRight,
   IconBrandGithub,
-  IconBrandNpm,
   IconCheck,
   IconLanguage,
   IconLayoutSidebar,
@@ -318,20 +317,6 @@ export function Sidebar({ categories }: { categories: { category: string; count:
             </RowIcon>
             {collapsed ? null : <span className="truncate">{LOCALE_NATIVE_NAME[other]}</span>}
           </a>
-          <SidebarRow
-            collapsed={collapsed}
-            href="https://www.npmjs.com/org/humation"
-            label={t.shell.npmPackages}
-            icon={<IconBrandNpm size={16} stroke={1.75} aria-hidden />}
-            trailing={
-              <IconArrowUpRight
-                size={12}
-                stroke={2}
-                className="ml-auto text-text-muted"
-                aria-hidden
-              />
-            }
-          />
           <SidebarRow
             collapsed={collapsed}
             href="https://humation.app/avatar"

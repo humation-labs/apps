@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import { IconChevronRight } from '@tabler/icons-react'
 import { iconSrc, screenshotSrc } from '../lib/constants'
 import { categoryLabel, langParam, useLocale, useT } from '../i18n'
 import { imageDimensions } from '../lib/images'
@@ -56,27 +57,28 @@ function HeroCard({ app }: { app: Listing }) {
         className="absolute inset-0 h-full w-full max-w-full object-cover object-top"
       />
       <span className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-black/10 dark:ring-white/10" />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/10" />
-      <div className="absolute inset-0 flex min-w-0 flex-col justify-end p-6 drop-shadow md:p-10">
-        <p className="text-[11px] font-semibold tracking-[0.08em] text-white/80 uppercase">
-          {categoryLabel(app.category, t)}
-        </p>
-        <h2 className="text-3xl font-bold tracking-tight text-white drop-shadow md:text-5xl">{app.name}</h2>
-        <p className="mt-1 text-white/90 drop-shadow">{app.tagline}</p>
-        <div className="mt-4 flex min-w-0 items-center gap-3">
-          <img
-            src={iconSrc(app.slug)}
-            alt=""
-            width={48}
-            height={48}
-            className="size-12 rounded-[24%] ring-1 ring-inset ring-white/20"
-          />
-          <div className="min-w-0 flex-1 self-center">
-            <p className="truncate text-[14px]/5 font-medium text-white">{app.name}</p>
-            <p className="truncate text-[13px]/[18px] text-white/80">{app.tagline}</p>
+      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/45 to-black/5" />
+      <div className="absolute inset-0 flex min-w-0 flex-col justify-end p-6 md:p-10">
+        <div className="flex min-w-0 flex-col md:flex-row">
+          <div className="flex min-w-0 flex-1 flex-col gap-3">
+            <img
+              src={iconSrc(app.slug)}
+              alt=""
+              width={56}
+              height={56}
+              className="size-14 rounded-[22%] ring-1 ring-inset ring-white/20"
+            />
+            <p className="text-[11px] font-semibold tracking-[0.08em] text-white/70 uppercase">
+              {categoryLabel(app.category, t)}
+            </p>
+            <h2 className="line-clamp-2 min-w-0 text-4xl font-bold leading-[1.05] tracking-tight text-white md:text-6xl">
+              {app.name}
+            </h2>
+            <p className="max-w-[36ch] text-base text-white/85 md:text-xl">{app.tagline}</p>
           </div>
-          <span className="inline-flex h-7 shrink-0 items-center justify-center rounded-full bg-white/20 px-3.5 text-[13px] leading-none font-semibold text-white backdrop-blur">
+          <span className="mt-4 inline-flex h-10 shrink-0 items-center self-start rounded-full bg-white px-5 text-sm leading-none font-semibold text-black md:mt-0 md:self-end">
             {t.home.view}
+            <IconChevronRight size={16} stroke={2.5} className="-mr-1" aria-hidden />
           </span>
         </div>
       </div>
