@@ -45,13 +45,15 @@ function Home() {
   const { featured: featuredApps, newest: newestApps, categories } = usePageData<HomeData>()
   const locale = useLocale()
   const t = useT()
+  const hero = featuredApps[0]
+  const previouslyFeatured = featuredApps.slice(1)
 
   return (
     <div className="min-w-0">
       <h1 className="text-4xl/tight font-bold tracking-tight">{t.home.title}</h1>
 
       {categories.length > 0 ? (
-        <div className="no-scrollbar mt-6 flex snap-x snap-mandatory gap-2 overflow-x-auto overscroll-x-contain touch-pan-x">
+        <div className="no-scrollbar mt-6 flex snap-x snap-proximity gap-2 overflow-x-auto overscroll-x-contain">
           {categories.map(({ category }) => (
             <LocaleLink
               key={category}
@@ -65,9 +67,9 @@ function Home() {
         </div>
       ) : null}
 
-      {featuredApps.length > 0 ? (
+      {hero ? (
         <div className="mt-6 min-w-0">
-          <FeaturedCards apps={featuredApps} />
+          <FeaturedCards apps={[hero]} />
         </div>
       ) : null}
 
@@ -88,6 +90,16 @@ function Home() {
           <AppRowGrid apps={apps} />
         </Section>
       ))}
+
+      {previouslyFeatured.length > 0 ? (
+        <section className="mt-12 min-w-0">
+          <h2 className="text-2xl font-bold tracking-tight">{t.home.previouslyFeatured}</h2>
+          <p className="mt-1 text-text-muted">{t.home.earlierPicks}</p>
+          <div className="mt-4 min-w-0">
+            <AppRowGrid apps={previouslyFeatured} />
+          </div>
+        </section>
+      ) : null}
 
       <section className="mt-12 rounded-xl bg-surface p-6" aria-label={t.shell.addYourApp}>
         <h2 className="text-xl font-semibold tracking-tight">{t.home.ctaHeading}</h2>

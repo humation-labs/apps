@@ -33,6 +33,8 @@ export const en = {
     title: 'Apps',
     new: 'New',
     recentlyAdded: 'Recently added',
+    previouslyFeatured: 'Previously featured',
+    earlierPicks: 'Earlier picks',
     view: 'View',
     ctaHeading: 'Built something with Humation?',
     ctaBody:

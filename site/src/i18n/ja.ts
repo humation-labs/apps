@@ -33,6 +33,8 @@ export const ja = {
     title: 'アプリ',
     new: '新着',
     recentlyAdded: '最近追加',
+    previouslyFeatured: 'これまでの Featured',
+    earlierPicks: '過去のおすすめ',
     view: '表示',
     ctaHeading: 'Humation で何か作りましたか？',
     ctaBody:

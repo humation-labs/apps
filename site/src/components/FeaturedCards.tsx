@@ -5,7 +5,7 @@ import type { Listing } from '../data/listings'
 import { LocaleLink } from './LocaleLink'
 
 export function FeaturedCards({ apps }: { apps: Listing[] }) {
-  const cards = apps.filter((app) => app.screenshots[0]).slice(0, 2)
+  const cards = apps.filter((app) => app.screenshots[0]).slice(0, 1)
   if (cards.length === 0) return null
 
   return (
@@ -47,9 +47,9 @@ function FeaturedCard({ app, index }: { app: Listing; index: number }) {
       className="block w-full min-w-0 overflow-hidden rounded-xl transition hover:scale-[1.01] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
     >
       <div className={textClass} style={{ backgroundColor: brand }}>
-        <div className="relative aspect-[3/4] overflow-hidden md:aspect-[21/9]">
+        <div className="relative aspect-[3/4] overflow-hidden md:aspect-[1200/630]">
           {isPortrait ? (
-            <div className="absolute top-6 right-6 bottom-[-22%] overflow-hidden rounded-[1.25rem] border border-border/70 ring-1 ring-black/10 dark:border-white/15 md:top-8 md:right-16 md:bottom-[-30%] lg:right-24">
+            <div className="absolute top-6 right-4 h-auto w-[50%] max-w-[240px] overflow-hidden rounded-[1.25rem] border border-border/70 ring-1 ring-black/10 dark:border-white/15 md:top-8 md:right-16 md:bottom-[-30%] md:w-auto md:max-w-none lg:right-24">
               <img
                 src={src}
                 alt={shot.alt}
@@ -58,7 +58,7 @@ function FeaturedCard({ app, index }: { app: Listing; index: number }) {
                 loading={loading}
                 fetchPriority={fetchPriority}
                 decoding="async"
-                className="h-full w-auto object-contain object-top"
+                className="h-auto w-full object-contain object-top md:h-full md:w-auto"
               />
             </div>
           ) : (
@@ -83,7 +83,7 @@ function FeaturedCard({ app, index }: { app: Listing; index: number }) {
             <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
           )}
           <div
-            className={`absolute inset-x-0 bottom-0 flex max-w-[68%] flex-col justify-end p-6 md:max-w-[55%] md:p-10 ${
+            className={`absolute inset-x-0 bottom-0 flex max-w-[60%] flex-col justify-end p-6 md:max-w-[55%] md:p-10 ${
               isPortrait ? '' : 'text-white'
             }`}
           >
