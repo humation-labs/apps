@@ -6,6 +6,9 @@ import { pageHead } from '../lib/head'
 import { allListings } from '../data/listings'
 
 export const Route = createFileRoute('/search')({
+  validateSearch: (search: Record<string, unknown>): { q?: string } => ({
+    q: typeof search.q === 'string' ? search.q : undefined,
+  }),
   loader: () => allListings(),
   head: () =>
     pageHead({

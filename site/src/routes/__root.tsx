@@ -3,9 +3,14 @@ import { HeadContent, Outlet, Scripts, createRootRoute } from '@tanstack/react-r
 import { Footer } from '../components/Footer'
 import { Header } from '../components/Header'
 import { NotFound } from '../components/NotFound'
+import { Sidebar } from '../components/Sidebar'
+import { categoryCounts } from '../data/listings'
 import appCss from '../styles/app.css?url'
 
 export const Route = createRootRoute({
+  loader: () => ({
+    categories: categoryCounts(),
+  }),
   head: () => ({
     meta: [
       { charSet: 'utf-8' },
@@ -21,23 +26,35 @@ export const Route = createRootRoute({
 })
 
 function RootComponent() {
+  const { categories } = Route.useLoaderData()
+
   return (
-    <RootDocument>
+    <RootDocument categories={categories}>
       <Outlet />
     </RootDocument>
   )
 }
 
-function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
+function RootDocument({
+  children,
+  categories,
+}: Readonly<{ children: ReactNode; categories: { category: string; count: number }[] }>) {
   return (
     <html lang="en">
       <head>
         <HeadContent />
       </head>
-      <body className="min-h-screen bg-zinc-50 text-zinc-900 antialiased dark:bg-black dark:text-zinc-100">
-        <Header />
-        <main>{children}</main>
-        <Footer />
+      <body className="min-h-screen bg-bg font-sans text-text antialiased">
+        <div className="flex min-h-screen">
+          <Sidebar categories={categories} />
+          <div className="flex min-w-0 flex-1 flex-col">
+            <Header />
+            <main className="mx-auto w-full min-w-0 max-w-[1100px] flex-1 px-6 py-8 lg:px-10">
+              {children}
+              <Footer />
+            </main>
+          </div>
+        </div>
         <Scripts />
       </body>
     </html>
