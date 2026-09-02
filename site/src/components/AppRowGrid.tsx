@@ -36,7 +36,7 @@ function PagedGrids({ pages }: { pages: Listing[][] }) {
       <div
         ref={ref}
         onScroll={onScroll}
-        className="no-scrollbar flex snap-x snap-mandatory overflow-x-auto"
+        className="no-scrollbar -mx-2 flex snap-x snap-mandatory overflow-x-auto px-2"
       >
         {pages.map((page, i) => (
           <div key={i} className="w-full min-w-0 shrink-0 snap-center">

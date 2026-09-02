@@ -34,18 +34,23 @@ function CategoryPage() {
   return (
     <div className="min-w-0">
       <nav aria-label="Breadcrumb" className="mb-4 flex items-center gap-1 text-sm">
-        <Link to="/" className="hover:text-accent">
+        <Link
+          to="/"
+          className="hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
+        >
           Apps
         </Link>
-        <IconChevronRight size={16} className="text-text-muted" aria-hidden />
+        <span className="icon-align inline-flex size-4 shrink-0 items-center justify-center text-text-muted">
+          <IconChevronRight size={16} stroke={1.75} aria-hidden />
+        </span>
         <span className="text-text-muted">{title}</span>
       </nav>
-      <h1 className="flex items-center gap-3 text-3xl font-bold">
-        <CategoryIcon category={category} size={32} />
+      <h1 className="flex items-center gap-3 text-4xl/tight font-bold tracking-tight">
+        <CategoryIcon category={category} size={20} className="icon-align" />
         {title}
       </h1>
-      <p className="mt-1 text-text-muted">{countLabel}</p>
-      <div className="mt-6 min-w-0">
+      <p className="mt-1 text-text-muted tabular">{countLabel}</p>
+      <div className="mt-4 min-w-0">
         <AppRowGrid apps={apps} paged={false} />
       </div>
     </div>

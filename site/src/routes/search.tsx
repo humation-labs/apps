@@ -40,9 +40,11 @@ function SearchPage() {
 
   return (
     <div className="min-w-0">
-      <h1 className="text-3xl font-bold">Search</h1>
-      <label className="mt-6 flex items-center gap-3 rounded-2xl bg-surface px-4 py-3.5 focus-within:ring-2 focus-within:ring-accent">
-        <IconSearch size={22} className="shrink-0 text-text-muted" aria-hidden />
+      <h1 className="text-4xl/tight font-bold tracking-tight">Search</h1>
+      <label className="mt-6 flex items-center gap-3 rounded-2xl bg-surface px-4 py-3.5 focus-within:outline-none focus-within:ring-2 focus-within:ring-accent focus-within:ring-offset-2 focus-within:ring-offset-bg">
+        <span className="icon-align inline-flex size-5 shrink-0 items-center justify-center text-text-muted">
+          <IconSearch size={20} stroke={1.5} aria-hidden />
+        </span>
         <input
           type="search"
           name="q"
@@ -61,13 +63,13 @@ function SearchPage() {
         />
       </label>
       {trimmed === '' ? (
-        <p className="mt-6 text-text-muted">
+        <p className="mt-4 text-text-muted">
           Search apps by name, tagline, developer or category.
         </p>
       ) : filtered.length === 0 ? (
-        <p className="mt-6 text-text-muted">No apps match "{trimmed}".</p>
+        <p className="mt-4 text-text-muted">No apps match "{trimmed}".</p>
       ) : (
-        <div className="mt-6 min-w-0">
+        <div className="mt-4 min-w-0">
           {filtered.map((app) => (
             <AppRow key={app.slug} app={app} />
           ))}

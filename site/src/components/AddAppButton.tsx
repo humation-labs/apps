@@ -3,7 +3,10 @@ import { IconCheck, IconClipboard } from '@tabler/icons-react'
 import { ADD_APP_PROMPT } from '../lib/constants'
 
 const defaultClassName =
-  'inline-flex items-center justify-center gap-2 rounded-full bg-accent px-4 py-2 text-sm font-semibold text-white'
+  'inline-flex h-9 items-center justify-center gap-1.5 rounded-full bg-accent px-4 text-[14px] leading-none font-semibold text-white'
+
+const focusClassName =
+  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg'
 
 export function CopyButton({
   text,
@@ -33,7 +36,7 @@ export function CopyButton({
   return (
     <button
       type="button"
-      className={`${className} focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none`}
+      className={`${className} ${focusClassName}`}
       onClick={onClick}
       aria-label={copied ? 'Copied' : label}
       title={title}
@@ -42,11 +45,13 @@ export function CopyButton({
         children(copied)
       ) : (
         <>
-          {copied ? (
-            <IconCheck size={16} stroke={1.75} className="icon-align" aria-hidden />
-          ) : (
-            <IconClipboard size={16} stroke={1.75} className="icon-align" aria-hidden />
-          )}
+          <span className="icon-align -ml-0.5 inline-flex size-4 shrink-0 items-center justify-center">
+            {copied ? (
+              <IconCheck size={16} stroke={1.75} aria-hidden />
+            ) : (
+              <IconClipboard size={16} stroke={1.75} aria-hidden />
+            )}
+          </span>
           {copied ? 'Copied' : label}
         </>
       )}

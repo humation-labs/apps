@@ -23,6 +23,13 @@ const CATEGORY_ICONS: Record<string, Icon> = {
   other: IconApps,
 }
 
+function boxClass(size: number) {
+  if (size <= 16) return 'size-4'
+  if (size <= 20) return 'size-5'
+  if (size <= 24) return 'size-6'
+  return ''
+}
+
 export function CategoryIcon({
   category,
   size = 20,
@@ -34,5 +41,13 @@ export function CategoryIcon({
 }) {
   const Glyph = CATEGORY_ICONS[category] ?? IconApps
   const stroke = size <= 16 ? 1.75 : 1.5
-  return <Glyph size={size} stroke={stroke} className={className} aria-hidden />
+  const box = boxClass(size)
+  return (
+    <span
+      className={`inline-flex ${box} shrink-0 items-center justify-center ${className ?? ''}`}
+      style={box ? undefined : { width: size, height: size }}
+    >
+      <Glyph size={size} stroke={stroke} aria-hidden />
+    </span>
+  )
 }

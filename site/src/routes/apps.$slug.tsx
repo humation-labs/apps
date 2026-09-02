@@ -66,6 +66,9 @@ const LINK_DEFS = [
   { key: 'discord', label: 'Discord', Icon: IconBrandDiscord },
 ] as const
 
+const FOCUS =
+  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg'
+
 function AppDetail() {
   const { listing, screenshots } = Route.useLoaderData()
   const developerUrl = developerHref(listing.developer)
@@ -83,12 +86,12 @@ function AppDetail() {
           alt={listing.name}
           width={120}
           height={120}
-          className="size-[120px] shrink-0 rounded-[22%] border border-border"
+          className="size-[120px] shrink-0 rounded-[22%] ring-1 ring-inset ring-black/10 dark:ring-white/10"
         />
-        <div className="min-w-0 flex-1">
-          <h1 className="text-3xl font-bold md:text-4xl">{listing.name}</h1>
+        <div className="min-w-0 flex-1 pt-1">
+          <h1 className="text-4xl/tight font-bold tracking-tight">{listing.name}</h1>
           <p className="mt-1 text-lg text-text-muted">{listing.tagline}</p>
-          <a href={developerUrl} rel="noopener" className="mt-2 inline-block text-accent">
+          <a href={developerUrl} rel="noopener" className={`mt-2 inline-block text-accent ${FOCUS}`}>
             {listing.developer.name}
           </a>
         </div>
@@ -97,18 +100,23 @@ function AppDetail() {
             href={listing.url}
             rel="noopener"
             target="_blank"
-            className="inline-flex items-center gap-2 rounded-full bg-accent px-5 py-2 text-sm font-semibold text-white focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none"
+            className={`inline-flex h-9 items-center justify-center gap-1.5 rounded-full bg-accent px-4 text-[14px] leading-none font-semibold text-white ${FOCUS}`}
           >
-            <IconExternalLink size={16} aria-hidden />
+            <span className="icon-align -ml-0.5 inline-flex size-4 shrink-0 items-center justify-center">
+              <IconExternalLink size={16} stroke={1.75} aria-hidden />
+            </span>
             Open
           </a>
           <div className="flex flex-wrap gap-1.5 md:justify-end">
             {listing.platforms.map((platform) => (
-              <span key={platform} className="rounded-full bg-surface-2 px-2.5 py-0.5 text-xs">
+              <span
+                key={platform}
+                className="inline-flex h-7 items-center justify-center rounded-full bg-surface-2 px-3 text-[13px] leading-none font-medium"
+              >
                 {platformLabel(platform)}
               </span>
             ))}
-            <span className="rounded-full bg-surface-2 px-2.5 py-0.5 text-xs">
+            <span className="inline-flex h-7 items-center justify-center rounded-full bg-surface-2 px-3 text-[13px] leading-none font-medium">
               {PRICING_LABELS[listing.pricing]}
             </span>
           </div>
@@ -121,11 +129,11 @@ function AppDetail() {
 
       <Description text={listing.description} />
 
-      <section className="mt-10 min-w-0">
-        <h2 className="text-xl font-bold">Information</h2>
-        <dl className="mt-3">
+      <section className="mt-8 min-w-0">
+        <h2 className="text-xl font-semibold tracking-tight">Information</h2>
+        <dl className="mt-4">
           <InfoRow label="Developer">
-            <a href={developerUrl} rel="noopener" className="text-accent">
+            <a href={developerUrl} rel="noopener" className={`text-accent ${FOCUS}`}>
               {listing.developer.name}
             </a>
           </InfoRow>
@@ -133,7 +141,7 @@ function AppDetail() {
             <Link
               to="/category/$category"
               params={{ category: listing.category }}
-              className="text-accent"
+              className={`text-accent ${FOCUS}`}
             >
               {categoryLabel(listing.category)}
             </Link>
@@ -147,7 +155,7 @@ function AppDetail() {
                   key={pkg}
                   href={packageHref(pkg)}
                   rel="noopener"
-                  className="rounded-full bg-surface-2 px-3 py-1 text-sm"
+                  className={`inline-flex h-7 items-center justify-center rounded-full bg-surface-2 px-3.5 text-[13px] leading-none font-medium ${FOCUS}`}
                 >
                   {pkg}
                 </a>
@@ -166,29 +174,33 @@ function AppDetail() {
                     href={listing.links?.[key]}
                     rel="noopener"
                     target="_blank"
-                    className="inline-flex items-center gap-1.5 text-accent"
+                    className={`inline-flex items-center gap-1.5 text-accent ${FOCUS}`}
                   >
-                    <Icon size={16} aria-hidden />
+                    <span className="icon-align inline-flex size-4 shrink-0 items-center justify-center">
+                      <Icon size={16} stroke={1.75} aria-hidden />
+                    </span>
                     {label}
                   </a>
                 ))}
               </div>
             </InfoRow>
           ) : null}
-          <InfoRow label="Added">{formatAdded(listing.addedAt)}</InfoRow>
+          <InfoRow label="Added">
+            <span className="tabular">{formatAdded(listing.addedAt)}</span>
+          </InfoRow>
         </dl>
       </section>
 
-      <div className="mt-10 rounded-2xl bg-surface p-6">
-        <p>Link back to your listing from your site:</p>
-        <div className="mt-3 flex min-w-0 items-start gap-2">
-          <code className="block min-w-0 flex-1 whitespace-pre-wrap break-all rounded-lg bg-surface-2 p-3 text-sm">
+      <div className="mt-8 rounded-2xl bg-surface p-6">
+        <h2 className="text-xl font-semibold tracking-tight">Link back to your listing from your site:</h2>
+        <div className="mt-4 flex min-w-0 items-start gap-2">
+          <code className="block min-w-0 flex-1 font-mono text-[13px] leading-relaxed break-words rounded-lg bg-surface-2 p-3">
             {snippet}
           </code>
           <CopyButton
             text={snippet}
             label="Copy"
-            className="inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-accent px-4 py-2 text-sm font-semibold text-white"
+            className="inline-flex h-9 shrink-0 items-center justify-center gap-1.5 rounded-full bg-accent px-4 text-[14px] leading-none font-semibold text-white"
           />
         </div>
       </div>
@@ -208,9 +220,9 @@ function AppDetail() {
 
 function InfoRow({ label, children }: { label: string; children: ReactNode }) {
   return (
-    <div className="flex items-start gap-4 border-b border-border py-3 last:border-b-0">
-      <dt className="w-40 shrink-0 text-text-muted">{label}</dt>
-      <dd className="min-w-0 flex-1">{children}</dd>
+    <div className="flex items-start gap-4 border-b border-border/60 py-3 last:border-b-0">
+      <dt className="w-44 shrink-0 text-[14px] text-text-muted">{label}</dt>
+      <dd className="min-w-0 flex-1 text-[14px]">{children}</dd>
     </div>
   )
 }
@@ -222,10 +234,10 @@ function Description({ text }: { text: string }) {
   const clamp = isLong && !expanded
 
   return (
-    <section className="mt-10 min-w-0">
-      <h2 className="text-xl font-bold">Description</h2>
+    <section className="mt-8 min-w-0">
+      <h2 className="text-xl font-semibold tracking-tight">Description</h2>
       <div
-        className={`mt-3 space-y-4 text-base leading-relaxed ${clamp ? 'line-clamp-6' : ''}`}
+        className={`mt-4 space-y-4 text-base leading-relaxed ${clamp ? 'line-clamp-6' : ''}`}
       >
         {paragraphs.map((paragraph) => (
           <p key={paragraph}>{paragraph}</p>
@@ -234,7 +246,7 @@ function Description({ text }: { text: string }) {
       {clamp ? (
         <button
           type="button"
-          className="mt-2 rounded-sm text-accent focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none"
+          className={`mt-2 rounded-sm text-accent ${FOCUS}`}
           onClick={() => setExpanded(true)}
           aria-label="Show more"
         >
@@ -295,18 +307,22 @@ function ScreenshotGallery({
         {shots.map((shot, i) => {
           const landscape = shot.width >= shot.height
           return (
-            <img
+            <div
               key={shot.file}
-              src={shot.src}
-              alt={shot.alt}
-              width={shot.width}
-              height={shot.height}
-              loading={i === 0 ? 'eager' : 'lazy'}
-              fetchPriority={i === 0 ? 'high' : undefined}
-              className={`h-auto shrink-0 snap-start rounded-xl border border-border ${
+              className={`relative shrink-0 snap-start overflow-hidden rounded-xl ring-1 ring-inset ring-black/10 dark:ring-white/10 ${
                 landscape ? 'w-[640px] max-w-[85vw]' : 'w-[280px] max-w-full'
               }`}
-            />
+            >
+              <img
+                src={shot.src}
+                alt={shot.alt}
+                width={shot.width}
+                height={shot.height}
+                loading={i === 0 ? 'eager' : 'lazy'}
+                fetchPriority={i === 0 ? 'high' : undefined}
+                className="h-auto w-full object-top"
+              />
+            </div>
           )
         })}
       </div>

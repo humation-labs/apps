@@ -41,7 +41,7 @@ function HeroCard({ app }: { app: Listing }) {
     <Link
       to="/apps/$slug"
       params={{ slug: app.slug }}
-      className="relative aspect-[4/5] w-full min-w-0 shrink-0 snap-center overflow-hidden rounded-2xl md:aspect-video md:max-h-[480px]"
+      className="relative aspect-[4/5] w-full min-w-0 shrink-0 snap-center overflow-hidden rounded-2xl md:aspect-video md:max-h-[480px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
     >
       <img
         src={screenshotSrc(app.slug, shot.file)}
@@ -50,10 +50,13 @@ function HeroCard({ app }: { app: Listing }) {
         height={height}
         className="absolute inset-0 h-full w-full max-w-full object-cover object-top"
       />
+      <span className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-inset ring-black/10 dark:ring-white/10" />
       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/10" />
       <div className="absolute inset-0 flex min-w-0 flex-col justify-end p-6 drop-shadow md:p-10">
-        <p className="text-xs tracking-wide text-white/80 uppercase">{categoryLabel(app.category)}</p>
-        <h2 className="text-3xl font-bold text-white drop-shadow md:text-5xl">{app.name}</h2>
+        <p className="text-[11px] font-semibold tracking-[0.08em] text-white/80 uppercase">
+          {categoryLabel(app.category)}
+        </p>
+        <h2 className="text-3xl font-bold tracking-tight text-white drop-shadow md:text-5xl">{app.name}</h2>
         <p className="mt-1 text-white/90 drop-shadow">{app.tagline}</p>
         <div className="mt-4 flex min-w-0 items-center gap-3">
           <img
@@ -61,13 +64,13 @@ function HeroCard({ app }: { app: Listing }) {
             alt=""
             width={48}
             height={48}
-            className="size-12 rounded-[22%] border border-white/20"
+            className="size-12 rounded-[22%] ring-1 ring-inset ring-white/20"
           />
-          <div className="min-w-0 flex-1">
-            <p className="truncate text-sm font-medium text-white">{app.name}</p>
-            <p className="truncate text-xs text-white/80">{app.tagline}</p>
+          <div className="min-w-0 flex-1 self-center">
+            <p className="truncate text-[14px]/5 font-medium text-white">{app.name}</p>
+            <p className="truncate text-[13px]/[18px] text-white/80">{app.tagline}</p>
           </div>
-          <span className="shrink-0 rounded-full bg-white/20 px-4 py-1.5 text-sm font-semibold text-white backdrop-blur">
+          <span className="inline-flex h-7 shrink-0 items-center justify-center rounded-full bg-white/20 px-3.5 text-[13px] leading-none font-semibold text-white backdrop-blur">
             View
           </span>
         </div>
