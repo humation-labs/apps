@@ -26,6 +26,12 @@ export function ScreenshotGallery({ shots }: { shots: Shot[] }) {
 
   useEffect(() => {
     const el = ref.current
+    if (el) el.scrollTo({ left: 0 })
+    updateEdges()
+  }, [shots, updateEdges])
+
+  useEffect(() => {
+    const el = ref.current
     if (!el) return
     updateEdges()
     const observer = new ResizeObserver(updateEdges)

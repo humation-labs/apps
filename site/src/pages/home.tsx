@@ -112,17 +112,17 @@ function Home() {
       ) : null}
 
       <section className="mt-12 rounded-xl bg-surface p-8 md:p-10" aria-label={t.shell.addYourApp}>
-        <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between md:gap-10">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-[minmax(0,1fr)_auto] md:items-center md:gap-10">
           <div className="min-w-0">
             <h2 className="text-2xl font-bold tracking-tight md:text-3xl">{t.home.ctaHeading}</h2>
             <p className="mt-2 max-w-[48ch] text-base text-text-muted">{t.home.ctaBody}</p>
           </div>
-          <div className="flex shrink-0 flex-col items-start gap-3">
+          <div className="flex flex-col items-center gap-3 self-center justify-self-end">
             <CopyButton
               text={ADD_APP_PROMPT}
               label={t.home.copyPrompt}
               copiedMs={2500}
-              className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-accent px-6 text-base font-semibold text-white"
+              className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-accent px-6 text-base font-semibold text-white md:w-auto"
             >
               {(copied) =>
                 copied ? (

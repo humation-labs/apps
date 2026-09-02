@@ -142,7 +142,7 @@ function AppDetail() {
       </header>
 
       <div className="mt-8 min-w-0">
-        <ScreenshotGallery shots={screenshots} />
+        <ScreenshotGallery key={listing.slug} shots={screenshots} />
       </div>
 
       <Description text={listing.description} />
@@ -211,29 +211,31 @@ function AppDetail() {
       </section>
 
       <div className="mt-8 rounded-xl bg-surface p-6 md:p-8">
-        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between md:gap-8">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-[minmax(0,1fr)_auto] md:items-center md:gap-8">
           <div className="min-w-0">
             <h2 className="text-lg font-semibold">{t.detail.linkBack}</h2>
             <p className="mt-1 text-sm text-text-muted">{t.detail.linkBackBody}</p>
           </div>
-          <CopyButton
-            text={snippet}
-            label={t.detail.copyLinkTag}
-            className="inline-flex h-10 shrink-0 items-center justify-center gap-1.5 rounded-full bg-surface-2 px-5 text-sm font-semibold hover:bg-surface-3"
-          >
-            {(copied) => (
-              <>
-                <span className="icon-align inline-flex size-4 shrink-0 items-center justify-center">
-                  {copied ? (
-                    <IconCheck size={16} stroke={1.75} aria-hidden />
-                  ) : (
-                    <IconLink size={16} stroke={1.75} aria-hidden />
-                  )}
-                </span>
-                {copied ? t.shell.copied : t.detail.copyLinkTag}
-              </>
-            )}
-          </CopyButton>
+          <div className="flex w-full flex-col items-center gap-3 self-center justify-self-end md:w-auto">
+            <CopyButton
+              text={snippet}
+              label={t.detail.copyLinkTag}
+              className="inline-flex h-10 w-full items-center justify-center gap-1.5 rounded-full bg-surface-2 px-5 text-sm font-semibold hover:bg-surface-3 md:w-auto"
+            >
+              {(copied) => (
+                <>
+                  <span className="icon-align inline-flex size-4 shrink-0 items-center justify-center">
+                    {copied ? (
+                      <IconCheck size={16} stroke={1.75} aria-hidden />
+                    ) : (
+                      <IconLink size={16} stroke={1.75} aria-hidden />
+                    )}
+                  </span>
+                  {copied ? t.shell.copied : t.detail.copyLinkTag}
+                </>
+              )}
+            </CopyButton>
+          </div>
         </div>
       </div>
 
