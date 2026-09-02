@@ -50,7 +50,10 @@ function RootDocument({
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
         <HeadContent />
       </head>
-      <body className="min-h-screen bg-bg font-sans text-text antialiased">
+      <body
+        className="min-h-screen bg-bg font-sans text-text antialiased"
+        data-scroll-restoration-id="body"
+      >
         <div className="flex min-h-screen">
           {SIDEBAR_ENABLED ? <Sidebar categories={categories} /> : null}
           <div className="flex min-w-0 flex-1 flex-col">
