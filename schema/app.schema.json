@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://apps.humation.app/schema/app.schema.json",
+  "title": "apps.humation.app listing",
+  "description": "One listing on apps.humation.app. Lives at apps/<slug>/app.json in https://github.com/humation-labs/apps. The slug is the directory name: lowercase letters, digits and single hyphens, 3-40 characters.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["name", "tagline", "description", "url", "category", "platforms", "pricing", "humation", "developer", "icon", "screenshots", "addedAt"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 40,
+      "description": "Display name of the app."
+    },
+    "tagline": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80,
+      "description": "One-line pitch shown on the card and under the name. No trailing period."
+    },
+    "description": {
+      "type": "string",
+      "minLength": 40,
+      "maxLength": 1200,
+      "description": "Plain text, 1-4 short paragraphs separated by blank lines. No Markdown, no HTML, no URLs. Explain what the app does and how it uses Humation avatars."
+    },
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https://",
+      "description": "Primary link for the Open button. Must be https and publicly reachable."
+    },
+    "category": {
+      "type": "string",
+      "enum": ["social", "games", "productivity", "developer-tools", "education", "entertainment", "lifestyle", "business", "other"]
+    },
+    "platforms": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "enum": ["web", "ios", "android", "macos", "windows", "linux", "cli"] }
+    },
+    "pricing": {
+      "type": "string",
+      "enum": ["free", "freemium", "paid"]
+    },
+    "humation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["packages"],
+      "properties": {
+        "packages": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "description": "Humation packages the app actually depends on. Verified from the project's dependency files.",
+          "items": {
+            "type": "string",
+            "enum": ["@humation/react", "@humation/core", "@humation/web-component", "@humation/assets-humation-1", "humation-swift"]
+          }
+        },
+        "usage": {
+          "type": "string",
+          "maxLength": 200,
+          "description": "Optional one sentence on where avatars appear in the app, e.g. 'User profile pictures and comment threads'."
+        }
+      }
+    },
+    "developer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "github"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1, "maxLength": 60, "description": "Person or organization name shown as the developer." },
+        "github": { "type": "string", "pattern": "^[A-Za-z0-9](?:[A-Za-z0-9]|-(?=[A-Za-z0-9])){0,38}$", "description": "GitHub user or organization login, without @. Should be the PR author or their organization." },
+        "url": { "type": "string", "format": "uri", "pattern": "^https://", "description": "Optional developer website." }
+      }
+    },
+    "icon": {
+      "type": "string",
+      "const": "icon.png",
+      "description": "Always icon.png in the listing directory: PNG, exactly 512x512, at most 512 KB, square, no rounded-corner mask (the site applies it)."
+    },
+    "screenshots": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 5,
+      "description": "Files under screenshots/ in the listing directory. PNG, JPEG or WebP; shorter side at least 640 px, longer side at most 3000 px, at most 2 MB each. All screenshots should share one orientation.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["file", "alt"],
+        "properties": {
+          "file": { "type": "string", "pattern": "^screenshots/[a-z0-9-]+\\.(png|jpg|jpeg|webp)$" },
+          "alt": { "type": "string", "minLength": 5, "maxLength": 140, "description": "What the screenshot shows, for accessibility." }
+        }
+      }
+    },
+    "links": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "repo": { "type": "string", "format": "uri", "pattern": "^https://(github\\.com|gitlab\\.com|codeberg\\.org)/" },
+        "appStore": { "type": "string", "format": "uri", "pattern": "^https://apps\\.apple\\.com/" },
+        "playStore": { "type": "string", "format": "uri", "pattern": "^https://play\\.google\\.com/" },
+        "x": { "type": "string", "format": "uri", "pattern": "^https://(x\\.com|twitter\\.com)/" },
+        "discord": { "type": "string", "format": "uri", "pattern": "^https://discord\\.(gg|com)/" }
+      }
+    },
+    "addedAt": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+      "description": "Date the listing was submitted, YYYY-MM-DD. Set once; do not change on later edits."
+    }
+  }
+}

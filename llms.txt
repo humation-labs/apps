@@ -1,0 +1,143 @@
+# apps.humation.app
+
+apps.humation.app is the showcase of apps and web services built with Humation
+(https://humation.app), the hand-drawn deterministic avatar engine. Every
+listing is a directory in the public GitHub repository
+https://github.com/humation-labs/apps. Anyone whose app depends on a Humation
+package can add it by opening a pull request. Listings are reviewed by
+maintainers before they go live.
+
+Site: https://apps.humation.app
+Repository: https://github.com/humation-labs/apps
+Listing schema: https://apps.humation.app/schema/app.schema.json
+Humation docs: https://humation.app/docs and https://github.com/humation-labs/humation
+
+## For AI agents
+
+You have been asked to submit the developer's app to apps.humation.app. Do it
+by opening one pull request that adds one directory, `apps/<slug>/`, to the
+repository. Follow every step in order. Never invent data you cannot verify
+from the project or from the developer; ask instead.
+
+### Step 0. Preconditions
+
+- `gh` is installed and authenticated. Run `gh auth status`. If it fails, stop
+  and ask the developer to run `gh auth login`, then resume.
+- `bun` (or Node.js 20+) is installed; the validator needs one of them.
+- The project depends on Humation. Look for `@humation/react`, `@humation/core`,
+  `@humation/web-component` or `@humation/assets-humation-1` in package.json,
+  or `humation-swift` in Package.swift / Xcode project. Record the exact package
+  names you found. If you find none, stop and tell the developer the app is not
+  eligible yet.
+
+### Step 1. Collect the listing data
+
+Fill every required field of the schema. Read the schema for limits and enums:
+https://apps.humation.app/schema/app.schema.json
+
+- `name`: the app's display name.
+- `tagline`: one line, max 80 characters, no trailing period.
+- `description`: 40-1200 characters of plain text. 1-4 short paragraphs
+  separated by blank lines. Say what the app does and where Humation avatars
+  appear in it. No Markdown, HTML or URLs.
+- `url`: the public https URL of the app. Fetch it once and confirm it responds.
+- `category`, `platforms`, `pricing`: pick from the schema enums.
+- `humation.packages`: exactly the packages you verified in Step 0.
+- `humation.usage`: optional one sentence on where avatars appear.
+- `developer.name` and `developer.github`: the developer or their organization.
+  Use `gh api user --jq .login` for the login if the developer does not say.
+- `links`: optional. Only include links you can confirm.
+- `addedAt`: today's date as YYYY-MM-DD.
+
+The `slug` is the directory name, not a field: lowercase letters, digits and
+single hyphens, 3-40 characters, usually derived from the app name. Check that
+`apps/<slug>/` does not already exist in the repository.
+
+If anything is unclear (tagline wording, category, which URL), ask the
+developer before writing files. A short question is better than a wrong listing.
+
+### Step 2. Prepare the images
+
+- `icon.png`: PNG, exactly 512x512, at most 512 KB, square with no rounded
+  corner mask. Use the app's existing icon or logo. Resize with the tools you
+  have (sharp, ImageMagick, sips on macOS). Do not generate a new icon.
+- `screenshots/01.png` ... up to five files: PNG, JPEG or WebP; shorter side
+  at least 640 px, longer side at most 3000 px, at most 2 MB each; one
+  orientation for all of them. File names are lowercase letters, digits and
+  hyphens. Each needs an `alt` text of 5-140 characters.
+- Capture real screens of the running app. Web: a headless browser or the
+  browser tools available to you at 1440x900 or a mobile viewport. iOS:
+  `xcrun simctl io booted screenshot`. If you cannot capture screenshots in
+  this environment, ask the developer to place image files in a folder and
+  tell you the path, then continue. Never use placeholder, stock or generated
+  images.
+
+### Step 3. Fork, add the files, validate
+
+```bash
+gh repo fork humation-labs/apps --clone --default-branch-only
+cd apps
+git checkout -b add-<slug>
+mkdir -p apps/<slug>/screenshots
+# write apps/<slug>/app.json, copy icon.png and screenshots/ into place
+bun install --frozen-lockfile
+bun run validate apps/<slug>
+```
+
+`bun run validate` checks the JSON against the schema, the image formats,
+dimensions and sizes, the slug, and that `url` responds. Fix every reported
+error and rerun until it passes. Do not modify files outside `apps/<slug>/`.
+
+### Step 4. Open the pull request
+
+```bash
+git add apps/<slug>
+git commit -m "Add <App name>"
+git push -u origin add-<slug>
+gh pr create --repo humation-labs/apps --title "Add <App name>" --body "$(cat <<'MD'
+## Listing
+- App: <App name> — <url>
+- Developer: @<github login>
+- Humation packages: <packages>
+
+## Checklist
+- [x] `bun run validate apps/<slug>` passes
+- [x] Images are real screens of the app and I have the rights to publish them
+- [x] Only `apps/<slug>/` is changed
+MD
+)"
+```
+
+### Step 5. Report back
+
+Tell the developer:
+- the pull request URL
+- that a maintainer will review it, and the listing will appear at
+  `https://apps.humation.app/apps/<slug>` after merge
+- anything you could not verify or had to leave out
+
+### Example app.json
+
+```json
+{
+  "$schema": "https://apps.humation.app/schema/app.schema.json",
+  "name": "Humation",
+  "tagline": "Design your own hand-drawn avatar",
+  "description": "Humation is the official avatar creator. Pick a hairstyle, outfit, accessory and colors, or roll a random one from a seed, and download it as SVG or PNG for any profile.\n\nEvery avatar is rendered locally from the Humation 1 asset set with @humation/core.",
+  "url": "https://humation.app",
+  "category": "developer-tools",
+  "platforms": ["web"],
+  "pricing": "free",
+  "humation": {
+    "packages": ["@humation/core", "@humation/react", "@humation/assets-humation-1"],
+    "usage": "The creator canvas and every preview tile"
+  },
+  "developer": { "name": "Humation Labs", "github": "humation-labs", "url": "https://humation.app" },
+  "icon": "icon.png",
+  "screenshots": [
+    { "file": "screenshots/01.png", "alt": "The avatar creator with hairstyle tabs and a live preview" }
+  ],
+  "links": { "repo": "https://github.com/humation-labs/humation" },
+  "addedAt": "2026-09-02"
+}
+```
