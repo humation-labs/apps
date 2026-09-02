@@ -1,6 +1,7 @@
 node_modules
 site/dist
-site/.astro
+site/.tanstack
+site/.output
 site/public/apps
 site/public/llms.txt
 site/public/schema

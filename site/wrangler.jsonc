@@ -3,7 +3,7 @@
   "compatibility_date": "2025-12-01",
   "account_id": "2bde4c78cf8549b660bce308f8bd5a2a",
   "assets": {
-    "directory": "./dist",
+    "directory": "./dist/client",
     "not_found_handling": "404-page"
   },
   "routes": [

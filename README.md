@@ -23,7 +23,7 @@ Or follow [CONTRIBUTING.md](CONTRIBUTING.md) to open the pull request by hand.
 | `schema/app.schema.json` | Source of truth for listing fields, served at `/schema/app.schema.json` |
 | `llms.txt` | Agent instructions, served at `/llms.txt` |
 | `scripts/validate.mjs` | Listing validator, run by contributors and CI |
-| `site/` | The Astro site deployed to Cloudflare Workers |
+| `site/` | The TanStack Start site deployed to Cloudflare Workers |
 
 ## Development
 
@@ -31,7 +31,7 @@ Or follow [CONTRIBUTING.md](CONTRIBUTING.md) to open the pull request by hand.
 bun install
 bun run validate          # all listings
 bun run dev               # site at http://localhost:4321
-bun run build             # static output in site/dist
+bun run build             # static output in site/dist/client
 ```
 
 ## License
