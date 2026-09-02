@@ -7,6 +7,9 @@ export const CONTRIBUTING_URL =
 export const SITE_NAME = 'Humation Apps';
 export const SITE_ORIGIN = 'https://apps.humation.app';
 
+/** Catalog is still small; keep the sidebar in the tree but do not render it. */
+export const SIDEBAR_ENABLED = false;
+
 export const RESERVED_SLUGS = [
   'apps',
   'app',

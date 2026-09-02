@@ -1,16 +1,10 @@
-import { IconArrowLeft, IconDeviceDesktop, IconLanguage, IconMoon, IconSearch, IconSun } from '@tabler/icons-react'
+import { IconArrowLeft, IconSearch } from '@tabler/icons-react'
 import { useRouter, useRouterState } from '@tanstack/react-router'
-import {
-  LOCALE_NATIVE_NAME,
-  localePath,
-  otherLocale,
-  useLocale,
-  useSwitchLocaleHref,
-  useT,
-} from '../i18n'
-import { nextThemePreference, useTheme } from '../lib/theme'
+import { localePath, useLocale, useT } from '../i18n'
 import { CopyForAgentButton } from './CopyForAgentButton'
 import { LocaleLink } from './LocaleLink'
+import { NavMenu } from './NavMenu'
+import { Wordmark } from './Wordmark'
 
 const ghostRoundClass =
   'inline-flex size-8 items-center justify-center rounded-full hover:bg-surface-3/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg'
@@ -20,13 +14,7 @@ export function NavBar() {
   const pathname = useRouterState({ select: (s) => s.location.pathname })
   const locale = useLocale()
   const t = useT()
-  const other = otherLocale(locale)
-  const switchHref = useSwitchLocaleHref()
   const isHome = pathname === localePath(locale, '/')
-  const { preference, setPreference } = useTheme()
-  const themeTitle = `${t.shell.theme.label}: ${t.shell.theme[preference]}`
-  const ThemeIcon =
-    preference === 'light' ? IconSun : preference === 'dark' ? IconMoon : IconDeviceDesktop
 
   function onBack() {
     if (typeof window === 'undefined' || typeof document === 'undefined') return
@@ -39,66 +27,42 @@ export function NavBar() {
 
   return (
     <header className="sticky top-0 z-20 flex h-13 items-center bg-bg/80 backdrop-blur">
-      <div className="flex w-full items-center justify-between gap-3 px-3">
-        <div className="flex min-w-0 items-center gap-3">
+      <div className="flex w-full items-center justify-between gap-2 px-3">
+        <div className="flex min-w-0 items-center gap-2">
           <button
             type="button"
             aria-label={t.shell.back}
             onClick={onBack}
-            className={`${ghostRoundClass} ${isHome ? 'invisible' : ''}`}
+            className={`${ghostRoundClass} shrink-0 ${isHome ? 'invisible' : ''}`}
           >
             <span className="-translate-x-px inline-flex size-[18px] items-center justify-center">
               <IconArrowLeft size={18} stroke={1.75} aria-hidden />
             </span>
           </button>
-          <LocaleLink href={localePath(locale, '/')} className="flex min-w-0 truncate items-center lg:hidden">
-            <img
-              src="/logo_humation.svg"
-              alt="Humation"
-              width={102}
-              height={16}
-              className="h-3.5 w-auto dark:hidden"
-            />
-            <img
-              src="/logo_humation_dk.svg"
-              alt=""
-              width={102}
-              height={16}
-              className="hidden h-3.5 w-auto dark:block"
-            />
+          <LocaleLink
+            href={localePath(locale, '/')}
+            className="flex min-w-0 items-center gap-1.5"
+          >
+            <span className="flex shrink-0 items-center">
+              <Wordmark />
+            </span>
+            <span className="min-w-0 truncate text-[13px] font-medium leading-none text-text-muted">
+              {t.shell.apps}
+            </span>
           </LocaleLink>
         </div>
-        <div className="flex shrink-0 items-center gap-3">
-          <button
-            type="button"
-            aria-label={themeTitle}
-            title={themeTitle}
-            onClick={() => setPreference(nextThemePreference(preference))}
-            className={`${ghostRoundClass} lg:hidden`}
-          >
-            <span className="inline-flex size-[18px] items-center justify-center">
-              <ThemeIcon size={18} stroke={1.75} aria-hidden />
-            </span>
-          </button>
-          <a
-            href={switchHref}
-            aria-label={LOCALE_NATIVE_NAME[other]}
-            className={`${ghostRoundClass} lg:hidden`}
-          >
-            <span className="inline-flex size-[18px] items-center justify-center">
-              <IconLanguage size={18} stroke={1.75} aria-hidden />
-            </span>
-          </a>
+        <div className="flex shrink-0 items-center gap-1.5">
           <LocaleLink
             href={localePath(locale, '/search')}
             aria-label={t.shell.search}
-            className={`${ghostRoundClass} lg:hidden`}
+            className={ghostRoundClass}
           >
             <span className="inline-flex size-[18px] items-center justify-center">
               <IconSearch size={18} stroke={1.75} aria-hidden />
             </span>
           </LocaleLink>
           <CopyForAgentButton />
+          <NavMenu />
         </div>
       </div>
     </header>

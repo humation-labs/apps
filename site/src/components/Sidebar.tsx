@@ -4,14 +4,11 @@ import {
   IconArrowUpRight,
   IconBrandGithub,
   IconCheck,
-  IconDeviceDesktop,
   IconLanguage,
   IconLayoutSidebar,
-  IconMoon,
   IconPlus,
   IconSearch,
   IconStar,
-  IconSun,
   IconUserCircle,
 } from '@tabler/icons-react'
 import { ADD_APP_PROMPT } from '../lib/constants'
@@ -25,27 +22,18 @@ import {
   useSwitchLocaleHref,
   useT,
 } from '../i18n'
-import { nextThemePreference, useTheme, type ThemePreference } from '../lib/theme'
+import { nextThemePreference, useTheme } from '../lib/theme'
 import { CopyButton } from './AddAppButton'
 import { CategoryIcon } from './CategoryIcon'
 import { LocaleLink } from './LocaleLink'
+import { navRowClassName, RowIcon } from './NavRow'
+import { ThemeControl, ThemePreferenceIcon } from './ThemeControl'
+import { Wordmark } from './Wordmark'
 
 const COLLAPSED_KEY = 'sidebar-collapsed'
 
 const ghostButtonClass =
   'inline-flex size-7 items-center justify-center rounded-[8px] text-text hover:bg-surface-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-sidebar'
-
-function rowClassName(collapsed: boolean) {
-  return collapsed
-    ? 'flex size-8 items-center justify-center rounded-[8px] text-[13px] font-medium text-text hover:bg-surface-3/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-sidebar'
-    : 'flex h-8 w-full items-center gap-3 rounded-[8px] px-2 text-[13px] font-medium text-text hover:bg-surface-3/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-sidebar'
-}
-
-function RowIcon({ children }: { children: ReactNode }) {
-  return (
-    <span className="icon-align inline-flex size-4 shrink-0 items-center justify-center">{children}</span>
-  )
-}
 
 function SidebarRow({
   collapsed,
@@ -68,7 +56,7 @@ function SidebarRow({
   external?: boolean
   highlightActive?: boolean
 }) {
-  const className = rowClassName(collapsed)
+  const className = navRowClassName(collapsed)
   const title = titleOverride ?? (collapsed ? label : undefined)
   const ariaLabel = collapsed ? (titleOverride ?? label) : undefined
   const inner = (
@@ -105,39 +93,6 @@ function SidebarRow({
     >
       {inner}
     </LocaleLink>
-  )
-}
-
-const THEME_OPTIONS: { value: ThemePreference; icon: typeof IconSun }[] = [
-  { value: 'light', icon: IconSun },
-  { value: 'dark', icon: IconMoon },
-  { value: 'system', icon: IconDeviceDesktop },
-]
-
-function ThemePreferenceIcon({ preference, size }: { preference: ThemePreference; size: number }) {
-  const Icon =
-    preference === 'light' ? IconSun : preference === 'dark' ? IconMoon : IconDeviceDesktop
-  return <Icon size={size} stroke={1.75} aria-hidden />
-}
-
-function Wordmark() {
-  return (
-    <>
-      <img
-        src="/logo_humation.svg"
-        alt="Humation"
-        width={102}
-        height={16}
-        className="h-3.5 w-auto dark:hidden"
-      />
-      <img
-        src="/logo_humation_dk.svg"
-        alt=""
-        width={102}
-        height={16}
-        className="hidden h-3.5 w-auto dark:block"
-      />
-    </>
   )
 }
 
@@ -223,7 +178,7 @@ export function Sidebar({ categories }: { categories: { category: string; count:
             text={ADD_APP_PROMPT}
             label={t.shell.addYourApp}
             title={collapsed ? t.shell.addYourApp : undefined}
-            className={rowClassName(collapsed)}
+            className={navRowClassName(collapsed)}
           >
             {(copied) => (
               <>
@@ -284,7 +239,7 @@ export function Sidebar({ categories }: { categories: { category: string; count:
           {collapsed ? (
             <button
               type="button"
-              className={rowClassName(true)}
+              className={navRowClassName(true)}
               title={themeTitle}
               aria-label={themeTitle}
               onClick={() => setPreference(nextThemePreference(preference))}
@@ -294,37 +249,11 @@ export function Sidebar({ categories }: { categories: { category: string; count:
               </RowIcon>
             </button>
           ) : (
-            <div
-              role="group"
-              aria-label={t.shell.theme.label}
-              className="flex rounded-[8px] bg-surface-2 p-0.5"
-            >
-              {THEME_OPTIONS.map(({ value, icon: Icon }) => {
-                const selected = preference === value
-                const label = t.shell.theme[value]
-                return (
-                  <button
-                    key={value}
-                    type="button"
-                    aria-label={label}
-                    title={label}
-                    aria-pressed={selected}
-                    onClick={() => setPreference(value)}
-                    className={`inline-flex h-7 flex-1 items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-sidebar ${
-                      selected
-                        ? 'rounded-[6px] bg-surface text-text shadow-sm'
-                        : 'text-text-muted'
-                    }`}
-                  >
-                    <Icon size={16} stroke={1.75} aria-hidden />
-                  </button>
-                )
-              })}
-            </div>
+            <ThemeControl />
           )}
           <a
             href={switchHref}
-            className={rowClassName(collapsed)}
+            className={navRowClassName(collapsed)}
             title={collapsed ? LOCALE_NATIVE_NAME[other] : undefined}
             aria-label={LOCALE_NATIVE_NAME[other]}
           >

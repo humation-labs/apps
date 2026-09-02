@@ -6,6 +6,7 @@ import { NotFound } from '../components/NotFound'
 import { Sidebar } from '../components/Sidebar'
 import { categoryCounts } from '../data/listings'
 import { useLocale } from '../i18n'
+import { SIDEBAR_ENABLED } from '../lib/constants'
 import { THEME_INIT_SCRIPT } from '../lib/theme'
 import appCss from '../styles/app.css?url'
 
@@ -51,7 +52,7 @@ function RootDocument({
       </head>
       <body className="min-h-screen bg-bg font-sans text-text antialiased">
         <div className="flex min-h-screen">
-          <Sidebar categories={categories} />
+          {SIDEBAR_ENABLED ? <Sidebar categories={categories} /> : null}
           <div className="flex min-w-0 flex-1 flex-col">
             <NavBar />
             <main className="mx-auto w-full min-w-0 max-w-[1100px] flex-1 px-6 pt-6 pb-8 lg:px-10">

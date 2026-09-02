@@ -20,6 +20,8 @@ export const en = {
     copy: 'Copy',
     copied: 'Copied',
     language: 'Language',
+    more: 'More',
+    contributing: 'Contributing',
     theme: {
       label: 'Theme',
       light: 'Light',

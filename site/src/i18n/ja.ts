@@ -20,6 +20,8 @@ export const ja = {
     copy: 'コピー',
     copied: 'コピーしました',
     language: '言語',
+    more: 'メニュー',
+    contributing: '掲載ガイド',
     theme: {
       label: 'テーマ',
       light: 'ライト',
