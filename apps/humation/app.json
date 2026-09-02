@@ -27,6 +27,18 @@
     {
       "file": "screenshots/01.png",
       "alt": "The avatar creator with a live preview and the Head part picker"
+    },
+    {
+      "file": "screenshots/02.png",
+      "alt": "Choosing an outfit in the Body tab"
+    },
+    {
+      "file": "screenshots/03.png",
+      "alt": "Adding an item or a cat companion in the Item tab"
+    },
+    {
+      "file": "screenshots/04.png",
+      "alt": "The Colors sheet for stroke, hair, skin, cloth and background"
     }
   ],
   "links": {
