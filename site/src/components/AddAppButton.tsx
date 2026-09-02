@@ -14,12 +14,14 @@ export function CopyButton({
   label,
   className = defaultClassName,
   title,
+  copiedMs = 2000,
   children,
 }: {
   text: string
   label?: string
   className?: string
   title?: string
+  copiedMs?: number
   children?: (copied: boolean) => ReactNode
 }) {
   const t = useT()
@@ -30,7 +32,7 @@ export function CopyButton({
     try {
       await navigator.clipboard.writeText(text)
       setCopied(true)
-      window.setTimeout(() => setCopied(false), 2000)
+      window.setTimeout(() => setCopied(false), copiedMs)
     } catch {
       setCopied(false)
     }

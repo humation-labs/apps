@@ -6,6 +6,8 @@ import {
   IconBrandGithub,
   IconBrandGooglePlay,
   IconBrandX,
+  IconCheck,
+  IconLink,
 } from '@tabler/icons-react'
 import { notFound } from '@tanstack/react-router'
 import { CopyButton } from '../components/AddAppButton'
@@ -110,19 +112,21 @@ function AppDetail() {
   return (
     <article className="min-w-0">
       <header className="flex flex-col md:flex-row md:items-center md:gap-5">
-        <img
-          src={iconSrc(listing.slug)}
-          alt={listing.name}
-          width={120}
-          height={120}
-          className="size-[120px] shrink-0 rounded-[22%] ring-1 ring-inset ring-black/10 dark:ring-white/10"
-        />
-        <div className="mt-5 min-w-0 flex-1 md:mt-0">
-          <h1 className="text-4xl/tight font-bold tracking-tight">{listing.name}</h1>
-          <p className="mt-1 text-lg text-text-muted">{listing.tagline}</p>
-          <a href={developerUrl} rel="noopener" className={`mt-2 inline-block text-accent ${FOCUS}`}>
-            {listing.developer.name}
-          </a>
+        <div className="flex items-center gap-4 md:contents">
+          <img
+            src={iconSrc(listing.slug)}
+            alt={listing.name}
+            width={120}
+            height={120}
+            className="size-20 shrink-0 rounded-[22%] ring-1 ring-inset ring-black/10 md:size-[120px] dark:ring-white/10"
+          />
+          <div className="min-w-0 flex-1">
+            <h1 className="text-2xl/tight font-bold tracking-tight md:text-4xl/tight">{listing.name}</h1>
+            <p className="mt-1 text-lg text-text-muted">{listing.tagline}</p>
+            <a href={developerUrl} rel="noopener" className={`mt-2 inline-block text-accent ${FOCUS}`}>
+              {listing.developer.name}
+            </a>
+          </div>
         </div>
         <a
           href={listing.url}
@@ -206,17 +210,30 @@ function AppDetail() {
         </dl>
       </section>
 
-      <div className="mt-8 rounded-xl bg-surface p-6">
-        <h2 className="text-xl font-semibold tracking-tight">{t.detail.linkBack}</h2>
-        <div className="mt-4 flex min-w-0 items-start gap-2">
-          <code className="block min-w-0 flex-1 font-mono text-[13px] leading-relaxed break-words rounded-sm bg-surface-2 p-3">
-            {snippet}
-          </code>
+      <div className="mt-8 rounded-xl bg-surface p-6 md:p-8">
+        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between md:gap-8">
+          <div className="min-w-0">
+            <h2 className="text-lg font-semibold">{t.detail.linkBack}</h2>
+            <p className="mt-1 text-sm text-text-muted">{t.detail.linkBackBody}</p>
+          </div>
           <CopyButton
             text={snippet}
-            label={t.shell.copy}
-            className="inline-flex h-9 shrink-0 items-center justify-center gap-1.5 rounded-full bg-accent px-4 text-[14px] leading-none font-semibold text-white"
-          />
+            label={t.detail.copyLinkTag}
+            className="inline-flex h-10 shrink-0 items-center justify-center gap-1.5 rounded-full bg-surface-2 px-5 text-sm font-semibold hover:bg-surface-3"
+          >
+            {(copied) => (
+              <>
+                <span className="icon-align inline-flex size-4 shrink-0 items-center justify-center">
+                  {copied ? (
+                    <IconCheck size={16} stroke={1.75} aria-hidden />
+                  ) : (
+                    <IconLink size={16} stroke={1.75} aria-hidden />
+                  )}
+                </span>
+                {copied ? t.shell.copied : t.detail.copyLinkTag}
+              </>
+            )}
+          </CopyButton>
         </div>
       </div>
 

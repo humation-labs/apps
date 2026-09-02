@@ -1,9 +1,13 @@
-import { AddAppButton } from '../components/AddAppButton'
+import { IconCheck } from '@tabler/icons-react'
+import { CopyButton } from '../components/AddAppButton'
 import { AppRowGrid } from '../components/AppRowGrid'
 import { CategoryIcon } from '../components/CategoryIcon'
-import { FeaturedCards } from '../components/FeaturedCards'
+import { FeaturedCard, FeaturedCards } from '../components/FeaturedCards'
 import { LocaleLink } from '../components/LocaleLink'
 import { Section } from '../components/Section'
+import { ClaudeLogo } from '../components/brand/ClaudeLogo'
+import { GrokLogo } from '../components/brand/GrokLogo'
+import { OpenAILogo } from '../components/brand/OpenAILogo'
 import { byCategory, categoryCounts, featured, newest } from '../data/listings'
 import type { Listing } from '../data/listings'
 import { categoryLabel, getDict, localePath, useLocale, useT, type Locale } from '../i18n'
@@ -40,6 +44,9 @@ export function homeRoute(locale: Locale) {
     component: Home,
   }
 }
+
+const FOCUS =
+  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg'
 
 function Home() {
   const { featured: featuredApps, newest: newestApps, categories } = usePageData<HomeData>()
@@ -93,34 +100,58 @@ function Home() {
 
       {previouslyFeatured.length > 0 ? (
         <section className="mt-12 min-w-0">
-          <h2 className="text-2xl font-bold tracking-tight">{t.home.previouslyFeatured}</h2>
-          <p className="mt-1 text-text-muted">{t.home.earlierPicks}</p>
-          <div className="mt-4 min-w-0">
-            <AppRowGrid apps={previouslyFeatured} />
+          <h2 className="text-2xl font-bold tracking-tight">{t.home.featured}</h2>
+          <div className="mt-4 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {previouslyFeatured
+              .filter((app) => app.screenshots[0])
+              .map((app) => (
+                <FeaturedCard key={app.slug} app={app} variant="compact" />
+              ))}
           </div>
         </section>
       ) : null}
 
-      <section className="mt-12 rounded-xl bg-surface p-6" aria-label={t.shell.addYourApp}>
-        <h2 className="text-xl font-semibold tracking-tight">{t.home.ctaHeading}</h2>
-        <p className="mt-2 text-[14px] text-text-muted">{t.home.ctaBody}</p>
-        <div className="mt-4 flex min-w-0 items-start gap-2">
-          <code className="block min-w-0 flex-1 font-mono text-[13px] leading-relaxed break-words rounded-sm bg-surface-2 p-3">
-            {ADD_APP_PROMPT}
-          </code>
-          <AddAppButton
-            label={t.shell.copy}
-            className="inline-flex h-9 shrink-0 items-center justify-center gap-1.5 rounded-full bg-accent px-4 text-[14px] leading-none font-semibold text-white"
-          />
+      <section className="mt-12 rounded-xl bg-surface p-8 md:p-10" aria-label={t.shell.addYourApp}>
+        <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between md:gap-10">
+          <div className="min-w-0">
+            <h2 className="text-2xl font-bold tracking-tight md:text-3xl">{t.home.ctaHeading}</h2>
+            <p className="mt-2 max-w-[48ch] text-base text-text-muted">{t.home.ctaBody}</p>
+          </div>
+          <div className="flex shrink-0 flex-col items-start gap-3">
+            <CopyButton
+              text={ADD_APP_PROMPT}
+              label={t.home.copyPrompt}
+              copiedMs={2500}
+              className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-accent px-6 text-base font-semibold text-white"
+            >
+              {(copied) =>
+                copied ? (
+                  <>
+                    <span className="icon-align inline-flex size-4 shrink-0 items-center justify-center">
+                      <IconCheck size={16} stroke={1.75} aria-hidden />
+                    </span>
+                    {t.home.copyPromptCopied}
+                  </>
+                ) : (
+                  <>
+                    <span className="inline-flex items-center gap-1">
+                      <ClaudeLogo size={16} className="opacity-90" />
+                      <OpenAILogo size={16} />
+                      <GrokLogo size={16} className="translate-x-px" />
+                    </span>
+                    {t.home.copyPrompt}
+                  </>
+                )
+              }
+            </CopyButton>
+            <a
+              href={CONTRIBUTING_URL}
+              className={`text-sm text-text-muted underline-offset-4 hover:underline ${FOCUS}`}
+            >
+              {t.home.orReadContributing}
+            </a>
+          </div>
         </div>
-        <p className="mt-3 text-sm text-text-muted">
-          <a
-            href={CONTRIBUTING_URL}
-            className="hover:text-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
-          >
-            {t.home.orReadContributing}
-          </a>
-        </p>
       </section>
     </div>
   )
