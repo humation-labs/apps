@@ -1,12 +1,15 @@
 import { Link } from '@tanstack/react-router'
 import { iconSrc } from '../lib/constants'
+import { langParam, useLocale } from '../i18n'
 import type { Listing } from '../data/listings'
 
 export function AppCard({ app }: { app: Listing }) {
+  const locale = useLocale()
+
   return (
     <Link
-      to="/apps/$slug"
-      params={{ slug: app.slug }}
+      to="/{-$lang}/apps/$slug"
+      params={{ lang: langParam(locale), slug: app.slug }}
       className="flex gap-3 rounded-lg border border-zinc-200 p-4 hover:border-zinc-400 dark:border-zinc-800"
     >
       <img src={iconSrc(app.slug)} alt="" width={64} height={64} className="size-16 rounded-[24%]" />

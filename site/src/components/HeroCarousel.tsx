@@ -1,5 +1,6 @@
 import { Link } from '@tanstack/react-router'
-import { categoryLabel, iconSrc, screenshotSrc } from '../lib/constants'
+import { iconSrc, screenshotSrc } from '../lib/constants'
+import { categoryLabel, langParam, useLocale, useT } from '../i18n'
 import { imageDimensions } from '../lib/images'
 import { PagerArrows, PagerDots } from './PagerControls'
 import { useSnapScroll } from './useSnapScroll'
@@ -34,13 +35,15 @@ export function HeroCarousel({ apps }: { apps: Listing[] }) {
 }
 
 function HeroCard({ app }: { app: Listing }) {
+  const locale = useLocale()
+  const t = useT()
   const shot = app.screenshots[0]
   const { width, height } = imageDimensions(app.slug, shot.file)
 
   return (
     <Link
-      to="/apps/$slug"
-      params={{ slug: app.slug }}
+      to="/{-$lang}/apps/$slug"
+      params={{ lang: langParam(locale), slug: app.slug }}
       className="relative aspect-[4/5] w-full min-w-0 shrink-0 snap-center overflow-hidden rounded-xl md:aspect-video md:max-h-[480px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
     >
       <img
@@ -54,7 +57,7 @@ function HeroCard({ app }: { app: Listing }) {
       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/10" />
       <div className="absolute inset-0 flex min-w-0 flex-col justify-end p-6 drop-shadow md:p-10">
         <p className="text-[11px] font-semibold tracking-[0.08em] text-white/80 uppercase">
-          {categoryLabel(app.category)}
+          {categoryLabel(app.category, t)}
         </p>
         <h2 className="text-3xl font-bold tracking-tight text-white drop-shadow md:text-5xl">{app.name}</h2>
         <p className="mt-1 text-white/90 drop-shadow">{app.tagline}</p>
@@ -71,7 +74,7 @@ function HeroCard({ app }: { app: Listing }) {
             <p className="truncate text-[13px]/[18px] text-white/80">{app.tagline}</p>
           </div>
           <span className="inline-flex h-7 shrink-0 items-center justify-center rounded-full bg-white/20 px-3.5 text-[13px] leading-none font-semibold text-white backdrop-blur">
-            View
+            {t.home.view}
           </span>
         </div>
       </div>

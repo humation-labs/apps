@@ -13,22 +13,30 @@ import { AppRowGrid } from '../components/AppRowGrid'
 import { ScreenshotGallery } from '../components/ScreenshotGallery'
 import { Section } from '../components/Section'
 import {
-  PRICING_LABELS,
   SITE_ORIGIN,
-  categoryLabel,
   descriptionParagraphs,
   developerHref,
-  formatAdded,
   iconSrc,
   packageHref,
-  platformLabel,
   screenshotSrc,
 } from '../lib/constants'
 import { pageHead } from '../lib/head'
 import { imageDimensions } from '../lib/images'
 import { byCategory, bySlug } from '../data/listings'
+import {
+  categoryLabel,
+  formatDate,
+  getDict,
+  langParam,
+  localeFromLang,
+  localePath,
+  platformLabel,
+  pricingLabel,
+  useLocale,
+  useT,
+} from '../i18n'
 
-export const Route = createFileRoute('/apps/$slug')({
+export const Route = createFileRoute('/{-$lang}/apps/$slug')({
   loader: ({ params }) => {
     const listing = bySlug(params.slug)
     if (!listing) throw notFound()
@@ -39,20 +47,24 @@ export const Route = createFileRoute('/apps/$slug')({
     }))
     return { listing, screenshots }
   },
-  head: ({ loaderData }) => {
+  head: ({ loaderData, params }) => {
+    const locale = localeFromLang(params.lang)
+    const t = getDict(locale)
     if (!loaderData) {
       return pageHead({
-        title: 'Not found',
-        description: 'This page is not in the Humation Apps catalog.',
-        path: '/404',
+        title: t.notFound.title,
+        description: t.notFound.metaDescription,
+        path: localePath('/404', locale),
+        locale,
       })
     }
     const { listing } = loaderData
     return pageHead({
       title: listing.name,
       description: listing.tagline,
-      path: `/apps/${listing.slug}`,
+      path: localePath(`/apps/${listing.slug}`, locale),
       image: iconSrc(listing.slug),
+      locale,
     })
   },
   component: AppDetail,
@@ -71,12 +83,16 @@ const FOCUS =
 
 function AppDetail() {
   const { listing, screenshots } = Route.useLoaderData()
+  const locale = useLocale()
+  const t = useT()
+  const lang = langParam(locale)
   const developerUrl = developerHref(listing.developer)
   const moreInCategory = byCategory(listing.category)
     .filter((app) => app.slug !== listing.slug)
     .slice(0, 9)
-  const snippet = `<a href="${SITE_ORIGIN}/apps/${listing.slug}">Featured on apps.humation.app</a>`
+  const snippet = `<a href="${SITE_ORIGIN}/apps/${listing.slug}">${t.detail.featuredOn}</a>`
   const presentLinks = LINK_DEFS.filter((def) => listing.links?.[def.key])
+  const category = categoryLabel(listing.category, t)
 
   return (
     <article className="min-w-0">
@@ -104,7 +120,7 @@ function AppDetail() {
           <span className="icon-align -ml-0.5 inline-flex size-5 shrink-0 items-center justify-center">
             <IconExternalLink size={20} stroke={2} aria-hidden />
           </span>
-          Open
+          {t.detail.open}
         </a>
       </header>
 
@@ -115,25 +131,27 @@ function AppDetail() {
       <Description text={listing.description} />
 
       <section className="mt-8 min-w-0">
-        <h2 className="text-xl font-semibold tracking-tight">Information</h2>
+        <h2 className="text-xl font-semibold tracking-tight">{t.detail.information}</h2>
         <dl className="mt-4">
-          <InfoRow label="Developer">
+          <InfoRow label={t.detail.developer}>
             <a href={developerUrl} rel="noopener" className={`text-accent ${FOCUS}`}>
               {listing.developer.name}
             </a>
           </InfoRow>
-          <InfoRow label="Category">
+          <InfoRow label={t.detail.category}>
             <Link
-              to="/category/$category"
-              params={{ category: listing.category }}
+              to="/{-$lang}/category/$category"
+              params={{ lang, category: listing.category }}
               className={`text-accent ${FOCUS}`}
             >
-              {categoryLabel(listing.category)}
+              {category}
             </Link>
           </InfoRow>
-          <InfoRow label="Platforms">{listing.platforms.map(platformLabel).join(', ')}</InfoRow>
-          <InfoRow label="Pricing">{PRICING_LABELS[listing.pricing]}</InfoRow>
-          <InfoRow label="Built with">
+          <InfoRow label={t.detail.platforms}>
+            {listing.platforms.map((platform) => platformLabel(platform, t)).join(', ')}
+          </InfoRow>
+          <InfoRow label={t.detail.pricing}>{pricingLabel(listing.pricing, t)}</InfoRow>
+          <InfoRow label={t.detail.builtWith}>
             <div className="flex flex-wrap gap-2">
               {listing.humation.packages.map((pkg) => (
                 <a
@@ -148,10 +166,10 @@ function AppDetail() {
             </div>
           </InfoRow>
           {listing.humation.usage ? (
-            <InfoRow label="Where avatars appear">{listing.humation.usage}</InfoRow>
+            <InfoRow label={t.detail.whereAvatarsAppear}>{listing.humation.usage}</InfoRow>
           ) : null}
           {presentLinks.length > 0 ? (
-            <InfoRow label="Links">
+            <InfoRow label={t.detail.links}>
               <div className="flex flex-wrap gap-3">
                 {presentLinks.map(({ key, label, Icon }) => (
                   <a
@@ -170,21 +188,21 @@ function AppDetail() {
               </div>
             </InfoRow>
           ) : null}
-          <InfoRow label="Added">
-            <span className="tabular">{formatAdded(listing.addedAt)}</span>
+          <InfoRow label={t.detail.added}>
+            <span className="tabular">{formatDate(listing.addedAt, locale)}</span>
           </InfoRow>
         </dl>
       </section>
 
       <div className="mt-8 rounded-xl bg-surface p-6">
-        <h2 className="text-xl font-semibold tracking-tight">Link back to your listing from your site:</h2>
+        <h2 className="text-xl font-semibold tracking-tight">{t.detail.linkBack}</h2>
         <div className="mt-4 flex min-w-0 items-start gap-2">
           <code className="block min-w-0 flex-1 font-mono text-[13px] leading-relaxed break-words rounded-sm bg-surface-2 p-3">
             {snippet}
           </code>
           <CopyButton
             text={snippet}
-            label="Copy"
+            label={t.shell.copy}
             className="inline-flex h-9 shrink-0 items-center justify-center gap-1.5 rounded-full bg-accent px-4 text-[14px] leading-none font-semibold text-white"
           />
         </div>
@@ -192,9 +210,9 @@ function AppDetail() {
 
       {moreInCategory.length > 0 ? (
         <Section
-          title={`More in ${categoryLabel(listing.category)}`}
-          to="/category/$category"
-          params={{ category: listing.category }}
+          title={t.detail.moreIn(category)}
+          to="/{-$lang}/category/$category"
+          params={{ lang, category: listing.category }}
         >
           <AppRowGrid apps={moreInCategory} paged={false} />
         </Section>
@@ -213,6 +231,7 @@ function InfoRow({ label, children }: { label: string; children: ReactNode }) {
 }
 
 function Description({ text }: { text: string }) {
+  const t = useT()
   const paragraphs = descriptionParagraphs(text)
   const [expanded, setExpanded] = useState(false)
   const isLong = text.length > 400
@@ -220,10 +239,8 @@ function Description({ text }: { text: string }) {
 
   return (
     <section className="mt-8 min-w-0">
-      <h2 className="text-xl font-semibold tracking-tight">Description</h2>
-      <div
-        className={`mt-4 space-y-4 text-base leading-relaxed ${clamp ? 'line-clamp-6' : ''}`}
-      >
+      <h2 className="text-xl font-semibold tracking-tight">{t.detail.description}</h2>
+      <div className={`mt-4 space-y-4 text-base leading-relaxed ${clamp ? 'line-clamp-6' : ''}`}>
         {paragraphs.map((paragraph) => (
           <p key={paragraph}>{paragraph}</p>
         ))}
@@ -233,9 +250,9 @@ function Description({ text }: { text: string }) {
           type="button"
           className={`mt-2 rounded-sm text-accent ${FOCUS}`}
           onClick={() => setExpanded(true)}
-          aria-label="Show more"
+          aria-label={t.detail.more}
         >
-          more
+          {t.detail.more}
         </button>
       ) : null}
     </section>

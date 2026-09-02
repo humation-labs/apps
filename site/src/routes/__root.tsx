@@ -5,6 +5,7 @@ import { NavBar } from '../components/NavBar'
 import { NotFound } from '../components/NotFound'
 import { Sidebar } from '../components/Sidebar'
 import { categoryCounts } from '../data/listings'
+import { useLocale } from '../i18n'
 import appCss from '../styles/app.css?url'
 
 export const Route = createRootRoute({
@@ -39,8 +40,10 @@ function RootDocument({
   children,
   categories,
 }: Readonly<{ children: ReactNode; categories: { category: string; count: number }[] }>) {
+  const locale = useLocale()
+
   return (
-    <html lang="en">
+    <html lang={locale}>
       <head>
         <HeadContent />
       </head>

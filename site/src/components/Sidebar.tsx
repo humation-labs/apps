@@ -4,6 +4,7 @@ import {
   IconArrowUpRight,
   IconBrandGithub,
   IconCheck,
+  IconLanguage,
   IconLayoutSidebar,
   IconPlus,
   IconSearch,
@@ -11,8 +12,17 @@ import {
   IconUserCircle,
 } from '@tabler/icons-react'
 import { Link } from '@tanstack/react-router'
-import { ADD_APP_PROMPT, categoryLabel } from '../lib/constants'
+import { ADD_APP_PROMPT } from '../lib/constants'
 import { formatStars, githubStars } from '../lib/github'
+import {
+  LOCALE_NATIVE_NAME,
+  categoryLabel,
+  langParam,
+  otherLocale,
+  useLocale,
+  useSwitchLocaleHref,
+  useT,
+} from '../i18n'
 import { CopyButton } from './AddAppButton'
 import { CategoryIcon } from './CategoryIcon'
 
@@ -33,6 +43,8 @@ function RowIcon({ children }: { children: ReactNode }) {
   )
 }
 
+type LangParam = { lang: 'ja' | undefined }
+
 function SidebarRow({
   collapsed,
   icon,
@@ -50,9 +62,14 @@ function SidebarRow({
   title?: string
   trailing?: ReactNode
 } & (
-  | { to: '/'; params?: undefined; href?: undefined; exact?: boolean }
-  | { to: '/search'; params?: undefined; href?: undefined; exact?: undefined }
-  | { to: '/category/$category'; params: { category: string }; href?: undefined; exact?: undefined }
+  | { to: '/{-$lang}'; params: LangParam; href?: undefined; exact?: boolean }
+  | { to: '/{-$lang}/search'; params: LangParam; href?: undefined; exact?: undefined }
+  | {
+      to: '/{-$lang}/category/$category'
+      params: LangParam & { category: string }
+      href?: undefined
+      exact?: undefined
+    }
   | { href: string; to?: undefined; params?: undefined; exact?: undefined }
 )) {
   const className = rowClassName(collapsed)
@@ -81,10 +98,10 @@ function SidebarRow({
     )
   }
 
-  if (to === '/category/$category') {
+  if (to === '/{-$lang}/category/$category') {
     return (
       <Link
-        to="/category/$category"
+        to="/{-$lang}/category/$category"
         params={params}
         className={className}
         title={title}
@@ -96,9 +113,15 @@ function SidebarRow({
     )
   }
 
-  if (to === '/search') {
+  if (to === '/{-$lang}/search') {
     return (
-      <Link to="/search" className={className} title={title} aria-label={ariaLabel}>
+      <Link
+        to="/{-$lang}/search"
+        params={params}
+        className={className}
+        title={title}
+        aria-label={ariaLabel}
+      >
         {inner}
       </Link>
     )
@@ -106,7 +129,8 @@ function SidebarRow({
 
   return (
     <Link
-      to="/"
+      to="/{-$lang}"
+      params={params}
       activeOptions={exact ? { exact: true } : undefined}
       activeProps={{ className: 'bg-surface-2 text-text' }}
       className={className}
@@ -142,6 +166,11 @@ function Wordmark() {
 export function Sidebar({ categories }: { categories: { category: string; count: number }[] }) {
   const [collapsed, setCollapsed] = useState(false)
   const stars = githubStars()
+  const locale = useLocale()
+  const t = useT()
+  const lang = langParam(locale)
+  const other = otherLocale(locale)
+  const switchHref = useSwitchLocaleHref()
 
   useEffect(() => {
     try {
@@ -178,7 +207,7 @@ export function Sidebar({ categories }: { categories: { category: string; count:
           <button
             type="button"
             className={ghostButtonClass}
-            aria-label="Expand sidebar"
+            aria-label={t.shell.expandSidebar}
             aria-expanded={false}
             onClick={toggleCollapsed}
           >
@@ -186,17 +215,22 @@ export function Sidebar({ categories }: { categories: { category: string; count:
           </button>
         ) : (
           <>
-            <Link to="/" className="flex min-w-0 items-center">
+            <Link to="/{-$lang}" params={{ lang }} className="flex min-w-0 items-center">
               <Wordmark />
             </Link>
             <div className="flex shrink-0 items-center">
-              <Link to="/search" aria-label="Search" className={ghostButtonClass}>
+              <Link
+                to="/{-$lang}/search"
+                params={{ lang }}
+                aria-label={t.shell.search}
+                className={ghostButtonClass}
+              >
                 <IconSearch size={16} stroke={1.75} aria-hidden />
               </Link>
               <button
                 type="button"
                 className={ghostButtonClass}
-                aria-label="Collapse sidebar"
+                aria-label={t.shell.collapseSidebar}
                 aria-expanded={true}
                 onClick={toggleCollapsed}
               >
@@ -212,22 +246,24 @@ export function Sidebar({ categories }: { categories: { category: string; count:
           {collapsed ? (
             <SidebarRow
               collapsed
-              to="/search"
-              label="Search"
+              to="/{-$lang}/search"
+              params={{ lang }}
+              label={t.shell.search}
               icon={<IconSearch size={16} stroke={1.75} aria-hidden />}
             />
           ) : null}
           <SidebarRow
             collapsed={collapsed}
-            to="/"
+            to="/{-$lang}"
+            params={{ lang }}
             exact
-            label="Apps"
+            label={t.shell.apps}
             icon={<IconApps size={16} stroke={1.75} aria-hidden />}
           />
           <CopyButton
             text={ADD_APP_PROMPT}
-            label="Add your app"
-            title={collapsed ? 'Add your app' : undefined}
+            label={t.shell.addYourApp}
+            title={collapsed ? t.shell.addYourApp : undefined}
             className={rowClassName(collapsed)}
           >
             {(copied) => (
@@ -240,7 +276,7 @@ export function Sidebar({ categories }: { categories: { category: string; count:
                   )}
                 </RowIcon>
                 {collapsed ? null : (
-                  <span className="truncate">{copied ? 'Copied' : 'Add your app'}</span>
+                  <span className="truncate">{copied ? t.shell.copied : t.shell.addYourApp}</span>
                 )}
               </>
             )}
@@ -250,16 +286,18 @@ export function Sidebar({ categories }: { categories: { category: string; count:
         {categories.length > 0 ? (
           <>
             {collapsed ? null : (
-              <p className="px-2 pt-5 pb-1 text-[13px] font-medium text-text-muted">Categories</p>
+              <p className="px-2 pt-5 pb-1 text-[13px] font-medium text-text-muted">
+                {t.shell.categories}
+              </p>
             )}
-            <nav className="flex flex-col gap-0.5" aria-label="Categories">
+            <nav className="flex flex-col gap-0.5" aria-label={t.shell.categories}>
               {categories.map(({ category }) => (
                 <SidebarRow
                   key={category}
                   collapsed={collapsed}
-                  to="/category/$category"
-                  params={{ category }}
-                  label={categoryLabel(category)}
+                  to="/{-$lang}/category/$category"
+                  params={{ lang, category }}
+                  label={categoryLabel(category, t)}
                   icon={<CategoryIcon category={category} size={16} />}
                 />
               ))}
@@ -268,10 +306,21 @@ export function Sidebar({ categories }: { categories: { category: string; count:
         ) : null}
 
         <div className="mt-auto flex flex-col gap-0.5 pt-2">
+          <a
+            href={switchHref}
+            className={rowClassName(collapsed)}
+            title={collapsed ? LOCALE_NATIVE_NAME[other] : undefined}
+            aria-label={LOCALE_NATIVE_NAME[other]}
+          >
+            <RowIcon>
+              <IconLanguage size={16} stroke={1.75} aria-hidden />
+            </RowIcon>
+            {collapsed ? null : <span className="truncate">{LOCALE_NATIVE_NAME[other]}</span>}
+          </a>
           <SidebarRow
             collapsed={collapsed}
             href="https://humation.app/avatar"
-            label="Create avatar"
+            label={t.shell.createAvatar}
             title="Open the Humation avatar creator"
             icon={<IconUserCircle size={16} stroke={1.75} aria-hidden />}
             trailing={
@@ -286,7 +335,7 @@ export function Sidebar({ categories }: { categories: { category: string; count:
           <SidebarRow
             collapsed={collapsed}
             href="https://github.com/humation-labs/humation"
-            label="GitHub"
+            label={t.shell.github}
             title={
               collapsed && stars != null ? `GitHub · ${formatStars(stars)} stars` : undefined
             }

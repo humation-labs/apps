@@ -1,6 +1,7 @@
 import { useState, type ReactNode } from 'react'
 import { IconCheck, IconClipboard } from '@tabler/icons-react'
 import { ADD_APP_PROMPT } from '../lib/constants'
+import { useT } from '../i18n'
 
 const defaultClassName =
   'inline-flex h-9 items-center justify-center gap-1.5 rounded-full bg-accent px-4 text-[14px] leading-none font-semibold text-white'
@@ -10,7 +11,7 @@ const focusClassName =
 
 export function CopyButton({
   text,
-  label = 'Copy',
+  label,
   className = defaultClassName,
   title,
   children,
@@ -21,6 +22,8 @@ export function CopyButton({
   title?: string
   children?: (copied: boolean) => ReactNode
 }) {
+  const t = useT()
+  const resolvedLabel = label ?? t.shell.copy
   const [copied, setCopied] = useState(false)
 
   async function onClick() {
@@ -38,7 +41,7 @@ export function CopyButton({
       type="button"
       className={`${className} ${focusClassName}`}
       onClick={onClick}
-      aria-label={copied ? 'Copied' : label}
+      aria-label={copied ? t.shell.copied : resolvedLabel}
       title={title}
     >
       {children ? (
@@ -52,7 +55,7 @@ export function CopyButton({
               <IconClipboard size={16} stroke={1.75} aria-hidden />
             )}
           </span>
-          {copied ? 'Copied' : label}
+          {copied ? t.shell.copied : resolvedLabel}
         </>
       )}
     </button>
@@ -60,11 +63,12 @@ export function CopyButton({
 }
 
 export function AddAppButton({
-  label = 'Add your app',
+  label,
   className = defaultClassName,
 }: {
   label?: string
   className?: string
 }) {
-  return <CopyButton text={ADD_APP_PROMPT} label={label} className={className} />
+  const t = useT()
+  return <CopyButton text={ADD_APP_PROMPT} label={label ?? t.shell.addYourApp} className={className} />
 }

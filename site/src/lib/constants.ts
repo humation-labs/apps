@@ -7,44 +7,38 @@ export const CONTRIBUTING_URL =
 export const SITE_NAME = 'Humation Apps';
 export const SITE_ORIGIN = 'https://apps.humation.app';
 
-export const CATEGORY_LABELS = {
-  social: 'Social',
-  games: 'Games',
-  productivity: 'Productivity',
-  'developer-tools': 'Developer Tools',
-  education: 'Education',
-  entertainment: 'Entertainment',
-  lifestyle: 'Lifestyle',
-  business: 'Business',
-  other: 'Other',
-} as const;
+export const CATEGORIES = [
+  'social',
+  'games',
+  'productivity',
+  'developer-tools',
+  'education',
+  'entertainment',
+  'lifestyle',
+  'business',
+  'other',
+] as const;
 
-export type Category = keyof typeof CATEGORY_LABELS;
+export type Category = (typeof CATEGORIES)[number];
 
-export const PLATFORM_LABELS = {
-  web: 'Web',
-  ios: 'iOS',
-  android: 'Android',
-  macos: 'macOS',
-  windows: 'Windows',
-  linux: 'Linux',
-  cli: 'CLI',
-} as const;
+export const PLATFORMS = [
+  'web',
+  'ios',
+  'android',
+  'macos',
+  'windows',
+  'linux',
+  'cli',
+] as const;
 
-export type Platform = keyof typeof PLATFORM_LABELS;
+export type Platform = (typeof PLATFORMS)[number];
 
-export const PRICING_LABELS = {
-  free: 'Free',
-  freemium: 'Freemium',
-  paid: 'Paid',
-} as const;
+export const PRICING = ['free', 'freemium', 'paid'] as const;
 
-export function categoryLabel(category: string): string {
-  return CATEGORY_LABELS[category as Category] ?? category;
-}
+export type Pricing = (typeof PRICING)[number];
 
-export function platformLabel(platform: string): string {
-  return PLATFORM_LABELS[platform as Platform] ?? platform;
+export function isCategory(value: string): value is Category {
+  return (CATEGORIES as readonly string[]).includes(value);
 }
 
 export function packageHref(pkg: string): string {
@@ -62,16 +56,6 @@ export function screenshotSrc(slug: string, file: string): string {
 
 export function developerHref(developer: { url?: string; github: string }): string {
   return developer.url ?? `https://github.com/${developer.github}`;
-}
-
-export function formatAdded(isoDate: string): string {
-  const [year, month, day] = isoDate.split('-').map(Number);
-  return new Date(Date.UTC(year, month - 1, day)).toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-    timeZone: 'UTC',
-  });
 }
 
 export function descriptionParagraphs(text: string): string[] {
