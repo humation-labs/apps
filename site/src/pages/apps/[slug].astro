@@ -1,0 +1,133 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Badges from '../../components/Badges.astro';
+import {
+  developerHref,
+  descriptionParagraphs,
+  formatAdded,
+  iconSrc,
+  packageHref,
+  screenshotSrc,
+  SITE_ORIGIN,
+} from '../../lib/constants';
+import { imageDimensions } from '../../lib/images';
+import { allListings } from '../../lib/listings';
+
+export async function getStaticPaths() {
+  const apps = await allListings();
+  return apps.map((app) => ({ params: { slug: app.id }, props: { app } }));
+}
+
+const { app } = Astro.props;
+const { data } = app;
+const developerUrl = developerHref(data.developer);
+const listingUrl = `${SITE_ORIGIN}/apps/${app.id}`;
+const embedSnippet = `<a href="${listingUrl}">Featured on apps.humation.app</a>`;
+const paragraphs = descriptionParagraphs(data.description);
+const shots = data.screenshots.map((shot) => ({
+  ...shot,
+  src: screenshotSrc(app.id, shot.file),
+  ...imageDimensions(app.id, shot.file),
+}));
+
+const linkItems = [
+  data.links?.repo ? { href: data.links.repo, label: 'Repository' } : null,
+  data.links?.appStore ? { href: data.links.appStore, label: 'App Store' } : null,
+  data.links?.playStore ? { href: data.links.playStore, label: 'Play Store' } : null,
+  data.links?.x ? { href: data.links.x, label: 'X' } : null,
+  data.links?.discord ? { href: data.links.discord, label: 'Discord' } : null,
+].filter((item): item is { href: string; label: string } => item !== null);
+---
+
+<Layout
+  title={data.name}
+  description={data.tagline}
+  canonicalPath={`/apps/${app.id}`}
+  ogImage={iconSrc(app.id)}
+>
+  <article class="wrap page">
+    <header class="detail-hero">
+      <img
+        class="detail-icon"
+        src={iconSrc(app.id)}
+        alt=""
+        width="118"
+        height="118"
+      />
+      <div class="detail-copy">
+        <h1>{data.name}</h1>
+        <p class="tagline">{data.tagline}</p>
+        <p class="developer">
+          <a href={developerUrl} rel="noopener">{data.developer.name}</a>
+        </p>
+      </div>
+      <div class="detail-actions">
+        <a class="btn btn-primary" href={data.url} rel="noopener" target="_blank">Open</a>
+        <Badges platforms={data.platforms} pricing={data.pricing} />
+      </div>
+    </header>
+
+    <div class="gallery" role="region" aria-label="Screenshots">
+      {
+        shots.map((shot, index) => (
+          <figure>
+            <img
+              src={shot.src}
+              alt={shot.alt}
+              loading={index === 0 ? 'eager' : 'lazy'}
+              fetchpriority={index === 0 ? 'high' : undefined}
+              width={shot.width}
+              height={shot.height}
+            />
+          </figure>
+        ))
+      }
+    </div>
+
+    <section class="prose" aria-label="Description">
+      {paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+    </section>
+
+    <section aria-labelledby="built-with-heading">
+      <h2 class="section-title" id="built-with-heading">Built with</h2>
+      <div class="chips">
+        {
+          data.humation.packages.map((pkg) => (
+            <a class="chip" href={packageHref(pkg)} rel="noopener">{pkg}</a>
+          ))
+        }
+      </div>
+      {data.humation.usage ? <p class="usage">{data.humation.usage}</p> : null}
+    </section>
+
+    {
+      linkItems.length > 0 && (
+        <nav class="links-row" aria-label="Links">
+          {linkItems.map((item) => (
+            <a href={item.href} rel="noopener">
+              {item.label}
+            </a>
+          ))}
+        </nav>
+      )
+    }
+
+    <p class="added">Added {formatAdded(data.addedAt)}</p>
+
+    <section class="feature-box" aria-labelledby="featured-on-heading">
+      <h2 id="featured-on-heading">Featured on apps.humation.app</h2>
+      <p>Add this link to your site:</p>
+      <div class="prompt-row">
+        <code>{embedSnippet}</code>
+        <button
+          type="button"
+          class="btn btn-ghost"
+          data-copy-text={embedSnippet}
+          data-label="Copy"
+        >
+          Copy
+        </button>
+      </div>
+    </section>
+  </article>
+</Layout>

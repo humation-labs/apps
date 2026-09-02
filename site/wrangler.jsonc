@@ -1,0 +1,15 @@
+{
+  "name": "humation-apps",
+  "compatibility_date": "2025-12-01",
+  "account_id": "2bde4c78cf8549b660bce308f8bd5a2a",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page"
+  },
+  "routes": [
+    {
+      "pattern": "apps.humation.app",
+      "custom_domain": true
+    }
+  ]
+}

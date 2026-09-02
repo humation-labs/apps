@@ -1,0 +1,10 @@
+node_modules
+site/dist
+site/.astro
+site/public/apps
+site/public/llms.txt
+site/public/schema
+site/src/generated
+.wrangler
+.DS_Store
+*.log

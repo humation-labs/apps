@@ -1,0 +1,14 @@
+---
+import { ADD_APP_PROMPT, CONTRIBUTING_URL } from '../lib/constants';
+---
+
+<aside class="add-prompt" aria-label="Add your app">
+  <p>
+    Paste it into the coding agent you use in your project.
+    <a href={CONTRIBUTING_URL}>or read CONTRIBUTING</a>
+  </p>
+  <div class="prompt-row">
+    <code>{ADD_APP_PROMPT}</code>
+    <button type="button" class="btn btn-ghost" data-copy-prompt data-label="Copy">Copy</button>
+  </div>
+</aside>

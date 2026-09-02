@@ -1,0 +1,88 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { ADD_APP_PROMPT, SITE_NAME, canonicalUrl } from '../lib/constants';
+
+interface Props {
+  title: string;
+  description: string;
+  canonicalPath: string;
+  ogImage?: string;
+}
+
+const {
+  title,
+  description,
+  canonicalPath,
+  ogImage = '/favicon.png',
+} = Astro.props;
+
+const canonical = canonicalUrl(canonicalPath);
+const ogImageUrl = new URL(ogImage, Astro.site).href;
+const fullTitle = title === SITE_NAME ? title : `${title} · ${SITE_NAME}`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:site_name" content={SITE_NAME} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+    <link rel="icon" href="/favicon.png" type="image/png" />
+  </head>
+  <body data-add-app-prompt={ADD_APP_PROMPT}>
+    <a class="skip-link" href="#content">Skip to content</a>
+    <Header />
+    <main id="content">
+      <slot />
+    </main>
+    <Footer />
+    <script is:inline>
+      (function () {
+        var prompt = document.body.getAttribute('data-add-app-prompt') || '';
+        document.addEventListener('click', function (event) {
+          var target = event.target;
+          if (!(target instanceof Element)) return;
+          var btn = target.closest('[data-copy-prompt], [data-copy-text]');
+          if (!(btn instanceof HTMLElement)) return;
+          var text = btn.getAttribute('data-copy-text') || prompt;
+          var label = btn.getAttribute('data-label') || btn.textContent || '';
+          if (!btn.getAttribute('data-label')) btn.setAttribute('data-label', label.trim());
+          function revert() {
+            window.setTimeout(function () {
+              btn.textContent = btn.getAttribute('data-label') || label;
+            }, 2000);
+          }
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(
+              function () {
+                btn.textContent = 'Copied';
+                revert();
+              },
+              function () {
+                btn.textContent = 'Copy failed';
+                revert();
+              },
+            );
+          } else {
+            btn.textContent = 'Copy failed';
+            revert();
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,21 @@
+---
+import Badges from './Badges.astro';
+import { iconSrc } from '../lib/constants';
+import type { AppEntry } from '../lib/listings';
+
+interface Props {
+  app: AppEntry;
+}
+
+const { app } = Astro.props;
+const { data } = app;
+---
+
+<a class="app-card" href={`/apps/${app.id}`}>
+  <img class="app-icon" src={iconSrc(app.id)} alt="" width="64" height="64" />
+  <div class="app-card-body">
+    <h3>{data.name}</h3>
+    <p class="tagline">{data.tagline}</p>
+    <Badges platforms={data.platforms} />
+  </div>
+</a>

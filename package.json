@@ -1,0 +1,22 @@
+{
+  "name": "humation-apps",
+  "private": true,
+  "workspaces": ["site"],
+  "scripts": {
+    "validate": "node scripts/validate.mjs",
+    "dev": "bun run --cwd site dev",
+    "build": "bun run --cwd site build",
+    "preview": "bun run --cwd site preview",
+    "deploy": "bun run --cwd site deploy",
+    "typecheck": "bun run --cwd site typecheck"
+  },
+  "devDependencies": {
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1",
+    "image-size": "^2.0.2",
+    "prettier": "^3.6.2"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

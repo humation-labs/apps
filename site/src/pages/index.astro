@@ -1,0 +1,81 @@
+---
+import Layout from '../layouts/Layout.astro';
+import AddAppPrompt from '../components/AddAppPrompt.astro';
+import FeaturedCard from '../components/FeaturedCard.astro';
+import AppCard from '../components/AppCard.astro';
+import { categoryLabel, SITE_NAME } from '../lib/constants';
+import { categoryCounts, featuredListings, newestListings } from '../lib/listings';
+
+const featured = await featuredListings();
+const newest = await newestListings(12);
+const categories = await categoryCounts();
+---
+
+<Layout
+  title={SITE_NAME}
+  description="A catalog of apps and web services built with Humation, the hand-drawn deterministic avatar engine."
+  canonicalPath="/"
+>
+  <div class="wrap page">
+    <section class="hero">
+      <div>
+        <h1>Apps built with Humation</h1>
+        <p class="lede">
+          An App Store for products that use the hand-drawn deterministic avatar engine. Listings
+          are added by pull request.
+        </p>
+      </div>
+      <AddAppPrompt />
+    </section>
+
+    {
+      featured.length > 0 && (
+        <section class="section" aria-labelledby="featured-heading">
+          <h2 class="section-title" id="featured-heading">
+            Featured
+          </h2>
+          <div class="featured-grid">
+            {featured.map((app) => (
+              <FeaturedCard app={app} />
+            ))}
+          </div>
+        </section>
+      )
+    }
+
+    <section class="section" aria-labelledby="new-heading">
+      <h2 class="section-title" id="new-heading">New</h2>
+      {
+        newest.length === 0 ? (
+          <p class="empty">No listings yet.</p>
+        ) : (
+          <div class="card-grid">
+            {newest.map((app) => (
+              <AppCard app={app} />
+            ))}
+          </div>
+        )
+      }
+    </section>
+
+    <section class="section" aria-labelledby="categories-heading">
+      <h2 class="section-title" id="categories-heading">Browse by category</h2>
+      {
+        categories.length === 0 ? (
+          <p class="empty">No categories yet.</p>
+        ) : (
+          <div class="card-grid">
+            {categories.map(({ category, count }) => (
+              <a class="category-card" href={`/category/${category}`}>
+                <h3>{categoryLabel(category)}</h3>
+                <p>
+                  {count} {count === 1 ? 'app' : 'apps'}
+                </p>
+              </a>
+            ))}
+          </div>
+        )
+      }
+    </section>
+  </div>
+</Layout>

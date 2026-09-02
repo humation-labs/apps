@@ -1,0 +1,33 @@
+---
+import Badges from './Badges.astro';
+import { iconSrc, screenshotSrc } from '../lib/constants';
+import { imageDimensions } from '../lib/images';
+import type { AppEntry } from '../lib/listings';
+
+interface Props {
+  app: AppEntry;
+}
+
+const { app } = Astro.props;
+const { data } = app;
+const first = data.screenshots[0];
+const shot = imageDimensions(app.id, first.file);
+---
+
+<a class="featured-card" href={`/apps/${app.id}`}>
+  <img
+    class="featured-shot"
+    src={screenshotSrc(app.id, first.file)}
+    alt={first.alt}
+    width={shot.width}
+    height={shot.height}
+  />
+  <div class="featured-meta">
+    <img class="app-icon" src={iconSrc(app.id)} alt="" width="72" height="72" />
+    <div>
+      <h3>{data.name}</h3>
+      <p class="tagline">{data.tagline}</p>
+      <Badges platforms={data.platforms} />
+    </div>
+  </div>
+</a>

@@ -1,0 +1,26 @@
+{
+  "name": "site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "predev": "node scripts/sync-assets.mjs",
+    "dev": "astro dev",
+    "prebuild": "node scripts/sync-assets.mjs",
+    "build": "astro build",
+    "preview": "astro preview",
+    "pretypecheck": "node scripts/sync-assets.mjs",
+    "typecheck": "astro check",
+    "deploy": "wrangler deploy"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@astrojs/sitemap": "^3.7.4",
+    "@tailwindcss/vite": "^4.3.3",
+    "astro": "^7.2.10",
+    "tailwindcss": "^4.3.3",
+    "typescript": "5"
+  },
+  "devDependencies": {
+    "wrangler": "^4.128.0"
+  }
+}
