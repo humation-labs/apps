@@ -1,4 +1,4 @@
-import { IconArrowLeft, IconLanguage, IconSearch } from '@tabler/icons-react'
+import { IconArrowLeft, IconDeviceDesktop, IconLanguage, IconMoon, IconSearch, IconSun } from '@tabler/icons-react'
 import { useRouter, useRouterState } from '@tanstack/react-router'
 import {
   LOCALE_NATIVE_NAME,
@@ -8,6 +8,7 @@ import {
   useSwitchLocaleHref,
   useT,
 } from '../i18n'
+import { nextThemePreference, useTheme } from '../lib/theme'
 import { CopyForAgentButton } from './CopyForAgentButton'
 import { LocaleLink } from './LocaleLink'
 
@@ -22,6 +23,10 @@ export function NavBar() {
   const other = otherLocale(locale)
   const switchHref = useSwitchLocaleHref()
   const isHome = pathname === localePath(locale, '/')
+  const { preference, setPreference } = useTheme()
+  const themeTitle = `${t.shell.theme.label}: ${t.shell.theme[preference]}`
+  const ThemeIcon =
+    preference === 'light' ? IconSun : preference === 'dark' ? IconMoon : IconDeviceDesktop
 
   function onBack() {
     if (typeof window === 'undefined' || typeof document === 'undefined') return
@@ -64,6 +69,17 @@ export function NavBar() {
           </LocaleLink>
         </div>
         <div className="flex shrink-0 items-center gap-3">
+          <button
+            type="button"
+            aria-label={themeTitle}
+            title={themeTitle}
+            onClick={() => setPreference(nextThemePreference(preference))}
+            className={`${ghostRoundClass} lg:hidden`}
+          >
+            <span className="inline-flex size-[18px] items-center justify-center">
+              <ThemeIcon size={18} stroke={1.75} aria-hidden />
+            </span>
+          </button>
           <a
             href={switchHref}
             aria-label={LOCALE_NATIVE_NAME[other]}

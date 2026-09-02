@@ -20,6 +20,12 @@ export const en = {
     copy: 'Copy',
     copied: 'Copied',
     language: 'Language',
+    theme: {
+      label: 'Theme',
+      light: 'Light',
+      dark: 'Dark',
+      system: 'System',
+    },
     footer: 'A catalog of apps built with Humation. Listings are added by pull request.',
   },
   home: {

@@ -4,11 +4,14 @@ import {
   IconArrowUpRight,
   IconBrandGithub,
   IconCheck,
+  IconDeviceDesktop,
   IconLanguage,
   IconLayoutSidebar,
+  IconMoon,
   IconPlus,
   IconSearch,
   IconStar,
+  IconSun,
   IconUserCircle,
 } from '@tabler/icons-react'
 import { ADD_APP_PROMPT } from '../lib/constants'
@@ -22,6 +25,7 @@ import {
   useSwitchLocaleHref,
   useT,
 } from '../i18n'
+import { nextThemePreference, useTheme, type ThemePreference } from '../lib/theme'
 import { CopyButton } from './AddAppButton'
 import { CategoryIcon } from './CategoryIcon'
 import { LocaleLink } from './LocaleLink'
@@ -104,6 +108,18 @@ function SidebarRow({
   )
 }
 
+const THEME_OPTIONS: { value: ThemePreference; icon: typeof IconSun }[] = [
+  { value: 'light', icon: IconSun },
+  { value: 'dark', icon: IconMoon },
+  { value: 'system', icon: IconDeviceDesktop },
+]
+
+function ThemePreferenceIcon({ preference, size }: { preference: ThemePreference; size: number }) {
+  const Icon =
+    preference === 'light' ? IconSun : preference === 'dark' ? IconMoon : IconDeviceDesktop
+  return <Icon size={size} stroke={1.75} aria-hidden />
+}
+
 function Wordmark() {
   return (
     <>
@@ -134,6 +150,8 @@ export function Sidebar({ categories }: { categories: { category: string; count:
   const switchHref = useSwitchLocaleHref()
   const homeHref = localePath(locale, '/')
   const searchHref = localePath(locale, '/search')
+  const { preference, setPreference } = useTheme()
+  const themeTitle = `${t.shell.theme.label}: ${t.shell.theme[preference]}`
 
   useEffect(() => {
     try {
@@ -263,6 +281,47 @@ export function Sidebar({ categories }: { categories: { category: string; count:
         ) : null}
 
         <div className="mt-auto flex flex-col gap-0.5 pt-2">
+          {collapsed ? (
+            <button
+              type="button"
+              className={rowClassName(true)}
+              title={themeTitle}
+              aria-label={themeTitle}
+              onClick={() => setPreference(nextThemePreference(preference))}
+            >
+              <RowIcon>
+                <ThemePreferenceIcon preference={preference} size={16} />
+              </RowIcon>
+            </button>
+          ) : (
+            <div
+              role="group"
+              aria-label={t.shell.theme.label}
+              className="flex rounded-[8px] bg-surface-2 p-0.5"
+            >
+              {THEME_OPTIONS.map(({ value, icon: Icon }) => {
+                const selected = preference === value
+                const label = t.shell.theme[value]
+                return (
+                  <button
+                    key={value}
+                    type="button"
+                    aria-label={label}
+                    title={label}
+                    aria-pressed={selected}
+                    onClick={() => setPreference(value)}
+                    className={`inline-flex h-7 flex-1 items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-sidebar ${
+                      selected
+                        ? 'rounded-[6px] bg-surface text-text shadow-sm'
+                        : 'text-text-muted'
+                    }`}
+                  >
+                    <Icon size={16} stroke={1.75} aria-hidden />
+                  </button>
+                )
+              })}
+            </div>
+          )}
           <a
             href={switchHref}
             className={rowClassName(collapsed)}

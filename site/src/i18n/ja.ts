@@ -20,6 +20,12 @@ export const ja = {
     copy: 'コピー',
     copied: 'コピーしました',
     language: '言語',
+    theme: {
+      label: 'テーマ',
+      light: 'ライト',
+      dark: 'ダーク',
+      system: 'システム',
+    },
     footer: 'Humation で作られたアプリのカタログ。掲載はプルリクエストで。',
   },
   home: {

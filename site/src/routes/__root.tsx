@@ -6,6 +6,7 @@ import { NotFound } from '../components/NotFound'
 import { Sidebar } from '../components/Sidebar'
 import { categoryCounts } from '../data/listings'
 import { useLocale } from '../i18n'
+import { THEME_INIT_SCRIPT } from '../lib/theme'
 import appCss from '../styles/app.css?url'
 
 export const Route = createRootRoute({
@@ -43,8 +44,9 @@ function RootDocument({
   const locale = useLocale()
 
   return (
-    <html lang={locale}>
+    <html lang={locale} suppressHydrationWarning>
       <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
         <HeadContent />
       </head>
       <body className="min-h-screen bg-bg font-sans text-text antialiased">
