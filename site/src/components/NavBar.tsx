@@ -20,8 +20,8 @@ export function NavBar() {
   }
 
   return (
-    <header className="sticky top-0 z-20 flex h-13 items-center border-b border-border/60 bg-bg/80 backdrop-blur">
-      <div className="mx-auto flex w-full max-w-[1100px] items-center justify-between gap-3 px-6 lg:px-10">
+    <header className="sticky top-0 z-20 flex h-13 items-center bg-bg/80 backdrop-blur">
+      <div className="flex w-full items-center justify-between gap-3 px-3">
         <div className="flex min-w-0 items-center gap-3">
           <button
             type="button"

@@ -42,12 +42,13 @@ export function ScreenshotGallery({ shots }: { shots: Shot[] }) {
     if (!el) return
     const children = Array.from(el.children) as HTMLElement[]
     const left = el.scrollLeft
+    const pad = parseFloat(getComputedStyle(el).scrollPaddingLeft) || 0
     const target =
       direction > 0
-        ? children.find((child) => child.offsetLeft > left + 4)
-        : [...children].reverse().find((child) => child.offsetLeft < left - 4)
+        ? children.find((child) => child.offsetLeft > left + pad + 4)
+        : [...children].reverse().find((child) => child.offsetLeft < left + pad - 4)
     if (target) {
-      el.scrollTo({ left: target.offsetLeft, behavior: 'smooth' })
+      el.scrollTo({ left: target.offsetLeft - pad, behavior: 'smooth' })
     }
   }
 
@@ -57,7 +58,7 @@ export function ScreenshotGallery({ shots }: { shots: Shot[] }) {
     <div className="relative min-w-0 -mx-6 lg:-mx-10">
       <div
         ref={ref}
-        className="no-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain touch-pan-x px-6 lg:px-10"
+        className="no-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain touch-pan-x px-6 lg:px-10 scroll-pl-6 lg:scroll-pl-10 scroll-pr-6 lg:scroll-pr-10"
         role="region"
         aria-label="Screenshots"
       >

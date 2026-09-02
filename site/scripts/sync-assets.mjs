@@ -55,3 +55,56 @@ writeFileSync(join(GENERATED_DIR, 'images.json'), JSON.stringify(catalog, null, 
 mkdirSync(join(PUBLIC, 'schema'), { recursive: true });
 cpSync(join(REPO_ROOT, 'llms.txt'), join(PUBLIC, 'llms.txt'));
 cpSync(join(REPO_ROOT, 'schema', 'app.schema.json'), join(PUBLIC, 'schema', 'app.schema.json'));
+
+const GITHUB_JSON = join(GENERATED_DIR, 'github.json');
+const GITHUB_FALLBACK = {
+  repo: 'humation-labs/humation',
+  stars: null,
+  fetchedAt: null,
+};
+
+async function syncGithubStars() {
+  try {
+    /** @type {Record<string, string>} */
+    const headers = {
+      Accept: 'application/vnd.github+json',
+      'User-Agent': 'humation-apps-build',
+    };
+    if (process.env.GITHUB_TOKEN) {
+      headers.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`;
+    }
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 8000);
+    let res;
+    try {
+      res = await fetch('https://api.github.com/repos/humation-labs/humation', {
+        headers,
+        signal: controller.signal,
+      });
+    } finally {
+      clearTimeout(timer);
+    }
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const body = await res.json();
+    if (typeof body.stargazers_count !== 'number') {
+      throw new Error('missing stargazers_count');
+    }
+    const payload = {
+      repo: 'humation-labs/humation',
+      stars: body.stargazers_count,
+      fetchedAt: new Date().toISOString(),
+    };
+    writeFileSync(GITHUB_JSON, JSON.stringify(payload, null, 2) + '\n');
+    console.log(`github: ${payload.stars} stars (humation-labs/humation)`);
+  } catch (err) {
+    const reason = err instanceof Error ? err.message : String(err);
+    if (existsSync(GITHUB_JSON)) {
+      console.log(`github: kept existing github.json (${reason})`);
+    } else {
+      writeFileSync(GITHUB_JSON, JSON.stringify(GITHUB_FALLBACK, null, 2) + '\n');
+      console.log(`github: wrote fallback github.json (${reason})`);
+    }
+  }
+}
+
+await syncGithubStars();

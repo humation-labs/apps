@@ -15,3 +15,5 @@ jobs:
       - run: bun run validate
       - run: bun run typecheck
       - run: bun run build
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

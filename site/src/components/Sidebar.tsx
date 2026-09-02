@@ -1,15 +1,18 @@
 import { useEffect, useState, type ReactNode } from 'react'
 import {
   IconApps,
+  IconArrowUpRight,
   IconBrandGithub,
   IconCheck,
-  IconExternalLink,
   IconLayoutSidebar,
   IconPlus,
   IconSearch,
+  IconStar,
+  IconUserCircle,
 } from '@tabler/icons-react'
 import { Link } from '@tanstack/react-router'
 import { ADD_APP_PROMPT, categoryLabel } from '../lib/constants'
+import { formatStars, githubStars } from '../lib/github'
 import { CopyButton } from './AddAppButton'
 import { CategoryIcon } from './CategoryIcon'
 
@@ -38,10 +41,14 @@ function SidebarRow({
   params,
   href,
   exact,
+  title: titleOverride,
+  trailing,
 }: {
   collapsed: boolean
   icon: ReactNode
   label: string
+  title?: string
+  trailing?: ReactNode
 } & (
   | { to: '/'; params?: undefined; href?: undefined; exact?: boolean }
   | { to: '/search'; params?: undefined; href?: undefined; exact?: undefined }
@@ -49,12 +56,13 @@ function SidebarRow({
   | { href: string; to?: undefined; params?: undefined; exact?: undefined }
 )) {
   const className = rowClassName(collapsed)
-  const title = collapsed ? label : undefined
-  const ariaLabel = collapsed ? label : undefined
+  const title = titleOverride ?? (collapsed ? label : undefined)
+  const ariaLabel = collapsed ? (titleOverride ?? label) : undefined
   const inner = (
     <>
       <RowIcon>{icon}</RowIcon>
       {collapsed ? null : <span className="truncate">{label}</span>}
+      {collapsed ? null : trailing}
     </>
   )
 
@@ -133,6 +141,7 @@ function Wordmark() {
 
 export function Sidebar({ categories }: { categories: { category: string; count: number }[] }) {
   const [collapsed, setCollapsed] = useState(false)
+  const stars = githubStars()
 
   useEffect(() => {
     try {
@@ -261,15 +270,35 @@ export function Sidebar({ categories }: { categories: { category: string; count:
         <div className="mt-auto flex flex-col gap-0.5 pt-2">
           <SidebarRow
             collapsed={collapsed}
-            href="https://github.com/humation-labs/apps"
-            label="GitHub"
-            icon={<IconBrandGithub size={16} stroke={1.75} aria-hidden />}
+            href="https://humation.app/avatar"
+            label="Create avatar"
+            title="Open the Humation avatar creator"
+            icon={<IconUserCircle size={16} stroke={1.75} aria-hidden />}
+            trailing={
+              <IconArrowUpRight
+                size={12}
+                stroke={2}
+                className="ml-auto text-text-muted"
+                aria-hidden
+              />
+            }
           />
           <SidebarRow
             collapsed={collapsed}
-            href="https://humation.app"
-            label="humation.app"
-            icon={<IconExternalLink size={16} stroke={1.75} aria-hidden />}
+            href="https://github.com/humation-labs/humation"
+            label="GitHub"
+            title={
+              collapsed && stars != null ? `GitHub · ${formatStars(stars)} stars` : undefined
+            }
+            icon={<IconBrandGithub size={16} stroke={1.75} aria-hidden />}
+            trailing={
+              stars != null ? (
+                <span className="ml-auto inline-flex items-center gap-1 text-xs tabular text-text-muted">
+                  <IconStar size={12} stroke={2} aria-hidden />
+                  {formatStars(stars)}
+                </span>
+              ) : null
+            }
           />
         </div>
       </nav>
