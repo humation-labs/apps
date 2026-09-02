@@ -44,12 +44,12 @@ function FeaturedCard({ app, index }: { app: Listing; index: number }) {
   return (
     <LocaleLink
       href={localePath(locale, `/${app.slug}`)}
-      className="block w-full min-w-0 overflow-hidden rounded-xl transition hover:scale-[1.01] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
+      className="flex aspect-[3/4] w-full min-w-0 flex-col overflow-hidden rounded-xl md:aspect-[1200/630] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
     >
-      <div className={textClass} style={{ backgroundColor: brand }}>
-        <div className="relative aspect-[3/4] overflow-hidden md:aspect-[1200/630]">
+      <div className={`flex h-full min-h-0 flex-col ${textClass}`} style={{ backgroundColor: brand }}>
+        <div className="relative flex-1 min-h-0 overflow-hidden">
           {isPortrait ? (
-            <div className="absolute top-6 right-4 h-auto w-[50%] max-w-[240px] overflow-hidden rounded-[1.25rem] border border-border/70 ring-1 ring-black/10 dark:border-white/15 md:top-8 md:right-16 md:bottom-[-30%] md:w-auto md:max-w-none lg:right-24">
+            <div className="absolute inset-x-6 top-6 overflow-hidden rounded-[1.25rem] border border-border/70 ring-1 ring-black/10 dark:border-white/15 md:inset-x-auto md:top-8 md:right-16 md:bottom-[-30%] md:w-auto lg:right-24">
               <img
                 src={src}
                 alt={shot.alt}
@@ -75,15 +75,17 @@ function FeaturedCard({ app, index }: { app: Listing; index: number }) {
           )}
           {isPortrait ? (
             <div
-              className={`pointer-events-none absolute inset-x-0 bottom-0 h-[55%] bg-gradient-to-t to-transparent ${
-                darkBg ? 'from-black/55' : 'from-white/55'
+              className={`pointer-events-none absolute inset-x-0 bottom-0 h-[60%] bg-gradient-to-t to-transparent md:h-[55%] ${
+                darkBg
+                  ? 'from-black/75 via-black/40 md:from-black/55 md:via-transparent'
+                  : 'from-white/75 via-white/40 md:from-white/55 md:via-transparent'
               }`}
             />
           ) : (
             <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
           )}
           <div
-            className={`absolute inset-x-0 bottom-0 flex max-w-[60%] flex-col justify-end p-6 md:max-w-[55%] md:p-10 ${
+            className={`absolute inset-x-0 bottom-0 flex max-w-full flex-col justify-end p-6 md:max-w-[55%] md:p-10 ${
               isPortrait ? '' : 'text-white'
             }`}
           >
@@ -107,7 +109,7 @@ function FeaturedCard({ app, index }: { app: Listing; index: number }) {
           </div>
         </div>
         <div
-          className={`flex items-center gap-3 px-5 py-4 md:px-8 md:py-5 ${
+          className={`flex shrink-0 items-center gap-3 px-5 py-4 md:px-8 md:py-5 ${
             darkBg ? 'bg-black/15' : 'bg-white/25'
           }`}
         >
