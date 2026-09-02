@@ -1,0 +1,27 @@
+{
+  "$schema": "https://apps.humation.app/schema/app.schema.json",
+  "name": "DopaDopa",
+  "tagline": "Quick two-player board games with friends, online or on one phone",
+  "description": "DopaDopa is a collection of short two-player board games for iPhone: Tic-Tac-Toe, Connect 4, Quoridor, Hex, Hit & Blow and a word game. Share a six-digit room code or an invite link to play a friend online, pass one phone back and forth, or practice against a robot opponent that adapts to your level.\n\nEvery player has a hand-drawn Humation avatar built with humation-swift. You design it during onboarding, and it appears on the home screen, next to your opponent during a match, on the result card with the winner's crown, and in the friends list and pair history.",
+  "url": "https://dopa2.com",
+  "category": "games",
+  "platforms": ["ios"],
+  "pricing": "freemium",
+  "humation": {
+    "packages": ["humation-swift"],
+    "usage": "Player profile avatars on the home screen, in-match header, result card, friends list and pair history"
+  },
+  "developer": { "name": "Day1", "github": "endo-yusuke", "url": "https://dopa2.com" },
+  "icon": "icon.png",
+  "screenshots": [
+    { "file": "screenshots/01-home.png", "alt": "The home screen with the player's avatar and the game catalog" },
+    { "file": "screenshots/02-quoridor.png", "alt": "A Quoridor match in progress with both players' avatars in the header" },
+    { "file": "screenshots/03-hitblow.png", "alt": "A Hit & Blow match with guess history and both players' avatars" },
+    { "file": "screenshots/04-result.png", "alt": "The result screen showing both avatars and the winner's crown" }
+  ],
+  "links": {
+    "appStore": "https://apps.apple.com/app/id6787054273",
+    "discord": "https://discord.gg/tq8J2qbxSQ"
+  },
+  "addedAt": "2026-09-03"
+}
