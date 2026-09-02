@@ -24,8 +24,8 @@ export function HeroCarousel({ apps }: { apps: Listing[] }) {
           role="region"
           aria-label="Featured apps"
         >
-          {slides.map((app) => (
-            <HeroCard key={app.slug} app={app} />
+          {slides.map((app, slideIndex) => (
+            <HeroCard key={app.slug} app={app} index={slideIndex} />
           ))}
         </div>
         {showControls ? (
@@ -37,18 +37,25 @@ export function HeroCarousel({ apps }: { apps: Listing[] }) {
   )
 }
 
-function HeroCard({ app }: { app: Listing }) {
+function HeroCard({ app, index }: { app: Listing; index: number }) {
   const locale = useLocale()
   const t = useT()
   const shot = app.screenshots[0]
   const { width, height } = imageDimensions(app.slug, shot.file)
   const isPortrait = height > width
   const src = screenshotSrc(app.slug, shot.file)
+  const isLcp = index === 0
+  const loading = isLcp ? 'eager' : 'lazy'
+  const fetchPriority = isLcp ? 'high' : undefined
 
   return (
     <LocaleLink
       href={localePath(locale, `/${app.slug}`)}
-      className="relative isolate aspect-[4/5] w-full min-w-0 shrink-0 snap-center overflow-hidden rounded-xl md:aspect-video md:max-h-[480px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
+      className={`relative isolate aspect-[4/5] w-full min-w-0 shrink-0 snap-center overflow-hidden rounded-xl md:aspect-[21/9] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg ${
+        isPortrait
+          ? ''
+          : 'border border-border/70 dark:border-white/15 ring-1 ring-inset ring-black/10 dark:ring-white/10'
+      }`}
     >
       {isPortrait ? (
         <img
@@ -57,7 +64,9 @@ function HeroCard({ app }: { app: Listing }) {
           aria-hidden
           width={width}
           height={height}
-          loading="lazy"
+          loading={loading}
+          fetchPriority={fetchPriority}
+          decoding="async"
           className="absolute inset-0 z-0 h-full w-full max-w-full scale-110 object-cover object-center opacity-70 blur-2xl saturate-150"
         />
       ) : (
@@ -66,7 +75,9 @@ function HeroCard({ app }: { app: Listing }) {
           alt=""
           width={width}
           height={height}
-          loading="lazy"
+          loading={loading}
+          fetchPriority={fetchPriority}
+          decoding="async"
           className="absolute inset-0 z-0 h-full w-full max-w-full object-cover object-top"
         />
       )}
@@ -79,13 +90,15 @@ function HeroCard({ app }: { app: Listing }) {
         }`}
       />
       {isPortrait ? (
-        <div className="absolute top-4 right-4 z-20 h-[58%] w-auto overflow-hidden rounded-xl shadow-2xl ring-1 ring-inset ring-white/15 md:top-6 md:right-8 md:bottom-6 md:h-auto md:rounded-[1.25rem] lg:right-12">
+        <div className="absolute top-4 right-4 z-20 h-[58%] w-auto overflow-hidden rounded-xl border border-border/70 shadow-2xl dark:border-white/15 md:top-6 md:right-8 md:bottom-6 md:h-auto md:rounded-[1.25rem] lg:right-12">
           <img
             src={src}
             alt=""
             width={width}
             height={height}
-            loading="lazy"
+            loading={loading}
+            fetchPriority={fetchPriority}
+            decoding="async"
             className="h-full w-auto object-contain"
           />
         </div>
@@ -102,12 +115,13 @@ function HeroCard({ app }: { app: Listing }) {
                 width={56}
                 height={56}
                 loading="lazy"
+                decoding="async"
                 className="size-14 rounded-[22%] ring-1 ring-inset ring-white/20"
               />
               <p className="text-[11px] font-semibold tracking-[0.08em] text-white/70 uppercase">
                 {categoryLabel(app.category, t)}
               </p>
-              <h2 className="line-clamp-2 min-w-0 text-4xl font-bold leading-[1.05] tracking-tight text-white md:text-6xl">
+              <h2 className="line-clamp-2 min-w-0 text-4xl font-bold leading-[1.05] tracking-tight text-white md:text-4xl lg:text-6xl">
                 {app.name}
               </h2>
               <p className="max-w-[36ch] text-base text-white/85 md:text-xl">{app.tagline}</p>

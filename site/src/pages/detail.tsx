@@ -128,7 +128,7 @@ function AppDetail() {
           href={listing.url}
           rel="noopener"
           target="_blank"
-          className={`mt-5 inline-flex h-12 w-full shrink-0 items-center justify-center gap-2 rounded-full bg-accent px-7 text-base leading-none font-semibold text-white shadow-[0_8px_24px_-8px_var(--accent)] transition hover:brightness-110 active:scale-[0.98] md:mt-0 md:w-auto ${FOCUS}`}
+          className={`mt-5 inline-flex h-12 w-full shrink-0 items-center justify-center gap-2 rounded-full bg-accent px-7 text-base leading-none font-semibold text-white transition hover:brightness-110 active:scale-[0.98] md:mt-0 md:w-auto ${FOCUS}`}
         >
           {t.detail.open}
           <span className="icon-align -mr-1 inline-flex size-5 shrink-0 items-center justify-center">

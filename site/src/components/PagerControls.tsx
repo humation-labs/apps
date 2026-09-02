@@ -1,7 +1,7 @@
 import { IconChevronLeft, IconChevronRight } from '@tabler/icons-react'
 
 const buttonClass =
-  'absolute top-1/2 z-10 flex size-9 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-surface text-text shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg'
+  'absolute top-1/2 z-10 hidden md:flex size-9 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-surface text-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg'
 
 export function PagerArrows({
   onPrev,

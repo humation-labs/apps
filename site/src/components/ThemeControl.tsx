@@ -44,7 +44,7 @@ export function ThemeControl({
             onClick={() => setPreference(value)}
             className={`inline-flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 ${offset} ${
               compact ? 'size-6' : 'h-7 flex-1'
-            } ${selected ? 'rounded-[6px] bg-surface text-text shadow-sm' : 'text-text-muted'}`}
+            } ${selected ? 'rounded-[6px] bg-bg text-text ring-1 ring-black/5 dark:ring-white/10' : 'text-text-muted'}`}
           >
             <Icon size={compact ? 14 : 16} stroke={1.75} aria-hidden />
           </button>

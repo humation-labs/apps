@@ -67,7 +67,7 @@ export function ScreenshotGallery({ shots }: { shots: Shot[] }) {
           return (
             <div
               key={shot.file}
-              className={`relative shrink-0 snap-start overflow-hidden rounded-lg ring-1 ring-inset ring-black/10 dark:ring-white/10 ${
+              className={`relative shrink-0 snap-start overflow-hidden rounded-lg border border-border/70 dark:border-white/15 ${
                 landscape ? 'w-[640px] max-w-[85vw]' : 'w-[280px] max-w-full'
               }`}
             >
