@@ -8,7 +8,7 @@ import { NavMenu } from './NavMenu'
 import { Wordmark } from './Wordmark'
 
 const ghostRoundClass =
-  'inline-flex size-8 items-center justify-center rounded-full hover:bg-surface-3/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg'
+  'inline-flex size-8 items-center justify-center rounded-full bg-surface-2 hover:bg-surface-3 text-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg'
 
 const githubLinkClass =
   'inline-flex size-9 items-center justify-center rounded-full hover:bg-surface-3/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg sm:h-9 sm:w-auto sm:gap-1.5 sm:px-3 sm:text-[13px] sm:font-semibold'
@@ -32,8 +32,8 @@ export function NavBar() {
 
   return (
     <header className="sticky top-0 z-20 flex h-13 items-center bg-bg/80 backdrop-blur">
-      <div className="flex w-full items-center justify-between gap-2 px-3">
-        <div className="flex min-w-0 items-center gap-1">
+      <div className="flex w-full items-center justify-between gap-2 pl-5 pr-3">
+        <div className="flex min-w-0 items-center gap-3">
           <LocaleLink
             href={localePath(locale, '/')}
             className="flex min-w-0 items-baseline gap-1.5"
