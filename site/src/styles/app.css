@@ -46,6 +46,11 @@ html {
   overflow-x: clip;
 }
 
+html,
+body {
+  overscroll-behavior-x: none;
+}
+
 @utility no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -60,4 +65,14 @@ html {
 
 @utility tabular {
   font-variant-numeric: tabular-nums;
+}
+
+@utility mask-fade-l {
+  -webkit-mask-image: linear-gradient(to left, transparent, black);
+  mask-image: linear-gradient(to left, transparent, black);
+}
+
+@utility mask-fade-r {
+  -webkit-mask-image: linear-gradient(to right, transparent, black);
+  mask-image: linear-gradient(to right, transparent, black);
 }

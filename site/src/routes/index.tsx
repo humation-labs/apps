@@ -36,7 +36,7 @@ function Home() {
       <h1 className="text-4xl/tight font-bold tracking-tight">Apps</h1>
 
       {categories.length > 0 ? (
-        <div className="no-scrollbar mt-6 flex snap-x snap-mandatory gap-2 overflow-x-auto">
+        <div className="no-scrollbar mt-6 flex snap-x snap-mandatory gap-2 overflow-x-auto overscroll-x-contain touch-pan-x">
           {categories.map(({ category }) => (
             <Link
               key={category}

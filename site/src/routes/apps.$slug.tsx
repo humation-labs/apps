@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react'
+import { useState, type ReactNode } from 'react'
 import {
   IconBrandApple,
   IconBrandDiscord,
@@ -10,7 +10,7 @@ import {
 import { Link, createFileRoute, notFound } from '@tanstack/react-router'
 import { CopyButton } from '../components/AddAppButton'
 import { AppRowGrid } from '../components/AppRowGrid'
-import { PagerArrows } from '../components/PagerControls'
+import { ScreenshotGallery } from '../components/ScreenshotGallery'
 import { Section } from '../components/Section'
 import {
   PRICING_LABELS,
@@ -80,7 +80,7 @@ function AppDetail() {
 
   return (
     <article className="min-w-0">
-      <header className="flex flex-col gap-5 md:flex-row md:items-start">
+      <header className="flex flex-col md:flex-row md:items-center md:gap-5">
         <img
           src={iconSrc(listing.slug)}
           alt={listing.name}
@@ -88,39 +88,24 @@ function AppDetail() {
           height={120}
           className="size-[120px] shrink-0 rounded-[22%] ring-1 ring-inset ring-black/10 dark:ring-white/10"
         />
-        <div className="min-w-0 flex-1 pt-1">
+        <div className="mt-5 min-w-0 flex-1 md:mt-0">
           <h1 className="text-4xl/tight font-bold tracking-tight">{listing.name}</h1>
           <p className="mt-1 text-lg text-text-muted">{listing.tagline}</p>
           <a href={developerUrl} rel="noopener" className={`mt-2 inline-block text-accent ${FOCUS}`}>
             {listing.developer.name}
           </a>
         </div>
-        <div className="flex shrink-0 flex-col items-start gap-2 md:items-end">
-          <a
-            href={listing.url}
-            rel="noopener"
-            target="_blank"
-            className={`inline-flex h-9 items-center justify-center gap-1.5 rounded-full bg-accent px-4 text-[14px] leading-none font-semibold text-white ${FOCUS}`}
-          >
-            <span className="icon-align -ml-0.5 inline-flex size-4 shrink-0 items-center justify-center">
-              <IconExternalLink size={16} stroke={1.75} aria-hidden />
-            </span>
-            Open
-          </a>
-          <div className="flex flex-wrap gap-1.5 md:justify-end">
-            {listing.platforms.map((platform) => (
-              <span
-                key={platform}
-                className="inline-flex h-7 items-center justify-center rounded-full bg-surface-2 px-3 text-[13px] leading-none font-medium"
-              >
-                {platformLabel(platform)}
-              </span>
-            ))}
-            <span className="inline-flex h-7 items-center justify-center rounded-full bg-surface-2 px-3 text-[13px] leading-none font-medium">
-              {PRICING_LABELS[listing.pricing]}
-            </span>
-          </div>
-        </div>
+        <a
+          href={listing.url}
+          rel="noopener"
+          target="_blank"
+          className={`mt-5 inline-flex h-12 w-full shrink-0 items-center justify-center gap-2 rounded-full bg-accent px-7 text-base leading-none font-semibold text-white shadow-[0_8px_24px_-8px_var(--accent)] transition hover:brightness-110 active:scale-[0.98] md:mt-0 md:w-auto ${FOCUS}`}
+        >
+          <span className="icon-align -ml-0.5 inline-flex size-5 shrink-0 items-center justify-center">
+            <IconExternalLink size={20} stroke={2} aria-hidden />
+          </span>
+          Open
+        </a>
       </header>
 
       <div className="mt-8 min-w-0">
@@ -254,81 +239,5 @@ function Description({ text }: { text: string }) {
         </button>
       ) : null}
     </section>
-  )
-}
-
-function ScreenshotGallery({
-  shots,
-}: {
-  shots: { file: string; src: string; alt: string; width: number; height: number }[]
-}) {
-  const ref = useRef<HTMLDivElement>(null)
-  const [overflows, setOverflows] = useState(false)
-
-  const measure = useCallback(() => {
-    const el = ref.current
-    if (!el) return
-    setOverflows(el.scrollWidth > el.clientWidth + 1)
-  }, [])
-
-  useEffect(() => {
-    const el = ref.current
-    if (!el) return
-    measure()
-    const observer = new ResizeObserver(measure)
-    observer.observe(el)
-    return () => observer.disconnect()
-  }, [measure, shots.length])
-
-  function scroll(direction: -1 | 1) {
-    const el = ref.current
-    if (!el) return
-    const children = Array.from(el.children) as HTMLElement[]
-    const left = el.scrollLeft
-    const target =
-      direction > 0
-        ? children.find((child) => child.offsetLeft > left + 4)
-        : [...children].reverse().find((child) => child.offsetLeft < left - 4)
-    if (target) {
-      el.scrollTo({ left: target.offsetLeft, behavior: 'smooth' })
-    }
-  }
-
-  if (shots.length === 0) return null
-
-  return (
-    <div className="relative min-w-0">
-      <div
-        ref={ref}
-        className="no-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto"
-        role="region"
-        aria-label="Screenshots"
-      >
-        {shots.map((shot, i) => {
-          const landscape = shot.width >= shot.height
-          return (
-            <div
-              key={shot.file}
-              className={`relative shrink-0 snap-start overflow-hidden rounded-xl ring-1 ring-inset ring-black/10 dark:ring-white/10 ${
-                landscape ? 'w-[640px] max-w-[85vw]' : 'w-[280px] max-w-full'
-              }`}
-            >
-              <img
-                src={shot.src}
-                alt={shot.alt}
-                width={shot.width}
-                height={shot.height}
-                loading={i === 0 ? 'eager' : 'lazy'}
-                fetchPriority={i === 0 ? 'high' : undefined}
-                className="h-auto w-full object-top"
-              />
-            </div>
-          )
-        })}
-      </div>
-      {overflows ? (
-        <PagerArrows onPrev={() => scroll(-1)} onNext={() => scroll(1)} />
-      ) : null}
-    </div>
   )
 }

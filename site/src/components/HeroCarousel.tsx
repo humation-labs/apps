@@ -18,7 +18,7 @@ export function HeroCarousel({ apps }: { apps: Listing[] }) {
         <div
           ref={ref}
           onScroll={onScroll}
-          className="no-scrollbar flex snap-x snap-mandatory overflow-x-auto"
+          className="no-scrollbar flex snap-x snap-mandatory overflow-x-auto overscroll-x-contain touch-pan-x"
           role="region"
           aria-label="Featured apps"
         >
