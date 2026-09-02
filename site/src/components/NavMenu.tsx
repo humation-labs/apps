@@ -2,15 +2,14 @@ import { useEffect, useId, useRef, useState, type KeyboardEvent, type ReactNode 
 import {
   IconArrowUpRight,
   IconBook,
-  IconBrandGithub,
   IconDotsVertical,
   IconLanguage,
-  IconStar,
+  IconSearch,
   IconUserCircle,
 } from '@tabler/icons-react'
 import { CONTRIBUTING_URL } from '../lib/constants'
-import { formatStars, githubStars, useGitHubStars } from '../lib/github'
-import { LOCALE_NATIVE_NAME, otherLocale, useLocale, useSwitchLocaleHref, useT } from '../i18n'
+import { LOCALE_NATIVE_NAME, localePath, otherLocale, useLocale, useSwitchLocaleHref, useT } from '../i18n'
+import { LocaleLink } from './LocaleLink'
 import { navRowClassName, RowIcon } from './NavRow'
 import { ThemeControl } from './ThemeControl'
 
@@ -30,17 +29,32 @@ function MenuLink({
   onSelect: () => void
   children: ReactNode
 }) {
+  if (external) {
+    return (
+      <a
+        href={href}
+        role="menuitem"
+        rel="noopener"
+        target="_blank"
+        className={rowClass}
+        onClick={onSelect}
+      >
+        {children}
+      </a>
+    )
+  }
+
   return (
-    <a
+    <LocaleLink
       href={href}
-      role="menuitem"
-      rel={external ? 'noopener' : undefined}
-      target={external ? '_blank' : undefined}
       className={rowClass}
-      onClick={onSelect}
+      {...({
+        role: 'menuitem',
+        onClick: onSelect,
+      } as { title?: string })}
     >
       {children}
-    </a>
+    </LocaleLink>
   )
 }
 
@@ -49,7 +63,6 @@ export function NavMenu() {
   const locale = useLocale()
   const other = otherLocale(locale)
   const switchHref = useSwitchLocaleHref()
-  const stars = useGitHubStars(githubStars())
   const [open, setOpen] = useState(false)
   const buttonRef = useRef<HTMLButtonElement>(null)
   const menuRef = useRef<HTMLDivElement>(null)
@@ -135,6 +148,13 @@ export function NavMenu() {
           onKeyDown={onMenuKeyDown}
           className="absolute top-full right-0 z-30 mt-1.5 w-64 rounded-lg bg-surface p-1.5 shadow-lg ring-1 ring-black/10 dark:ring-white/10"
         >
+          <MenuLink href={localePath(locale, '/search')} onSelect={close}>
+            <RowIcon>
+              <IconSearch size={16} stroke={1.75} aria-hidden />
+            </RowIcon>
+            <span className="truncate">{t.shell.search}</span>
+          </MenuLink>
+          <div className="my-1 border-t border-border/60" role="separator" />
           <div className="flex h-8 items-center justify-between gap-2 rounded-[8px] px-2">
             <span className="text-[13px] font-medium leading-none text-text">{t.shell.theme.label}</span>
             <ThemeControl compact />
@@ -152,21 +172,6 @@ export function NavMenu() {
             </RowIcon>
             <span className="truncate">{t.shell.createAvatar}</span>
             <IconArrowUpRight size={12} stroke={2} className="ml-auto text-text-muted" aria-hidden />
-          </MenuLink>
-          <MenuLink href="https://github.com/humation-labs/humation" external onSelect={close}>
-            <RowIcon>
-              <IconBrandGithub size={16} stroke={1.75} aria-hidden />
-            </RowIcon>
-            <span className="truncate">{t.shell.github}</span>
-            <span className="ml-auto inline-flex items-center gap-1 text-text-muted">
-              {stars != null ? (
-                <span className="inline-flex items-center gap-1 text-xs tabular">
-                  <IconStar size={12} stroke={2} aria-hidden />
-                  {formatStars(stars)}
-                </span>
-              ) : null}
-              <IconArrowUpRight size={12} stroke={2} aria-hidden />
-            </span>
           </MenuLink>
           <MenuLink href={CONTRIBUTING_URL} external onSelect={close}>
             <RowIcon>
