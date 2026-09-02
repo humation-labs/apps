@@ -10,7 +10,6 @@ export const ja = {
     github: 'GitHub',
     collapseSidebar: 'サイドバーを閉じる',
     expandSidebar: 'サイドバーを開く',
-    back: '戻る',
     copyForAgent: 'アプリを掲載',
     copyForAgentShort: '掲載',
     copyForAgentCopied: 'コピーしました · エージェントに貼り付け',

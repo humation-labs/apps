@@ -1,5 +1,5 @@
 import { iconSrc, screenshotSrc } from '../lib/constants'
-import { localePath, useLocale } from '../i18n'
+import { categoryLabel, localePath, useLocale, useT } from '../i18n'
 import { iconColor, imageDimensions } from '../lib/images'
 import type { Listing } from '../data/listings'
 import { LocaleLink } from './LocaleLink'
@@ -26,6 +26,7 @@ function relativeLuminance(hex: string): number {
 
 function FeaturedCard({ app, index }: { app: Listing; index: number }) {
   const locale = useLocale()
+  const t = useT()
   const shot = app.screenshots[0]
   const { width, height } = imageDimensions(app.slug, shot.file)
   const isPortrait = height > width
@@ -37,87 +38,102 @@ function FeaturedCard({ app, index }: { app: Listing; index: number }) {
   const darkBg = relativeLuminance(brand) < 0.5
   const textClass = darkBg ? 'text-white' : 'text-black'
   const mutedClass = darkBg ? 'text-white/75' : 'text-black/75'
+  const promoMutedClass = darkBg ? 'text-white/80' : 'text-black/80'
+  const category = categoryLabel(app.category, t)
 
   return (
     <LocaleLink
       href={localePath(locale, `/${app.slug}`)}
-      className={`relative isolate block aspect-[3/4] w-full min-w-0 overflow-hidden rounded-xl transition hover:scale-[1.01] md:aspect-[21/9] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg ${
-        isPortrait
-          ? ''
-          : 'border border-border/70 dark:border-white/15 ring-1 ring-inset ring-black/10 dark:ring-white/10'
-      }`}
+      className="block w-full min-w-0 overflow-hidden rounded-xl transition hover:scale-[1.01] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
     >
-      {isPortrait ? (
-        <div className="absolute inset-0 z-0" style={{ backgroundColor: brand }} />
-      ) : (
-        <img
-          src={src}
-          alt={shot.alt}
-          width={width}
-          height={height}
-          loading={loading}
-          fetchPriority={fetchPriority}
-          decoding="async"
-          className="absolute inset-0 z-0 h-full w-full max-w-full object-cover object-top"
-        />
-      )}
-      <span className="pointer-events-none absolute inset-0 z-10 rounded-xl ring-1 ring-inset ring-black/10 dark:ring-white/10" />
-      {isPortrait ? null : (
-        <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/85 via-black/35 to-transparent" />
-      )}
-      {isPortrait ? (
-        <div className="absolute top-[40%] right-4 bottom-[-16%] z-20 w-auto overflow-hidden rounded-xl border border-border/70 ring-1 ring-black/10 dark:border-white/15 md:top-[10%] md:right-10 md:bottom-[-24%] md:rounded-[1.5rem] lg:right-20">
+      <div className={textClass} style={{ backgroundColor: brand }}>
+        <div className="relative aspect-[3/4] overflow-hidden md:aspect-[21/9]">
+          {isPortrait ? (
+            <div className="absolute top-6 right-6 bottom-[-22%] overflow-hidden rounded-[1.25rem] border border-border/70 ring-1 ring-black/10 dark:border-white/15 md:top-8 md:right-16 md:bottom-[-30%] lg:right-24">
+              <img
+                src={src}
+                alt={shot.alt}
+                width={width}
+                height={height}
+                loading={loading}
+                fetchPriority={fetchPriority}
+                decoding="async"
+                className="h-full w-auto object-contain object-top"
+              />
+            </div>
+          ) : (
+            <img
+              src={src}
+              alt={shot.alt}
+              width={width}
+              height={height}
+              loading={loading}
+              fetchPriority={fetchPriority}
+              decoding="async"
+              className="absolute inset-0 h-full w-full max-w-full object-cover object-top"
+            />
+          )}
+          {isPortrait ? (
+            <div
+              className={`pointer-events-none absolute inset-x-0 bottom-0 h-[55%] bg-gradient-to-t to-transparent ${
+                darkBg ? 'from-black/55' : 'from-white/55'
+              }`}
+            />
+          ) : (
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+          )}
+          <div
+            className={`absolute inset-x-0 bottom-0 flex max-w-[68%] flex-col justify-end p-6 md:max-w-[55%] md:p-10 ${
+              isPortrait ? '' : 'text-white'
+            }`}
+          >
+            <p
+              className={`text-[11px] uppercase tracking-[0.08em] ${
+                isPortrait ? mutedClass : 'text-white/75'
+              }`}
+            >
+              {category}
+            </p>
+            <h2 className="line-clamp-2 min-w-0 text-3xl font-bold leading-[1.02] tracking-tight md:text-5xl lg:text-6xl">
+              {app.name}
+            </h2>
+            <p
+              className={`mt-2 line-clamp-2 text-base md:text-lg ${
+                isPortrait ? promoMutedClass : 'text-white/80'
+              }`}
+            >
+              {app.tagline}
+            </p>
+          </div>
+        </div>
+        <div
+          className={`flex items-center gap-3 px-5 py-4 md:px-8 md:py-5 ${
+            darkBg ? 'bg-black/15' : 'bg-white/25'
+          }`}
+        >
           <img
-            src={src}
-            alt={shot.alt}
-            width={width}
-            height={height}
+            src={iconSrc(app.slug)}
+            alt=""
+            width={48}
+            height={48}
             loading={loading}
             fetchPriority={fetchPriority}
             decoding="async"
-            className="h-full w-auto object-contain object-top"
+            className="size-12 shrink-0 rounded-[22%] ring-1 ring-inset ring-white/20"
           />
-        </div>
-      ) : null}
-      {isPortrait ? (
-        <div className="absolute inset-0 z-30 flex min-w-0 flex-col justify-start p-6 md:justify-center md:p-10 lg:p-14">
-          <div className="flex min-w-0 flex-col gap-3 md:max-w-[50%]">
-            <img
-              src={iconSrc(app.slug)}
-              alt=""
-              width={56}
-              height={56}
-              loading="lazy"
-              decoding="async"
-              className="size-14 rounded-[22%] ring-1 ring-inset ring-white/20"
-            />
-            <h2
-              className={`line-clamp-2 min-w-0 text-5xl font-bold leading-[0.95] tracking-tight md:text-6xl lg:text-7xl ${textClass}`}
-            >
-              {app.name}
-            </h2>
-            <p className={`text-lg md:text-xl ${mutedClass}`}>{app.tagline}</p>
+          <div className="min-w-0 flex-1">
+            <p className="truncate text-[15px] font-semibold">{app.name}</p>
+            <p className={`truncate text-[13px] ${mutedClass}`}>{app.tagline}</p>
           </div>
+          <span
+            className={`inline-flex h-8 shrink-0 items-center rounded-full px-4 text-sm font-semibold leading-none backdrop-blur ${
+              darkBg ? 'bg-white/20' : 'bg-black/10'
+            }`}
+          >
+            {t.home.view}
+          </span>
         </div>
-      ) : (
-        <div className="absolute inset-0 z-30 flex min-w-0 flex-col justify-end p-6 md:p-10 lg:p-14">
-          <div className="flex min-w-0 flex-col gap-3 md:max-w-[50%]">
-            <img
-              src={iconSrc(app.slug)}
-              alt=""
-              width={56}
-              height={56}
-              loading="lazy"
-              decoding="async"
-              className="size-14 rounded-[22%] ring-1 ring-inset ring-white/20"
-            />
-            <h2 className="line-clamp-2 min-w-0 text-5xl font-bold leading-[0.95] tracking-tight text-white md:text-6xl lg:text-7xl">
-              {app.name}
-            </h2>
-            <p className="text-lg text-white/75 md:text-xl">{app.tagline}</p>
-          </div>
-        </div>
-      )}
+      </div>
     </LocaleLink>
   )
 }

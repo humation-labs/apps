@@ -10,7 +10,6 @@ export const en = {
     github: 'GitHub',
     collapseSidebar: 'Collapse sidebar',
     expandSidebar: 'Expand sidebar',
-    back: 'Back',
     copyForAgent: 'Add your app',
     copyForAgentShort: 'Add app',
     copyForAgentCopied: 'Copied · paste it into your agent',
