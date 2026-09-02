@@ -7,6 +7,27 @@ export const CONTRIBUTING_URL =
 export const SITE_NAME = 'Humation Apps';
 export const SITE_ORIGIN = 'https://apps.humation.app';
 
+export const RESERVED_SLUGS = [
+  'apps',
+  'app',
+  'search',
+  'category',
+  'categories',
+  'ja',
+  'en',
+  'schema',
+  'llms.txt',
+  'favicon.png',
+  'assets',
+  '404',
+  'api',
+  'static',
+  'public',
+  'sitemap.xml',
+  'robots.txt',
+  'index',
+] as const;
+
 export const CATEGORIES = [
   'social',
   'games',

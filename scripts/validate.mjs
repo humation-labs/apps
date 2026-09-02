@@ -11,6 +11,26 @@ const APPS_DIR = join(ROOT, 'apps');
 const SCHEMA_PATH = join(ROOT, 'schema', 'app.schema.json');
 
 const SLUG_RE = /^[a-z0-9]+(-[a-z0-9]+)*$/;
+const RESERVED_SLUGS = new Set([
+  'apps',
+  'app',
+  'search',
+  'category',
+  'categories',
+  'ja',
+  'en',
+  'schema',
+  'llms.txt',
+  'favicon.png',
+  'assets',
+  '404',
+  'api',
+  'static',
+  'public',
+  'sitemap.xml',
+  'robots.txt',
+  'index',
+]);
 const ICON_MAX = 512 * 1024;
 const SCREENSHOT_MAX = 2 * 1024 * 1024;
 const URL_TIMEOUT_MS = 10_000;
@@ -117,6 +137,10 @@ function collectNames(slugs) {
 }
 
 function checkSlug(slug, err) {
+  if (RESERVED_SLUGS.has(slug)) {
+    err(`slug "${slug}" is reserved`);
+    return;
+  }
   if (slug.length < 3 || slug.length > 40 || !SLUG_RE.test(slug)) {
     err('slug must match ^[a-z0-9]+(-[a-z0-9]+)*$ and be 3-40 characters');
   }

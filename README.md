@@ -32,7 +32,21 @@ bun install
 bun run validate          # all listings
 bun run dev               # site at http://localhost:4321
 bun run build             # static output in site/dist/client
+bun run deploy            # wrangler deploy from site/ (uses your wrangler login)
 ```
+
+## Deployment
+
+The site is a static-assets Cloudflare Worker (`site/wrangler.jsonc`) on the custom domain
+apps.humation.app. Deploy from a machine that is logged in with `wrangler login`:
+
+```bash
+bun run deploy
+```
+
+For automatic deploys on merge, connect this repository in the Cloudflare dashboard
+(Workers & Pages → Create → Import a repository) with build command `bun run build` and deploy
+command `bun run --cwd site deploy`. That path needs no GitHub secrets.
 
 ## License
 

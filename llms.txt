@@ -51,7 +51,9 @@ https://apps.humation.app/schema/app.schema.json
 
 The `slug` is the directory name, not a field: lowercase letters, digits and
 single hyphens, 3-40 characters, usually derived from the app name. Check that
-`apps/<slug>/` does not already exist in the repository.
+`apps/<slug>/` does not already exist in the repository. The listing page will be
+`https://apps.humation.app/<slug>`, so these slugs are reserved and rejected: apps, app,
+search, category, categories, ja, en, schema, assets, api, static, public, index, 404.
 
 If anything is unclear (tagline wording, category, which URL), ask the
 developer before writing files. A short question is better than a wrong listing.
