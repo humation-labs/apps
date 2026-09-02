@@ -10,7 +10,6 @@ import {
   IconSchool,
   IconUsers,
 } from '@tabler/icons-react'
-import { IconLine } from './IconLine'
 
 const CATEGORY_ICONS: Record<string, Icon> = {
   social: IconUsers,
@@ -34,5 +33,6 @@ export function CategoryIcon({
   className?: string
 }) {
   const Glyph = CATEGORY_ICONS[category] ?? IconApps
-  return <Glyph size={size} className={className} aria-hidden />
+  const stroke = size <= 16 ? 1.75 : 1.5
+  return <Glyph size={size} stroke={stroke} className={className} aria-hidden />
 }

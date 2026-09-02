@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, type ReactNode } from 'react'
 import { IconCheck, IconClipboard } from '@tabler/icons-react'
 import { ADD_APP_PROMPT } from '../lib/constants'
 
@@ -9,10 +9,14 @@ export function CopyButton({
   text,
   label = 'Copy',
   className = defaultClassName,
+  title,
+  children,
 }: {
   text: string
   label?: string
   className?: string
+  title?: string
+  children?: (copied: boolean) => ReactNode
 }) {
   const [copied, setCopied] = useState(false)
 
@@ -32,9 +36,20 @@ export function CopyButton({
       className={`${className} focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none`}
       onClick={onClick}
       aria-label={copied ? 'Copied' : label}
+      title={title}
     >
-      {copied ? <IconCheck size={16} aria-hidden /> : <IconClipboard size={16} aria-hidden />}
-      {copied ? 'Copied' : label}
+      {children ? (
+        children(copied)
+      ) : (
+        <>
+          {copied ? (
+            <IconCheck size={16} stroke={1.75} className="icon-align" aria-hidden />
+          ) : (
+            <IconClipboard size={16} stroke={1.75} className="icon-align" aria-hidden />
+          )}
+          {copied ? 'Copied' : label}
+        </>
+      )}
     </button>
   )
 }
