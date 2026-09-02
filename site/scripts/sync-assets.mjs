@@ -57,11 +57,16 @@ cpSync(join(REPO_ROOT, 'llms.txt'), join(PUBLIC, 'llms.txt'));
 cpSync(join(REPO_ROOT, 'schema', 'app.schema.json'), join(PUBLIC, 'schema', 'app.schema.json'));
 
 const GITHUB_JSON = join(GENERATED_DIR, 'github.json');
-const GITHUB_FALLBACK = {
+const GITHUB_FALLBACK_FILE = join(SITE_ROOT, 'src', 'data', 'github-stars.json');
+const GITHUB_NULL = {
   repo: 'humation-labs/humation',
   stars: null,
   fetchedAt: null,
 };
+
+function writeGithubJson(payload) {
+  writeFileSync(GITHUB_JSON, JSON.stringify(payload, null, 2) + '\n');
+}
 
 async function syncGithubStars() {
   try {
@@ -94,15 +99,20 @@ async function syncGithubStars() {
       stars: body.stargazers_count,
       fetchedAt: new Date().toISOString(),
     };
-    writeFileSync(GITHUB_JSON, JSON.stringify(payload, null, 2) + '\n');
+    const json = JSON.stringify(payload, null, 2) + '\n';
+    writeFileSync(GITHUB_JSON, json);
+    writeFileSync(GITHUB_FALLBACK_FILE, json);
     console.log(`github: ${payload.stars} stars (humation-labs/humation)`);
   } catch (err) {
     const reason = err instanceof Error ? err.message : String(err);
-    if (existsSync(GITHUB_JSON)) {
-      console.log(`github: kept existing github.json (${reason})`);
-    } else {
-      writeFileSync(GITHUB_JSON, JSON.stringify(GITHUB_FALLBACK, null, 2) + '\n');
-      console.log(`github: wrote fallback github.json (${reason})`);
+    try {
+      const raw = readFileSync(GITHUB_FALLBACK_FILE, 'utf8');
+      const fallback = JSON.parse(raw);
+      writeFileSync(GITHUB_JSON, raw.endsWith('\n') ? raw : `${raw}\n`);
+      console.log(`github: using fallback (${fallback.stars} stars from ${fallback.fetchedAt})`);
+    } catch {
+      writeGithubJson(GITHUB_NULL);
+      console.log(`github: wrote null github.json (${reason})`);
     }
   }
 }

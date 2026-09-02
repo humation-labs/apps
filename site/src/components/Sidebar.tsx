@@ -15,7 +15,7 @@ import {
   IconUserCircle,
 } from '@tabler/icons-react'
 import { ADD_APP_PROMPT } from '../lib/constants'
-import { formatStars, githubStars } from '../lib/github'
+import { formatStars, githubStars, useGitHubStars } from '../lib/github'
 import {
   LOCALE_NATIVE_NAME,
   categoryLabel,
@@ -143,7 +143,7 @@ function Wordmark() {
 
 export function Sidebar({ categories }: { categories: { category: string; count: number }[] }) {
   const [collapsed, setCollapsed] = useState(false)
-  const stars = githubStars()
+  const stars = useGitHubStars(githubStars())
   const locale = useLocale()
   const t = useT()
   const other = otherLocale(locale)
