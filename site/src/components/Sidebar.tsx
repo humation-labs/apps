@@ -243,23 +243,6 @@ export function Sidebar({ categories }: { categories: { category: string; count:
 
       <nav className="flex min-h-0 flex-1 flex-col" aria-label="Primary">
         <div className="flex flex-col gap-0.5">
-          {collapsed ? (
-            <SidebarRow
-              collapsed
-              to="/{-$lang}/search"
-              params={{ lang }}
-              label={t.shell.search}
-              icon={<IconSearch size={16} stroke={1.75} aria-hidden />}
-            />
-          ) : null}
-          <SidebarRow
-            collapsed={collapsed}
-            to="/{-$lang}"
-            params={{ lang }}
-            exact
-            label={t.shell.apps}
-            icon={<IconApps size={16} stroke={1.75} aria-hidden />}
-          />
           <CopyButton
             text={ADD_APP_PROMPT}
             label={t.shell.addYourApp}
@@ -281,6 +264,23 @@ export function Sidebar({ categories }: { categories: { category: string; count:
               </>
             )}
           </CopyButton>
+          {collapsed ? (
+            <SidebarRow
+              collapsed
+              to="/{-$lang}/search"
+              params={{ lang }}
+              label={t.shell.search}
+              icon={<IconSearch size={16} stroke={1.75} aria-hidden />}
+            />
+          ) : null}
+          <SidebarRow
+            collapsed={collapsed}
+            to="/{-$lang}"
+            params={{ lang }}
+            exact
+            label={t.shell.apps}
+            icon={<IconApps size={16} stroke={1.75} aria-hidden />}
+          />
         </div>
 
         {categories.length > 0 ? (
