@@ -44,9 +44,9 @@ apps.humation.app. Deploy from a machine that is logged in with `wrangler login`
 bun run deploy
 ```
 
-For automatic deploys on merge, connect this repository in the Cloudflare dashboard
-(Workers & Pages → Create → Import a repository) with build command `bun run build` and deploy
-command `bun run --cwd site deploy`. That path needs no GitHub secrets.
+Pushes to `main` are built and deployed automatically by Cloudflare Workers Builds (the repository
+is connected in the Cloudflare dashboard; build command `bun run build`, deploy command
+`bun run --cwd site deploy`). No GitHub secrets are involved.
 
 ## License
 
