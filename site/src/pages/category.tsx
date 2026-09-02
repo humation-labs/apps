@@ -64,7 +64,7 @@ function CategoryPage() {
       </h1>
       <p className="mt-1 text-text-muted tabular">{t.category.appsCount(apps.length)}</p>
       <div className="mt-4 min-w-0">
-        <AppRowGrid apps={apps} paged={false} />
+        <AppRowGrid apps={apps} />
       </div>
     </div>
   )

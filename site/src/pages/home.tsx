@@ -1,7 +1,7 @@
 import { AddAppButton } from '../components/AddAppButton'
 import { AppRowGrid } from '../components/AppRowGrid'
 import { CategoryIcon } from '../components/CategoryIcon'
-import { HeroCarousel } from '../components/HeroCarousel'
+import { FeaturedCards } from '../components/FeaturedCards'
 import { LocaleLink } from '../components/LocaleLink'
 import { Section } from '../components/Section'
 import { byCategory, categoryCounts, featured, newest } from '../data/listings'
@@ -67,7 +67,7 @@ function Home() {
 
       {featuredApps.length > 0 ? (
         <div className="mt-6 min-w-0">
-          <HeroCarousel apps={featuredApps} />
+          <FeaturedCards apps={featuredApps} />
         </div>
       ) : null}
 

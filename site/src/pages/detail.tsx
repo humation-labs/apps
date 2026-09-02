@@ -225,7 +225,7 @@ function AppDetail() {
           title={t.detail.moreIn(category)}
           href={localePath(locale, `/category/${listing.category}`)}
         >
-          <AppRowGrid apps={moreInCategory} paged={false} />
+          <AppRowGrid apps={moreInCategory} />
         </Section>
       ) : null}
     </article>
