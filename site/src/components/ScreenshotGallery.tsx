@@ -64,22 +64,35 @@ export function ScreenshotGallery({ shots }: { shots: Shot[] }) {
       >
         {shots.map((shot, i) => {
           const landscape = shot.width >= shot.height
+          const img = (
+            <img
+              src={shot.src}
+              alt={shot.alt}
+              width={shot.width}
+              height={shot.height}
+              loading={i === 0 ? 'eager' : 'lazy'}
+              fetchPriority={i === 0 ? 'high' : undefined}
+              className="h-auto w-full object-top"
+            />
+          )
+          if (landscape) {
+            return (
+              <div
+                key={shot.file}
+                className="relative w-[640px] max-w-[85vw] shrink-0 snap-start overflow-hidden rounded-lg border border-border/70 dark:border-white/15"
+              >
+                {img}
+              </div>
+            )
+          }
           return (
             <div
               key={shot.file}
-              className={`relative shrink-0 snap-start overflow-hidden rounded-lg border border-border/70 dark:border-white/15 ${
-                landscape ? 'w-[640px] max-w-[85vw]' : 'w-[280px] max-w-full'
-              }`}
+              className="relative w-[280px] max-w-full min-w-0 shrink-0 snap-start [container-type:inline-size]"
             >
-              <img
-                src={shot.src}
-                alt={shot.alt}
-                width={shot.width}
-                height={shot.height}
-                loading={i === 0 ? 'eager' : 'lazy'}
-                fetchPriority={i === 0 ? 'high' : undefined}
-                className="h-auto w-full object-top"
-              />
+              <div className="overflow-hidden rounded-[14cqw] border border-border/70 dark:border-white/15">
+                {img}
+              </div>
             </div>
           )
         })}

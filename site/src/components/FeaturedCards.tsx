@@ -49,17 +49,19 @@ function FeaturedCard({ app, index }: { app: Listing; index: number }) {
       <div className={`flex h-full min-h-0 flex-col ${textClass}`} style={{ backgroundColor: brand }}>
         <div className="relative flex-1 min-h-0 overflow-hidden">
           {isPortrait ? (
-            <div className="absolute inset-x-6 top-6 overflow-hidden rounded-[1.25rem] border border-border/70 ring-1 ring-black/10 dark:border-white/15 md:inset-x-auto md:top-8 md:right-16 md:bottom-[-30%] md:w-auto lg:right-24">
-              <img
-                src={src}
-                alt={shot.alt}
-                width={width}
-                height={height}
-                loading={loading}
-                fetchPriority={fetchPriority}
-                decoding="async"
-                className="h-auto w-full object-contain object-top md:h-full md:w-auto"
-              />
+            <div className="absolute inset-x-6 top-6 min-w-0 [container-type:inline-size] md:inset-x-auto md:top-8 md:right-16 md:bottom-[-30%] md:w-auto lg:right-24">
+              <div className="h-full overflow-hidden rounded-[14cqw] border border-border/70 ring-1 ring-black/10 dark:border-white/15">
+                <img
+                  src={src}
+                  alt={shot.alt}
+                  width={width}
+                  height={height}
+                  loading={loading}
+                  fetchPriority={fetchPriority}
+                  decoding="async"
+                  className="h-auto w-full object-contain object-top md:h-full md:w-auto"
+                />
+              </div>
             </div>
           ) : (
             <img
