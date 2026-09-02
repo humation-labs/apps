@@ -25,8 +25,8 @@ export function pageHead({
   const fullTitle = title === siteName ? title : `${title} · ${siteName}`
   const ogImage = new URL(image, SITE_ORIGIN).href
   const bare = stripLocalePrefix(path)
-  const enUrl = canonicalUrl(localePath(bare, 'en'))
-  const jaUrl = canonicalUrl(localePath(bare, 'ja'))
+  const enUrl = canonicalUrl(localePath('en', bare))
+  const jaUrl = canonicalUrl(localePath('ja', bare))
 
   return {
     meta: [

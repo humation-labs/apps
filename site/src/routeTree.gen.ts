@@ -9,170 +9,270 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as Char123LangChar125RouteImport } from './routes/{-$lang}'
-import { Route as Char123LangChar125IndexRouteImport } from './routes/{-$lang}.index'
-import { Route as Char123LangChar125404RouteImport } from './routes/{-$lang}.404'
-import { Route as Char123LangChar125SearchRouteImport } from './routes/{-$lang}.search'
-import { Route as Char123LangChar125AppsSlugRouteImport } from './routes/{-$lang}.apps.$slug'
-import { Route as Char123LangChar125CategoryCategoryRouteImport } from './routes/{-$lang}.category.$category'
+import { Route as IndexRouteImport } from './routes/index'
+import { Route as SlugRouteImport } from './routes/$slug'
+import { Route as R404RouteImport } from './routes/404'
+import { Route as JaRouteImport } from './routes/ja'
+import { Route as SearchRouteImport } from './routes/search'
+import { Route as CategoryCategoryRouteImport } from './routes/category.$category'
+import { Route as JaIndexRouteImport } from './routes/ja.index'
+import { Route as JaSlugRouteImport } from './routes/ja.$slug'
+import { Route as Ja404RouteImport } from './routes/ja.404'
+import { Route as JaSearchRouteImport } from './routes/ja.search'
+import { Route as JaCategoryCategoryRouteImport } from './routes/ja.category.$category'
 
-const Char123LangChar125Route = Char123LangChar125RouteImport.update({
-  id: '/{-$lang}',
-  path: '/{-$lang}',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const Char123LangChar125IndexRoute = Char123LangChar125IndexRouteImport.update({
+const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => Char123LangChar125Route,
+  getParentRoute: () => rootRouteImport,
 } as any)
-const Char123LangChar125404Route = Char123LangChar125404RouteImport.update({
+const SlugRoute = SlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const R404Route = R404RouteImport.update({
   id: '/404',
   path: '/404',
-  getParentRoute: () => Char123LangChar125Route,
+  getParentRoute: () => rootRouteImport,
 } as any)
-const Char123LangChar125SearchRoute =
-  Char123LangChar125SearchRouteImport.update({
-    id: '/search',
-    path: '/search',
-    getParentRoute: () => Char123LangChar125Route,
-  } as any)
-const Char123LangChar125AppsSlugRoute =
-  Char123LangChar125AppsSlugRouteImport.update({
-    id: '/apps/$slug',
-    path: '/apps/$slug',
-    getParentRoute: () => Char123LangChar125Route,
-  } as any)
-const Char123LangChar125CategoryCategoryRoute =
-  Char123LangChar125CategoryCategoryRouteImport.update({
-    id: '/category/$category',
-    path: '/category/$category',
-    getParentRoute: () => Char123LangChar125Route,
-  } as any)
+const JaRoute = JaRouteImport.update({
+  id: '/ja',
+  path: '/ja',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SearchRoute = SearchRouteImport.update({
+  id: '/search',
+  path: '/search',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CategoryCategoryRoute = CategoryCategoryRouteImport.update({
+  id: '/category/$category',
+  path: '/category/$category',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JaIndexRoute = JaIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => JaRoute,
+} as any)
+const JaSlugRoute = JaSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => JaRoute,
+} as any)
+const Ja404Route = Ja404RouteImport.update({
+  id: '/404',
+  path: '/404',
+  getParentRoute: () => JaRoute,
+} as any)
+const JaSearchRoute = JaSearchRouteImport.update({
+  id: '/search',
+  path: '/search',
+  getParentRoute: () => JaRoute,
+} as any)
+const JaCategoryCategoryRoute = JaCategoryCategoryRouteImport.update({
+  id: '/category/$category',
+  path: '/category/$category',
+  getParentRoute: () => JaRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
-  '/{-$lang}': typeof Char123LangChar125RouteWithChildren
-  '/{-$lang}/404': typeof Char123LangChar125404Route
-  '/{-$lang}/search': typeof Char123LangChar125SearchRoute
-  '/{-$lang}/': typeof Char123LangChar125IndexRoute
-  '/{-$lang}/apps/$slug': typeof Char123LangChar125AppsSlugRoute
-  '/{-$lang}/category/$category': typeof Char123LangChar125CategoryCategoryRoute
+  '/': typeof IndexRoute
+  '/$slug': typeof SlugRoute
+  '/404': typeof R404Route
+  '/ja': typeof JaRouteWithChildren
+  '/search': typeof SearchRoute
+  '/category/$category': typeof CategoryCategoryRoute
+  '/ja/$slug': typeof JaSlugRoute
+  '/ja/404': typeof Ja404Route
+  '/ja/search': typeof JaSearchRoute
+  '/ja/': typeof JaIndexRoute
+  '/ja/category/$category': typeof JaCategoryCategoryRoute
 }
 export interface FileRoutesByTo {
-  '/{-$lang}/404': typeof Char123LangChar125404Route
-  '/{-$lang}/search': typeof Char123LangChar125SearchRoute
-  '/{-$lang}': typeof Char123LangChar125IndexRoute
-  '/{-$lang}/apps/$slug': typeof Char123LangChar125AppsSlugRoute
-  '/{-$lang}/category/$category': typeof Char123LangChar125CategoryCategoryRoute
+  '/': typeof IndexRoute
+  '/$slug': typeof SlugRoute
+  '/404': typeof R404Route
+  '/search': typeof SearchRoute
+  '/category/$category': typeof CategoryCategoryRoute
+  '/ja/$slug': typeof JaSlugRoute
+  '/ja/404': typeof Ja404Route
+  '/ja/search': typeof JaSearchRoute
+  '/ja': typeof JaIndexRoute
+  '/ja/category/$category': typeof JaCategoryCategoryRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/{-$lang}': typeof Char123LangChar125RouteWithChildren
-  '/{-$lang}/404': typeof Char123LangChar125404Route
-  '/{-$lang}/search': typeof Char123LangChar125SearchRoute
-  '/{-$lang}/': typeof Char123LangChar125IndexRoute
-  '/{-$lang}/apps/$slug': typeof Char123LangChar125AppsSlugRoute
-  '/{-$lang}/category/$category': typeof Char123LangChar125CategoryCategoryRoute
+  '/': typeof IndexRoute
+  '/$slug': typeof SlugRoute
+  '/404': typeof R404Route
+  '/ja': typeof JaRouteWithChildren
+  '/search': typeof SearchRoute
+  '/category/$category': typeof CategoryCategoryRoute
+  '/ja/$slug': typeof JaSlugRoute
+  '/ja/404': typeof Ja404Route
+  '/ja/search': typeof JaSearchRoute
+  '/ja/': typeof JaIndexRoute
+  '/ja/category/$category': typeof JaCategoryCategoryRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | '/{-$lang}'
-    | '/{-$lang}/404'
-    | '/{-$lang}/search'
-    | '/{-$lang}/'
-    | '/{-$lang}/apps/$slug'
-    | '/{-$lang}/category/$category'
+    | '/'
+    | '/$slug'
+    | '/404'
+    | '/ja'
+    | '/search'
+    | '/category/$category'
+    | '/ja/$slug'
+    | '/ja/404'
+    | '/ja/search'
+    | '/ja/'
+    | '/ja/category/$category'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/{-$lang}/404'
-    | '/{-$lang}/search'
-    | '/{-$lang}'
-    | '/{-$lang}/apps/$slug'
-    | '/{-$lang}/category/$category'
+    | '/'
+    | '/$slug'
+    | '/404'
+    | '/search'
+    | '/category/$category'
+    | '/ja/$slug'
+    | '/ja/404'
+    | '/ja/search'
+    | '/ja'
+    | '/ja/category/$category'
   id:
     | '__root__'
-    | '/{-$lang}'
-    | '/{-$lang}/404'
-    | '/{-$lang}/search'
-    | '/{-$lang}/'
-    | '/{-$lang}/apps/$slug'
-    | '/{-$lang}/category/$category'
+    | '/'
+    | '/$slug'
+    | '/404'
+    | '/ja'
+    | '/search'
+    | '/category/$category'
+    | '/ja/$slug'
+    | '/ja/404'
+    | '/ja/search'
+    | '/ja/'
+    | '/ja/category/$category'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  Char123LangChar125Route: typeof Char123LangChar125RouteWithChildren
+  IndexRoute: typeof IndexRoute
+  SlugRoute: typeof SlugRoute
+  R404Route: typeof R404Route
+  JaRoute: typeof JaRouteWithChildren
+  SearchRoute: typeof SearchRoute
+  CategoryCategoryRoute: typeof CategoryCategoryRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/{-$lang}': {
-      id: '/{-$lang}'
-      path: '/{-$lang}'
-      fullPath: '/{-$lang}'
-      preLoaderRoute: typeof Char123LangChar125RouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/{-$lang}/': {
-      id: '/{-$lang}/'
-      path: '/'
-      fullPath: '/{-$lang}/'
-      preLoaderRoute: typeof Char123LangChar125IndexRouteImport
-      parentRoute: typeof Char123LangChar125Route
+    '/$slug': {
+      id: '/$slug'
+      path: '/$slug'
+      fullPath: '/$slug'
+      preLoaderRoute: typeof SlugRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/{-$lang}/404': {
-      id: '/{-$lang}/404'
+    '/404': {
+      id: '/404'
       path: '/404'
-      fullPath: '/{-$lang}/404'
-      preLoaderRoute: typeof Char123LangChar125404RouteImport
-      parentRoute: typeof Char123LangChar125Route
+      fullPath: '/404'
+      preLoaderRoute: typeof R404RouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/{-$lang}/search': {
-      id: '/{-$lang}/search'
+    '/ja': {
+      id: '/ja'
+      path: '/ja'
+      fullPath: '/ja'
+      preLoaderRoute: typeof JaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/search': {
+      id: '/search'
       path: '/search'
-      fullPath: '/{-$lang}/search'
-      preLoaderRoute: typeof Char123LangChar125SearchRouteImport
-      parentRoute: typeof Char123LangChar125Route
+      fullPath: '/search'
+      preLoaderRoute: typeof SearchRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/{-$lang}/apps/$slug': {
-      id: '/{-$lang}/apps/$slug'
-      path: '/apps/$slug'
-      fullPath: '/{-$lang}/apps/$slug'
-      preLoaderRoute: typeof Char123LangChar125AppsSlugRouteImport
-      parentRoute: typeof Char123LangChar125Route
-    }
-    '/{-$lang}/category/$category': {
-      id: '/{-$lang}/category/$category'
+    '/category/$category': {
+      id: '/category/$category'
       path: '/category/$category'
-      fullPath: '/{-$lang}/category/$category'
-      preLoaderRoute: typeof Char123LangChar125CategoryCategoryRouteImport
-      parentRoute: typeof Char123LangChar125Route
+      fullPath: '/category/$category'
+      preLoaderRoute: typeof CategoryCategoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ja/': {
+      id: '/ja/'
+      path: '/'
+      fullPath: '/ja/'
+      preLoaderRoute: typeof JaIndexRouteImport
+      parentRoute: typeof JaRoute
+    }
+    '/ja/$slug': {
+      id: '/ja/$slug'
+      path: '/$slug'
+      fullPath: '/ja/$slug'
+      preLoaderRoute: typeof JaSlugRouteImport
+      parentRoute: typeof JaRoute
+    }
+    '/ja/404': {
+      id: '/ja/404'
+      path: '/404'
+      fullPath: '/ja/404'
+      preLoaderRoute: typeof Ja404RouteImport
+      parentRoute: typeof JaRoute
+    }
+    '/ja/search': {
+      id: '/ja/search'
+      path: '/search'
+      fullPath: '/ja/search'
+      preLoaderRoute: typeof JaSearchRouteImport
+      parentRoute: typeof JaRoute
+    }
+    '/ja/category/$category': {
+      id: '/ja/category/$category'
+      path: '/category/$category'
+      fullPath: '/ja/category/$category'
+      preLoaderRoute: typeof JaCategoryCategoryRouteImport
+      parentRoute: typeof JaRoute
     }
   }
 }
 
-interface Char123LangChar125RouteChildren {
-  Char123LangChar125404Route: typeof Char123LangChar125404Route
-  Char123LangChar125SearchRoute: typeof Char123LangChar125SearchRoute
-  Char123LangChar125IndexRoute: typeof Char123LangChar125IndexRoute
-  Char123LangChar125AppsSlugRoute: typeof Char123LangChar125AppsSlugRoute
-  Char123LangChar125CategoryCategoryRoute: typeof Char123LangChar125CategoryCategoryRoute
+interface JaRouteChildren {
+  JaSlugRoute: typeof JaSlugRoute
+  Ja404Route: typeof Ja404Route
+  JaSearchRoute: typeof JaSearchRoute
+  JaIndexRoute: typeof JaIndexRoute
+  JaCategoryCategoryRoute: typeof JaCategoryCategoryRoute
 }
 
-const Char123LangChar125RouteChildren: Char123LangChar125RouteChildren = {
-  Char123LangChar125404Route: Char123LangChar125404Route,
-  Char123LangChar125SearchRoute: Char123LangChar125SearchRoute,
-  Char123LangChar125IndexRoute: Char123LangChar125IndexRoute,
-  Char123LangChar125AppsSlugRoute: Char123LangChar125AppsSlugRoute,
-  Char123LangChar125CategoryCategoryRoute:
-    Char123LangChar125CategoryCategoryRoute,
+const JaRouteChildren: JaRouteChildren = {
+  JaSlugRoute: JaSlugRoute,
+  Ja404Route: Ja404Route,
+  JaSearchRoute: JaSearchRoute,
+  JaIndexRoute: JaIndexRoute,
+  JaCategoryCategoryRoute: JaCategoryCategoryRoute,
 }
 
-const Char123LangChar125RouteWithChildren =
-  Char123LangChar125Route._addFileChildren(Char123LangChar125RouteChildren)
+const JaRouteWithChildren = JaRoute._addFileChildren(JaRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
-  Char123LangChar125Route: Char123LangChar125RouteWithChildren,
+  IndexRoute: IndexRoute,
+  SlugRoute: SlugRoute,
+  R404Route: R404Route,
+  JaRoute: JaRouteWithChildren,
+  SearchRoute: SearchRoute,
+  CategoryCategoryRoute: CategoryCategoryRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

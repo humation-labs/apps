@@ -1,16 +1,15 @@
-import { Link } from '@tanstack/react-router'
 import { iconSrc } from '../lib/constants'
-import { langParam, useLocale, useT } from '../i18n'
+import { localePath, useLocale, useT } from '../i18n'
 import type { Listing } from '../data/listings'
+import { LocaleLink } from './LocaleLink'
 
 export function AppRow({ app }: { app: Listing }) {
   const locale = useLocale()
   const t = useT()
 
   return (
-    <Link
-      to="/{-$lang}/apps/$slug"
-      params={{ lang: langParam(locale), slug: app.slug }}
+    <LocaleLink
+      href={localePath(locale, `/${app.slug}`)}
       className="-mx-2 flex items-center gap-4 rounded-lg px-2 py-2 hover:bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
     >
       <img
@@ -27,6 +26,6 @@ export function AppRow({ app }: { app: Listing }) {
       <span className="inline-flex h-7 shrink-0 items-center justify-center rounded-full bg-surface-2 px-3.5 text-[13px] leading-none font-semibold text-accent">
         {t.home.view}
       </span>
-    </Link>
+    </LocaleLink>
   )
 }

@@ -1,6 +1,6 @@
 import { IconMoodEmpty } from '@tabler/icons-react'
-import { Link } from '@tanstack/react-router'
-import { langParam, useLocale, useT } from '../i18n'
+import { localePath, useLocale, useT } from '../i18n'
+import { LocaleLink } from './LocaleLink'
 
 export function NotFound() {
   const locale = useLocale()
@@ -12,13 +12,12 @@ export function NotFound() {
         <IconMoodEmpty size={64} stroke={1.5} aria-hidden />
       </span>
       <h1 className="mt-4 text-4xl/tight font-bold tracking-tight">{t.notFound.title}</h1>
-      <Link
-        to="/{-$lang}"
-        params={{ lang: langParam(locale) }}
+      <LocaleLink
+        href={localePath(locale, '/')}
         className="mt-6 inline-flex h-9 items-center justify-center rounded-full bg-accent px-4 text-[14px] leading-none font-semibold text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
       >
         {t.notFound.backToApps}
-      </Link>
+      </LocaleLink>
     </div>
   )
 }

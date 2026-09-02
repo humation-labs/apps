@@ -113,7 +113,7 @@ MD
 Tell the developer:
 - the pull request URL
 - that a maintainer will review it, and the listing will appear at
-  `https://apps.humation.app/apps/<slug>` after merge
+  `https://apps.humation.app/<slug>` after merge
 - anything you could not verify or had to leave out
 
 ### Example app.json

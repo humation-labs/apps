@@ -7,11 +7,25 @@ import {
   IconBrandGooglePlay,
   IconBrandX,
 } from '@tabler/icons-react'
-import { Link, createFileRoute, notFound } from '@tanstack/react-router'
+import { notFound } from '@tanstack/react-router'
 import { CopyButton } from '../components/AddAppButton'
 import { AppRowGrid } from '../components/AppRowGrid'
+import { LocaleLink } from '../components/LocaleLink'
 import { ScreenshotGallery } from '../components/ScreenshotGallery'
 import { Section } from '../components/Section'
+import { byCategory, bySlug } from '../data/listings'
+import type { Listing } from '../data/listings'
+import {
+  categoryLabel,
+  formatDate,
+  getDict,
+  localePath,
+  platformLabel,
+  pricingLabel,
+  useLocale,
+  useT,
+  type Locale,
+} from '../i18n'
 import {
   SITE_ORIGIN,
   descriptionParagraphs,
@@ -22,53 +36,53 @@ import {
 } from '../lib/constants'
 import { pageHead } from '../lib/head'
 import { imageDimensions } from '../lib/images'
-import { byCategory, bySlug } from '../data/listings'
-import {
-  categoryLabel,
-  formatDate,
-  getDict,
-  langParam,
-  localeFromLang,
-  localePath,
-  platformLabel,
-  pricingLabel,
-  useLocale,
-  useT,
-} from '../i18n'
+import { usePageData } from './usePageData'
 
-export const Route = createFileRoute('/{-$lang}/apps/$slug')({
-  loader: ({ params }) => {
-    const listing = bySlug(params.slug)
-    if (!listing) throw notFound()
-    const screenshots = listing.screenshots.map((shot) => ({
-      ...shot,
-      src: screenshotSrc(listing.slug, shot.file),
-      ...imageDimensions(listing.slug, shot.file),
-    }))
-    return { listing, screenshots }
-  },
-  head: ({ loaderData, params }) => {
-    const locale = localeFromLang(params.lang)
-    const t = getDict(locale)
-    if (!loaderData) {
+type Screenshot = Listing['screenshots'][number] & {
+  src: string
+  width: number
+  height: number
+}
+
+type DetailData = {
+  listing: Listing
+  screenshots: Screenshot[]
+}
+
+export function detailRoute(locale: Locale) {
+  return {
+    loader: ({ params }: { params: { slug: string } }): DetailData => {
+      const listing = bySlug(params.slug)
+      if (!listing) throw notFound()
+      const screenshots = listing.screenshots.map((shot) => ({
+        ...shot,
+        src: screenshotSrc(listing.slug, shot.file),
+        ...imageDimensions(listing.slug, shot.file),
+      }))
+      return { listing, screenshots }
+    },
+    head: ({ loaderData }: { loaderData?: DetailData }) => {
+      const t = getDict(locale)
+      if (!loaderData) {
+        return pageHead({
+          title: t.notFound.title,
+          description: t.notFound.metaDescription,
+          path: localePath(locale, '/404'),
+          locale,
+        })
+      }
+      const { listing } = loaderData
       return pageHead({
-        title: t.notFound.title,
-        description: t.notFound.metaDescription,
-        path: localePath('/404', locale),
+        title: listing.name,
+        description: listing.tagline,
+        path: localePath(locale, `/${listing.slug}`),
+        image: iconSrc(listing.slug),
         locale,
       })
-    }
-    const { listing } = loaderData
-    return pageHead({
-      title: listing.name,
-      description: listing.tagline,
-      path: localePath(`/apps/${listing.slug}`, locale),
-      image: iconSrc(listing.slug),
-      locale,
-    })
-  },
-  component: AppDetail,
-})
+    },
+    component: AppDetail,
+  }
+}
 
 const LINK_DEFS = [
   { key: 'repo', label: 'GitHub', Icon: IconBrandGithub },
@@ -82,15 +96,14 @@ const FOCUS =
   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg'
 
 function AppDetail() {
-  const { listing, screenshots } = Route.useLoaderData()
+  const { listing, screenshots } = usePageData<DetailData>()
   const locale = useLocale()
   const t = useT()
-  const lang = langParam(locale)
   const developerUrl = developerHref(listing.developer)
   const moreInCategory = byCategory(listing.category)
     .filter((app) => app.slug !== listing.slug)
     .slice(0, 9)
-  const snippet = `<a href="${SITE_ORIGIN}/apps/${listing.slug}">${t.detail.featuredOn}</a>`
+  const snippet = `<a href="${SITE_ORIGIN}/${listing.slug}">${t.detail.featuredOn}</a>`
   const presentLinks = LINK_DEFS.filter((def) => listing.links?.[def.key])
   const category = categoryLabel(listing.category, t)
 
@@ -139,13 +152,12 @@ function AppDetail() {
             </a>
           </InfoRow>
           <InfoRow label={t.detail.category}>
-            <Link
-              to="/{-$lang}/category/$category"
-              params={{ lang, category: listing.category }}
+            <LocaleLink
+              href={localePath(locale, `/category/${listing.category}`)}
               className={`text-accent ${FOCUS}`}
             >
               {category}
-            </Link>
+            </LocaleLink>
           </InfoRow>
           <InfoRow label={t.detail.platforms}>
             {listing.platforms.map((platform) => platformLabel(platform, t)).join(', ')}
@@ -211,8 +223,7 @@ function AppDetail() {
       {moreInCategory.length > 0 ? (
         <Section
           title={t.detail.moreIn(category)}
-          to="/{-$lang}/category/$category"
-          params={{ lang, category: listing.category }}
+          href={localePath(locale, `/category/${listing.category}`)}
         >
           <AppRowGrid apps={moreInCategory} paged={false} />
         </Section>

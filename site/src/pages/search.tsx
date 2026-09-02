@@ -1,33 +1,36 @@
 import { useMemo } from 'react'
 import { IconSearch } from '@tabler/icons-react'
-import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import { useNavigate } from '@tanstack/react-router'
 import { AppRow } from '../components/AppRow'
-import { categoryLabel, en, getDict, ja, localeFromLang, localePath, useT } from '../i18n'
-import { pageHead } from '../lib/head'
 import { allListings } from '../data/listings'
+import type { Listing } from '../data/listings'
+import { categoryLabel, en, getDict, ja, localePath, useT, type Locale } from '../i18n'
+import { pageHead } from '../lib/head'
+import { usePageData, usePageSearch } from './usePageData'
 
-export const Route = createFileRoute('/{-$lang}/search')({
-  validateSearch: (search: Record<string, unknown>): { q?: string } => ({
-    q: typeof search.q === 'string' ? search.q : undefined,
-  }),
-  loader: () => allListings(),
-  head: ({ params }) => {
-    const locale = localeFromLang(params.lang)
-    const t = getDict(locale)
-    return pageHead({
-      title: t.search.title,
-      description: t.search.metaDescription,
-      path: localePath('/search', locale),
-      locale,
-    })
-  },
-  component: SearchPage,
-})
+export function searchRoute(locale: Locale) {
+  return {
+    validateSearch: (search: Record<string, unknown>): { q?: string } => ({
+      q: typeof search.q === 'string' ? search.q : undefined,
+    }),
+    loader: () => allListings(),
+    head: () => {
+      const t = getDict(locale)
+      return pageHead({
+        title: t.search.title,
+        description: t.search.metaDescription,
+        path: localePath(locale, '/search'),
+        locale,
+      })
+    },
+    component: SearchPage,
+  }
+}
 
 function SearchPage() {
-  const apps = Route.useLoaderData()
-  const { q } = Route.useSearch()
-  const navigate = useNavigate({ from: '/{-$lang}/search' })
+  const apps = usePageData<Listing[]>()
+  const { q } = usePageSearch<{ q?: string }>()
+  const navigate = useNavigate()
   const t = useT()
   const query = q ?? ''
   const trimmed = query.trim()
@@ -63,7 +66,7 @@ function SearchPage() {
           onChange={(event) => {
             const next = event.target.value
             void navigate({
-              search: { q: next === '' ? undefined : next },
+              search: { q: next === '' ? undefined : next } as never,
               replace: true,
             })
           }}

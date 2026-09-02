@@ -1,8 +1,7 @@
 import { IconArrowLeft, IconLanguage, IconSearch } from '@tabler/icons-react'
-import { Link, useRouter, useRouterState } from '@tanstack/react-router'
+import { useRouter, useRouterState } from '@tanstack/react-router'
 import {
   LOCALE_NATIVE_NAME,
-  langParam,
   localePath,
   otherLocale,
   useLocale,
@@ -10,6 +9,7 @@ import {
   useT,
 } from '../i18n'
 import { CopyForAgentButton } from './CopyForAgentButton'
+import { LocaleLink } from './LocaleLink'
 
 const ghostRoundClass =
   'inline-flex size-8 items-center justify-center rounded-full hover:bg-surface-3/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg'
@@ -19,17 +19,16 @@ export function NavBar() {
   const pathname = useRouterState({ select: (s) => s.location.pathname })
   const locale = useLocale()
   const t = useT()
-  const lang = langParam(locale)
   const other = otherLocale(locale)
   const switchHref = useSwitchLocaleHref()
-  const isHome = pathname === localePath('/', locale)
+  const isHome = pathname === localePath(locale, '/')
 
   function onBack() {
     if (typeof window === 'undefined' || typeof document === 'undefined') return
     if (window.history.length > 1 && document.referrer.startsWith(window.location.origin)) {
       router.history.back()
     } else {
-      void router.navigate({ to: '/{-$lang}', params: { lang } })
+      void router.navigate({ to: localePath(locale, '/') as never })
     }
   }
 
@@ -47,11 +46,7 @@ export function NavBar() {
               <IconArrowLeft size={18} stroke={1.75} aria-hidden />
             </span>
           </button>
-          <Link
-            to="/{-$lang}"
-            params={{ lang }}
-            className="flex min-w-0 truncate items-center lg:hidden"
-          >
+          <LocaleLink href={localePath(locale, '/')} className="flex min-w-0 truncate items-center lg:hidden">
             <img
               src="/logo_humation.svg"
               alt="Humation"
@@ -66,7 +61,7 @@ export function NavBar() {
               height={16}
               className="hidden h-3.5 w-auto dark:block"
             />
-          </Link>
+          </LocaleLink>
         </div>
         <div className="flex shrink-0 items-center gap-3">
           <a
@@ -78,16 +73,15 @@ export function NavBar() {
               <IconLanguage size={18} stroke={1.75} aria-hidden />
             </span>
           </a>
-          <Link
-            to="/{-$lang}/search"
-            params={{ lang }}
+          <LocaleLink
+            href={localePath(locale, '/search')}
             aria-label={t.shell.search}
             className={`${ghostRoundClass} lg:hidden`}
           >
             <span className="inline-flex size-[18px] items-center justify-center">
               <IconSearch size={18} stroke={1.75} aria-hidden />
             </span>
-          </Link>
+          </LocaleLink>
           <CopyForAgentButton />
         </div>
       </div>

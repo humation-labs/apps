@@ -1,11 +1,11 @@
-import { Link } from '@tanstack/react-router'
 import { IconChevronRight } from '@tabler/icons-react'
 import { iconSrc, screenshotSrc } from '../lib/constants'
-import { categoryLabel, langParam, useLocale, useT } from '../i18n'
+import { categoryLabel, localePath, useLocale, useT } from '../i18n'
 import { imageDimensions } from '../lib/images'
+import type { Listing } from '../data/listings'
+import { LocaleLink } from './LocaleLink'
 import { PagerArrows, PagerDots } from './PagerControls'
 import { useSnapScroll } from './useSnapScroll'
-import type { Listing } from '../data/listings'
 
 export function HeroCarousel({ apps }: { apps: Listing[] }) {
   const slides = apps.filter((app) => app.screenshots[0])
@@ -44,9 +44,8 @@ function HeroCard({ app }: { app: Listing }) {
   const { width, height } = imageDimensions(app.slug, shot.file)
 
   return (
-    <Link
-      to="/{-$lang}/apps/$slug"
-      params={{ lang: langParam(locale), slug: app.slug }}
+    <LocaleLink
+      href={localePath(locale, `/${app.slug}`)}
       className="relative aspect-[4/5] w-full min-w-0 shrink-0 snap-center overflow-hidden rounded-xl md:aspect-video md:max-h-[480px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
     >
       <img
@@ -82,6 +81,6 @@ function HeroCard({ app }: { app: Listing }) {
           </span>
         </div>
       </div>
-    </Link>
+    </LocaleLink>
   )
 }

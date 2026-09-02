@@ -11,13 +11,12 @@ import {
   IconStar,
   IconUserCircle,
 } from '@tabler/icons-react'
-import { Link } from '@tanstack/react-router'
 import { ADD_APP_PROMPT } from '../lib/constants'
 import { formatStars, githubStars } from '../lib/github'
 import {
   LOCALE_NATIVE_NAME,
   categoryLabel,
-  langParam,
+  localePath,
   otherLocale,
   useLocale,
   useSwitchLocaleHref,
@@ -25,6 +24,7 @@ import {
 } from '../i18n'
 import { CopyButton } from './AddAppButton'
 import { CategoryIcon } from './CategoryIcon'
+import { LocaleLink } from './LocaleLink'
 
 const COLLAPSED_KEY = 'sidebar-collapsed'
 
@@ -43,35 +43,27 @@ function RowIcon({ children }: { children: ReactNode }) {
   )
 }
 
-type LangParam = { lang: 'ja' | undefined }
-
 function SidebarRow({
   collapsed,
   icon,
   label,
-  to,
-  params,
   href,
   exact,
   title: titleOverride,
   trailing,
+  external,
+  highlightActive,
 }: {
   collapsed: boolean
   icon: ReactNode
   label: string
+  href: string
+  exact?: boolean
   title?: string
   trailing?: ReactNode
-} & (
-  | { to: '/{-$lang}'; params: LangParam; href?: undefined; exact?: boolean }
-  | { to: '/{-$lang}/search'; params: LangParam; href?: undefined; exact?: undefined }
-  | {
-      to: '/{-$lang}/category/$category'
-      params: LangParam & { category: string }
-      href?: undefined
-      exact?: undefined
-    }
-  | { href: string; to?: undefined; params?: undefined; exact?: undefined }
-)) {
+  external?: boolean
+  highlightActive?: boolean
+}) {
   const className = rowClassName(collapsed)
   const title = titleOverride ?? (collapsed ? label : undefined)
   const ariaLabel = collapsed ? (titleOverride ?? label) : undefined
@@ -83,7 +75,7 @@ function SidebarRow({
     </>
   )
 
-  if (href) {
+  if (external) {
     return (
       <a
         href={href}
@@ -98,47 +90,17 @@ function SidebarRow({
     )
   }
 
-  if (to === '/{-$lang}/category/$category') {
-    return (
-      <Link
-        to="/{-$lang}/category/$category"
-        params={params}
-        className={className}
-        title={title}
-        aria-label={ariaLabel}
-        activeProps={{ className: 'bg-surface-2 text-text' }}
-      >
-        {inner}
-      </Link>
-    )
-  }
-
-  if (to === '/{-$lang}/search') {
-    return (
-      <Link
-        to="/{-$lang}/search"
-        params={params}
-        className={className}
-        title={title}
-        aria-label={ariaLabel}
-      >
-        {inner}
-      </Link>
-    )
-  }
-
   return (
-    <Link
-      to="/{-$lang}"
-      params={params}
-      activeOptions={exact ? { exact: true } : undefined}
-      activeProps={{ className: 'bg-surface-2 text-text' }}
+    <LocaleLink
+      href={href}
+      exact={exact}
       className={className}
       title={title}
       aria-label={ariaLabel}
+      activeProps={highlightActive ? { className: 'bg-surface-2 text-text' } : undefined}
     >
       {inner}
-    </Link>
+    </LocaleLink>
   )
 }
 
@@ -168,9 +130,10 @@ export function Sidebar({ categories }: { categories: { category: string; count:
   const stars = githubStars()
   const locale = useLocale()
   const t = useT()
-  const lang = langParam(locale)
   const other = otherLocale(locale)
   const switchHref = useSwitchLocaleHref()
+  const homeHref = localePath(locale, '/')
+  const searchHref = localePath(locale, '/search')
 
   useEffect(() => {
     try {
@@ -215,18 +178,13 @@ export function Sidebar({ categories }: { categories: { category: string; count:
           </button>
         ) : (
           <>
-            <Link to="/{-$lang}" params={{ lang }} className="flex min-w-0 items-center">
+            <LocaleLink href={homeHref} className="flex min-w-0 items-center">
               <Wordmark />
-            </Link>
+            </LocaleLink>
             <div className="flex shrink-0 items-center">
-              <Link
-                to="/{-$lang}/search"
-                params={{ lang }}
-                aria-label={t.shell.search}
-                className={ghostButtonClass}
-              >
+              <LocaleLink href={searchHref} aria-label={t.shell.search} className={ghostButtonClass}>
                 <IconSearch size={16} stroke={1.75} aria-hidden />
-              </Link>
+              </LocaleLink>
               <button
                 type="button"
                 className={ghostButtonClass}
@@ -267,17 +225,16 @@ export function Sidebar({ categories }: { categories: { category: string; count:
           {collapsed ? (
             <SidebarRow
               collapsed
-              to="/{-$lang}/search"
-              params={{ lang }}
+              href={searchHref}
               label={t.shell.search}
               icon={<IconSearch size={16} stroke={1.75} aria-hidden />}
             />
           ) : null}
           <SidebarRow
             collapsed={collapsed}
-            to="/{-$lang}"
-            params={{ lang }}
+            href={homeHref}
             exact
+            highlightActive
             label={t.shell.apps}
             icon={<IconApps size={16} stroke={1.75} aria-hidden />}
           />
@@ -295,8 +252,8 @@ export function Sidebar({ categories }: { categories: { category: string; count:
                 <SidebarRow
                   key={category}
                   collapsed={collapsed}
-                  to="/{-$lang}/category/$category"
-                  params={{ lang, category }}
+                  href={localePath(locale, `/category/${category}`)}
+                  highlightActive
                   label={categoryLabel(category, t)}
                   icon={<CategoryIcon category={category} size={16} />}
                 />
@@ -320,6 +277,7 @@ export function Sidebar({ categories }: { categories: { category: string; count:
           <SidebarRow
             collapsed={collapsed}
             href="https://humation.app/avatar"
+            external
             label={t.shell.createAvatar}
             icon={<IconUserCircle size={16} stroke={1.75} aria-hidden />}
             trailing={
@@ -334,6 +292,7 @@ export function Sidebar({ categories }: { categories: { category: string; count:
           <SidebarRow
             collapsed={collapsed}
             href="https://github.com/humation-labs/humation"
+            external
             label={t.shell.github}
             title={collapsed && stars != null ? `GitHub · ${formatStars(stars)}` : undefined}
             icon={<IconBrandGithub size={16} stroke={1.75} aria-hidden />}
