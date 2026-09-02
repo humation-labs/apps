@@ -3,6 +3,7 @@ import { cpSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, write
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { imageSize } from 'image-size';
+import { PNG } from 'pngjs';
 
 const SITE_ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const REPO_ROOT = join(SITE_ROOT, '..');
@@ -14,8 +15,93 @@ const GENERATED_DIR = join(SITE_ROOT, 'src', 'generated');
 if (existsSync(APPS_DEST)) rmSync(APPS_DEST, { recursive: true, force: true });
 mkdirSync(APPS_DEST, { recursive: true });
 
-/** @type {Record<string, Record<string, { width: number; height: number }>>} */
+/** @type {Record<string, Record<string, { width: number; height: number; color?: string }>>} */
 const catalog = {};
+
+/**
+ * Average opaque, non-white, non-black pixels, then boost saturation and clamp lightness.
+ * @param {Buffer} buf
+ * @returns {string | undefined}
+ */
+function brandColorFromPng(buf) {
+  const png = PNG.sync.read(buf);
+  const { data } = png;
+  let rSum = 0;
+  let gSum = 0;
+  let bSum = 0;
+  let count = 0;
+  for (let i = 0; i < data.length; i += 4) {
+    const r = data[i];
+    const g = data[i + 1];
+    const b = data[i + 2];
+    const a = data[i + 3];
+    if (a <= 200) continue;
+    if (r > 240 && g > 240 && b > 240) continue;
+    if (r < 20 && g < 20 && b < 20) continue;
+    rSum += r;
+    gSum += g;
+    bSum += b;
+    count++;
+  }
+  if (count === 0) return undefined;
+  const { h, s, l } = rgbToHsl(rSum / count, gSum / count, bSum / count);
+  const { r, g, b } = hslToRgb(h, Math.min(1, s * 1.15), Math.min(0.55, Math.max(0.3, l)));
+  return `#${hexByte(r)}${hexByte(g)}${hexByte(b)}`;
+}
+
+/** @param {number} n */
+function hexByte(n) {
+  return Math.round(n).toString(16).padStart(2, '0');
+}
+
+/**
+ * @param {number} r
+ * @param {number} g
+ * @param {number} b
+ */
+function rgbToHsl(r, g, b) {
+  r /= 255;
+  g /= 255;
+  b /= 255;
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  const l = (max + min) / 2;
+  if (max === min) return { h: 0, s: 0, l };
+  const d = max - min;
+  const s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+  let h = 0;
+  if (max === r) h = ((g - b) / d + (g < b ? 6 : 0)) / 6;
+  else if (max === g) h = ((b - r) / d + 2) / 6;
+  else h = ((r - g) / d + 4) / 6;
+  return { h, s, l };
+}
+
+/**
+ * @param {number} h
+ * @param {number} s
+ * @param {number} l
+ */
+function hslToRgb(h, s, l) {
+  if (s === 0) {
+    const v = l * 255;
+    return { r: v, g: v, b: v };
+  }
+  const hue2rgb = (p, q, t) => {
+    if (t < 0) t += 1;
+    if (t > 1) t -= 1;
+    if (t < 1 / 6) return p + (q - p) * 6 * t;
+    if (t < 1 / 2) return q;
+    if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+    return p;
+  };
+  const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+  const p = 2 * l - q;
+  return {
+    r: hue2rgb(p, q, h + 1 / 3) * 255,
+    g: hue2rgb(p, q, h) * 255,
+    b: hue2rgb(p, q, h - 1 / 3) * 255,
+  };
+}
 
 if (existsSync(APPS_SRC)) {
   for (const entry of readdirSync(APPS_SRC, { withFileTypes: true })) {
@@ -23,14 +109,23 @@ if (existsSync(APPS_SRC)) {
     const src = join(APPS_SRC, entry.name);
     const dest = join(APPS_DEST, entry.name);
     mkdirSync(join(dest, 'screenshots'), { recursive: true });
-    /** @type {Record<string, { width: number; height: number }>} */
+    /** @type {Record<string, { width: number; height: number; color?: string }>} */
     const files = {};
     const icon = join(src, 'icon.png');
     if (existsSync(icon)) {
       const destIcon = join(dest, 'icon.png');
       cpSync(icon, destIcon);
-      const size = imageSize(readFileSync(destIcon));
-      files['icon.png'] = { width: size.width, height: size.height };
+      const buf = readFileSync(destIcon);
+      const size = imageSize(buf);
+      /** @type {{ width: number; height: number; color?: string }} */
+      const iconEntry = { width: size.width, height: size.height };
+      try {
+        const color = brandColorFromPng(buf);
+        if (color) iconEntry.color = color;
+      } catch {
+        // omit color if decoding fails
+      }
+      files['icon.png'] = iconEntry;
     }
     const shots = join(src, 'screenshots');
     if (existsSync(shots)) {
