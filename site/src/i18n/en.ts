@@ -7,11 +7,14 @@ export const en = {
     categories: 'Categories',
     search: 'Search',
     createAvatar: 'Create avatar',
+    npmPackages: 'npm packages',
     github: 'GitHub',
     collapseSidebar: 'Collapse sidebar',
     expandSidebar: 'Expand sidebar',
     back: 'Back',
     copyForAgent: 'Copy for agent',
+    copyForAgentTitle:
+      'Copy the listing prompt and paste it into Claude Code, ChatGPT/Codex or Grok',
     copy: 'Copy',
     copied: 'Copied',
     language: 'Language',
@@ -26,6 +29,7 @@ export const en = {
     ctaBody:
       'Paste this into the coding agent you use in your project and it will open the pull request for you.',
     orReadContributing: 'Or read CONTRIBUTING',
+    avatarCreator: 'Avatar creator',
     metaDescription:
       'A catalog of apps and web services built with Humation, the hand-drawn deterministic avatar engine.',
     noListings: 'No listings yet.',

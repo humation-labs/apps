@@ -6,22 +6,30 @@ const buttonClass =
 export function PagerArrows({
   onPrev,
   onNext,
+  showPrev = true,
+  showNext = true,
 }: {
   onPrev: () => void
   onNext: () => void
+  showPrev?: boolean
+  showNext?: boolean
 }) {
   return (
     <>
-      <button type="button" aria-label="Previous" onClick={onPrev} className={`${buttonClass} left-2`}>
-        <span className="inline-flex size-6 shrink-0 -translate-x-px items-center justify-center">
-          <IconChevronLeft size={24} stroke={1.5} aria-hidden />
-        </span>
-      </button>
-      <button type="button" aria-label="Next" onClick={onNext} className={`${buttonClass} right-2`}>
-        <span className="inline-flex size-6 shrink-0 translate-x-px items-center justify-center">
-          <IconChevronRight size={24} stroke={1.5} aria-hidden />
-        </span>
-      </button>
+      {showPrev ? (
+        <button type="button" aria-label="Previous" onClick={onPrev} className={`${buttonClass} left-2`}>
+          <span className="inline-flex size-6 shrink-0 -translate-x-px items-center justify-center">
+            <IconChevronLeft size={24} stroke={1.5} aria-hidden />
+          </span>
+        </button>
+      ) : null}
+      {showNext ? (
+        <button type="button" aria-label="Next" onClick={onNext} className={`${buttonClass} right-2`}>
+          <span className="inline-flex size-6 shrink-0 translate-x-px items-center justify-center">
+            <IconChevronRight size={24} stroke={1.5} aria-hidden />
+          </span>
+        </button>
+      ) : null}
     </>
   )
 }

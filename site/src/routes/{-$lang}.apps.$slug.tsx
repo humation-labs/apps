@@ -1,11 +1,11 @@
 import { useState, type ReactNode } from 'react'
 import {
+  IconArrowUpRight,
   IconBrandApple,
   IconBrandDiscord,
   IconBrandGithub,
   IconBrandGooglePlay,
   IconBrandX,
-  IconExternalLink,
 } from '@tabler/icons-react'
 import { Link, createFileRoute, notFound } from '@tanstack/react-router'
 import { CopyButton } from '../components/AddAppButton'
@@ -117,10 +117,10 @@ function AppDetail() {
           target="_blank"
           className={`mt-5 inline-flex h-12 w-full shrink-0 items-center justify-center gap-2 rounded-full bg-accent px-7 text-base leading-none font-semibold text-white shadow-[0_8px_24px_-8px_var(--accent)] transition hover:brightness-110 active:scale-[0.98] md:mt-0 md:w-auto ${FOCUS}`}
         >
-          <span className="icon-align -ml-0.5 inline-flex size-5 shrink-0 items-center justify-center">
-            <IconExternalLink size={20} stroke={2} aria-hidden />
-          </span>
           {t.detail.open}
+          <span className="icon-align -mr-1 inline-flex size-5 shrink-0 items-center justify-center">
+            <IconArrowUpRight size={20} stroke={2} aria-hidden />
+          </span>
         </a>
       </header>
 
@@ -245,14 +245,14 @@ function Description({ text }: { text: string }) {
           <p key={paragraph}>{paragraph}</p>
         ))}
       </div>
-      {clamp ? (
+      {isLong ? (
         <button
           type="button"
           className={`mt-2 rounded-sm text-accent ${FOCUS}`}
-          onClick={() => setExpanded(true)}
-          aria-label={t.detail.more}
+          onClick={() => setExpanded((current) => !current)}
+          aria-label={expanded ? t.detail.less : t.detail.more}
         >
-          {t.detail.more}
+          {expanded ? t.detail.less : t.detail.more}
         </button>
       ) : null}
     </section>

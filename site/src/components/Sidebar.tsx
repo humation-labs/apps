@@ -3,6 +3,7 @@ import {
   IconApps,
   IconArrowUpRight,
   IconBrandGithub,
+  IconBrandNpm,
   IconCheck,
   IconLanguage,
   IconLayoutSidebar,
@@ -29,12 +30,12 @@ import { CategoryIcon } from './CategoryIcon'
 const COLLAPSED_KEY = 'sidebar-collapsed'
 
 const ghostButtonClass =
-  'inline-flex size-7 items-center justify-center rounded-md text-text hover:bg-surface-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-sidebar'
+  'inline-flex size-7 items-center justify-center rounded-[8px] text-text hover:bg-surface-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-sidebar'
 
 function rowClassName(collapsed: boolean) {
   return collapsed
-    ? 'flex size-8 items-center justify-center rounded-md text-[13px] font-medium text-text hover:bg-surface-3/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-sidebar'
-    : 'flex h-8 w-full items-center gap-3 rounded-md px-2 text-[13px] font-medium text-text hover:bg-surface-3/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-sidebar'
+    ? 'flex size-8 items-center justify-center rounded-[8px] text-[13px] font-medium text-text hover:bg-surface-3/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-sidebar'
+    : 'flex h-8 w-full items-center gap-3 rounded-[8px] px-2 text-[13px] font-medium text-text hover:bg-surface-3/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-sidebar'
 }
 
 function RowIcon({ children }: { children: ReactNode }) {
@@ -319,9 +320,22 @@ export function Sidebar({ categories }: { categories: { category: string; count:
           </a>
           <SidebarRow
             collapsed={collapsed}
+            href="https://www.npmjs.com/org/humation"
+            label={t.shell.npmPackages}
+            icon={<IconBrandNpm size={16} stroke={1.75} aria-hidden />}
+            trailing={
+              <IconArrowUpRight
+                size={12}
+                stroke={2}
+                className="ml-auto text-text-muted"
+                aria-hidden
+              />
+            }
+          />
+          <SidebarRow
+            collapsed={collapsed}
             href="https://humation.app/avatar"
             label={t.shell.createAvatar}
-            title="Open the Humation avatar creator"
             icon={<IconUserCircle size={16} stroke={1.75} aria-hidden />}
             trailing={
               <IconArrowUpRight
@@ -336,9 +350,7 @@ export function Sidebar({ categories }: { categories: { category: string; count:
             collapsed={collapsed}
             href="https://github.com/humation-labs/humation"
             label={t.shell.github}
-            title={
-              collapsed && stars != null ? `GitHub · ${formatStars(stars)} stars` : undefined
-            }
+            title={collapsed && stars != null ? `GitHub · ${formatStars(stars)}` : undefined}
             icon={<IconBrandGithub size={16} stroke={1.75} aria-hidden />}
             trailing={
               stars != null ? (

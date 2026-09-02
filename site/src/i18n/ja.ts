@@ -7,14 +7,17 @@ export const ja = {
     categories: 'カテゴリ',
     search: '検索',
     createAvatar: 'アバターを作る',
+    npmPackages: 'npm パッケージ',
     github: 'GitHub',
     collapseSidebar: 'サイドバーを閉じる',
     expandSidebar: 'サイドバーを開く',
     back: '戻る',
     copyForAgent: 'エージェント用にコピー',
+    copyForAgentTitle:
+      '掲載用のプロンプトをコピーして Claude Code、ChatGPT/Codex、Grok に貼り付けてください',
     copy: 'コピー',
     copied: 'コピーしました',
-    language: 'Language',
+    language: '言語',
     footer: 'Humation で作られたアプリのカタログ。掲載はプルリクエストで。',
   },
   home: {
@@ -26,9 +29,10 @@ export const ja = {
     ctaBody:
       'この一文をプロジェクトで使っているコーディングエージェントに貼り付けると、掲載のプルリクエストを代わりに作成します。',
     orReadContributing: 'または CONTRIBUTING を読む',
+    avatarCreator: 'アバタークリエイター',
     metaDescription:
       '手描きの決定論的アバターエンジン Humation で作られたアプリと Web サービスのカタログ。',
-    noListings: 'No listings yet.',
+    noListings: 'まだ掲載がありません。',
   },
   detail: {
     open: '開く',
@@ -50,19 +54,19 @@ export const ja = {
   },
   category: {
     crumbApps: 'アプリ',
-    appsCount: (n: number) => `「${n} 件のアプリ」`,
+    appsCount: (n: number) => `${n} 件のアプリ`,
   },
   search: {
     title: '検索',
     placeholder: 'アプリを検索',
     empty: 'アプリ名、説明、開発者、カテゴリで検索できます。',
     none: (q: string) => `「${q}」に一致するアプリはありません。`,
-    metaDescription: 'Search apps and web services built with Humation.',
+    metaDescription: 'Humation で作られたアプリと Web サービスを検索。',
   },
   notFound: {
     title: 'ページが見つかりません',
     backToApps: 'アプリ一覧へ戻る',
-    metaDescription: 'This page is not in the Humation Apps catalog.',
+    metaDescription: 'このページは Humation Apps のカタログにありません。',
   },
   labels: {
     categories: {

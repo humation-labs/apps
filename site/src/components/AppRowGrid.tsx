@@ -29,7 +29,7 @@ export function AppRowGrid({ apps, paged = true }: { apps: Listing[]; paged?: bo
 }
 
 function PagedGrids({ pages }: { pages: Listing[][] }) {
-  const { ref, prev, next, onScroll } = useSnapScroll(pages.length)
+  const { ref, prev, next, onScroll, atStart, atEnd } = useSnapScroll(pages.length)
 
   return (
     <div className="relative min-w-0">
@@ -44,7 +44,7 @@ function PagedGrids({ pages }: { pages: Listing[][] }) {
           </div>
         ))}
       </div>
-      <PagerArrows onPrev={prev} onNext={next} />
+      <PagerArrows onPrev={prev} onNext={next} showPrev={!atStart} showNext={!atEnd} />
     </div>
   )
 }

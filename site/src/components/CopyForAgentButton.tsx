@@ -17,7 +17,7 @@ export function CopyForAgentButton() {
       text={ADD_APP_PROMPT}
       label={t.shell.copyForAgent}
       className={buttonClassName}
-      title="Copy the listing prompt and paste it into Claude Code, ChatGPT/Codex or Grok"
+      title={t.shell.copyForAgentTitle}
     >
       {(copied) => (
         <>

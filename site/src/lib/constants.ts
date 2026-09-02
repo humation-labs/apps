@@ -43,7 +43,7 @@ export function isCategory(value: string): value is Category {
 
 export function packageHref(pkg: string): string {
   if (pkg === 'humation-swift') return 'https://github.com/humation-labs/humation-swift';
-  return 'https://github.com/humation-labs/humation';
+  return `https://www.npmjs.com/package/${pkg}`;
 }
 
 export function iconSrc(slug: string): string {

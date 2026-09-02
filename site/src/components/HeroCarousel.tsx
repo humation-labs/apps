@@ -8,7 +8,7 @@ import type { Listing } from '../data/listings'
 
 export function HeroCarousel({ apps }: { apps: Listing[] }) {
   const slides = apps.filter((app) => app.screenshots[0])
-  const { ref, index, goTo, prev, next, onScroll } = useSnapScroll(slides.length)
+  const { ref, index, goTo, prev, next, onScroll, atStart, atEnd } = useSnapScroll(slides.length)
   const showControls = slides.length > 1
 
   if (slides.length === 0) return null
@@ -27,7 +27,9 @@ export function HeroCarousel({ apps }: { apps: Listing[] }) {
             <HeroCard key={app.slug} app={app} />
           ))}
         </div>
-        {showControls ? <PagerArrows onPrev={prev} onNext={next} /> : null}
+        {showControls ? (
+          <PagerArrows onPrev={prev} onNext={next} showPrev={!atStart} showNext={!atEnd} />
+        ) : null}
       </div>
       {showControls ? <PagerDots index={index} count={slides.length} onDot={goTo} /> : null}
     </div>

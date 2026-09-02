@@ -96,7 +96,14 @@ export function ScreenshotGallery({ shots }: { shots: Shot[] }) {
           showRight ? 'opacity-100' : 'opacity-0'
         }`}
       />
-      {overflows ? <PagerArrows onPrev={() => scroll(-1)} onNext={() => scroll(1)} /> : null}
+      {overflows ? (
+        <PagerArrows
+          onPrev={() => scroll(-1)}
+          onNext={() => scroll(1)}
+          showPrev={showLeft}
+          showNext={showRight}
+        />
+      ) : null}
     </div>
   )
 }
