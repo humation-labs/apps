@@ -7,14 +7,14 @@ export function AppRow({ app }: { app: Listing }) {
     <Link
       to="/apps/$slug"
       params={{ slug: app.slug }}
-      className="-mx-2 flex items-center gap-4 rounded-xl px-2 py-2 hover:bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
+      className="-mx-2 flex items-center gap-4 rounded-lg px-2 py-2 hover:bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
     >
       <img
         src={iconSrc(app.slug)}
         alt=""
         width={64}
         height={64}
-        className="size-16 shrink-0 rounded-[22%] ring-1 ring-inset ring-black/10 dark:ring-white/10"
+        className="size-16 shrink-0 rounded-[24%] ring-1 ring-inset ring-black/10 dark:ring-white/10"
       />
       <div className="min-w-0 flex-1 self-center">
         <p className="truncate text-[14px]/5 font-medium">{app.name}</p>

@@ -76,14 +76,14 @@ function Home() {
         </Section>
       ))}
 
-      <section className="mt-12 rounded-2xl bg-surface p-6" aria-label="Add your app">
+      <section className="mt-12 rounded-xl bg-surface p-6" aria-label="Add your app">
         <h2 className="text-xl font-semibold tracking-tight">Built something with Humation?</h2>
         <p className="mt-2 text-[14px] text-text-muted">
           Paste this into the coding agent you use in your project and it will open the pull
           request for you.
         </p>
         <div className="mt-4 flex min-w-0 items-start gap-2">
-          <code className="block min-w-0 flex-1 font-mono text-[13px] leading-relaxed break-words rounded-lg bg-surface-2 p-3">
+          <code className="block min-w-0 flex-1 font-mono text-[13px] leading-relaxed break-words rounded-sm bg-surface-2 p-3">
             {ADD_APP_PROMPT}
           </code>
           <AddAppButton

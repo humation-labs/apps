@@ -176,10 +176,10 @@ function AppDetail() {
         </dl>
       </section>
 
-      <div className="mt-8 rounded-2xl bg-surface p-6">
+      <div className="mt-8 rounded-xl bg-surface p-6">
         <h2 className="text-xl font-semibold tracking-tight">Link back to your listing from your site:</h2>
         <div className="mt-4 flex min-w-0 items-start gap-2">
-          <code className="block min-w-0 flex-1 font-mono text-[13px] leading-relaxed break-words rounded-lg bg-surface-2 p-3">
+          <code className="block min-w-0 flex-1 font-mono text-[13px] leading-relaxed break-words rounded-sm bg-surface-2 p-3">
             {snippet}
           </code>
           <CopyButton

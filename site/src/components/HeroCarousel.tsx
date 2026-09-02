@@ -41,7 +41,7 @@ function HeroCard({ app }: { app: Listing }) {
     <Link
       to="/apps/$slug"
       params={{ slug: app.slug }}
-      className="relative aspect-[4/5] w-full min-w-0 shrink-0 snap-center overflow-hidden rounded-2xl md:aspect-video md:max-h-[480px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
+      className="relative aspect-[4/5] w-full min-w-0 shrink-0 snap-center overflow-hidden rounded-xl md:aspect-video md:max-h-[480px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
     >
       <img
         src={screenshotSrc(app.slug, shot.file)}
@@ -50,7 +50,7 @@ function HeroCard({ app }: { app: Listing }) {
         height={height}
         className="absolute inset-0 h-full w-full max-w-full object-cover object-top"
       />
-      <span className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-inset ring-black/10 dark:ring-white/10" />
+      <span className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-black/10 dark:ring-white/10" />
       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/10" />
       <div className="absolute inset-0 flex min-w-0 flex-col justify-end p-6 drop-shadow md:p-10">
         <p className="text-[11px] font-semibold tracking-[0.08em] text-white/80 uppercase">
@@ -64,7 +64,7 @@ function HeroCard({ app }: { app: Listing }) {
             alt=""
             width={48}
             height={48}
-            className="size-12 rounded-[22%] ring-1 ring-inset ring-white/20"
+            className="size-12 rounded-[24%] ring-1 ring-inset ring-white/20"
           />
           <div className="min-w-0 flex-1 self-center">
             <p className="truncate text-[14px]/5 font-medium text-white">{app.name}</p>

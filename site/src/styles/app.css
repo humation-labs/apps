@@ -12,6 +12,10 @@
   --color-text-muted: var(--text-muted);
   --color-border: var(--border);
   --color-accent: var(--accent);
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
 }
 
 :root {

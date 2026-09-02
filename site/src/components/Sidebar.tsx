@@ -23,8 +23,8 @@ const ghostButtonClass =
 
 function rowClassName(collapsed: boolean) {
   return collapsed
-    ? 'flex size-8 items-center justify-center rounded-lg text-[13px] font-medium text-text hover:bg-surface-3/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-sidebar'
-    : 'flex h-8 w-full items-center gap-3 rounded-lg px-2 text-[13px] font-medium text-text hover:bg-surface-3/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-sidebar'
+    ? 'flex size-8 items-center justify-center rounded-md text-[13px] font-medium text-text hover:bg-surface-3/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-sidebar'
+    : 'flex h-8 w-full items-center gap-3 rounded-md px-2 text-[13px] font-medium text-text hover:bg-surface-3/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-sidebar'
 }
 
 function RowIcon({ children }: { children: ReactNode }) {
