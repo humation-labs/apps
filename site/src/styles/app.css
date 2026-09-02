@@ -61,13 +61,22 @@
   }
 }
 
-html {
-  overflow-x: clip;
-}
-
 html,
 body {
-  overscroll-behavior-x: none;
+  overscroll-behavior: none;
+}
+
+html {
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+body {
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: clip;
+  -webkit-overflow-scrolling: touch;
 }
 
 @utility no-scrollbar {
