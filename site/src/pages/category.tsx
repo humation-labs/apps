@@ -31,6 +31,7 @@ export function categoryRoute(locale: Locale) {
         title,
         description: `${t.category.appsCount(count)} · ${title} · ${t.meta.siteName}`,
         path: localePath(locale, `/category/${category}`),
+        image: '/og/default.png',
         locale,
       })
     },

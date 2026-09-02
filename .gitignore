@@ -3,6 +3,7 @@ site/dist
 site/.tanstack
 site/.output
 site/public/apps
+site/public/og
 site/public/llms.txt
 site/public/schema
 site/src/generated

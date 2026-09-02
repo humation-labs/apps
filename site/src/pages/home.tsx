@@ -38,6 +38,7 @@ export function homeRoute(locale: Locale) {
         title: t.meta.siteName,
         description: t.home.metaDescription,
         path: localePath(locale, '/'),
+        image: '/og/default.png',
         locale,
       })
     },

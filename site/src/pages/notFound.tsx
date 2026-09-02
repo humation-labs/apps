@@ -10,6 +10,7 @@ export function notFoundRoute(locale: Locale) {
         title: t.notFound.title,
         description: t.notFound.metaDescription,
         path: localePath(locale, '/404'),
+        image: '/og/default.png',
         locale,
       })
     },

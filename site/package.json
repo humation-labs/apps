@@ -3,9 +3,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "predev": "node scripts/sync-assets.mjs",
+    "predev": "node scripts/sync-assets.mjs && node scripts/og.mjs",
     "dev": "vite dev",
-    "prebuild": "node scripts/sync-assets.mjs",
+    "prebuild": "node scripts/sync-assets.mjs && node scripts/og.mjs",
     "build": "vite build",
     "postbuild": "node scripts/copy-404.mjs",
     "preview": "vite preview",

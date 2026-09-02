@@ -70,6 +70,7 @@ export function detailRoute(locale: Locale) {
           title: t.notFound.title,
           description: t.notFound.metaDescription,
           path: localePath(locale, '/404'),
+          image: '/og/default.png',
           locale,
         })
       }
@@ -78,7 +79,7 @@ export function detailRoute(locale: Locale) {
         title: listing.name,
         description: listing.tagline,
         path: localePath(locale, `/${listing.slug}`),
-        image: iconSrc(listing.slug),
+        image: `/og/${listing.slug}.png`,
         locale,
       })
     },
@@ -111,19 +112,19 @@ function AppDetail() {
 
   return (
     <article className="min-w-0">
-      <header className="flex flex-col md:flex-row md:items-center md:gap-5">
-        <div className="flex items-center gap-4 md:contents">
+      <header className="flex flex-col md:flex-row md:items-center md:gap-8">
+        <div className="flex items-center gap-5 md:gap-8 md:contents">
           <img
             src={iconSrc(listing.slug)}
             alt={listing.name}
             width={120}
             height={120}
-            className="size-20 shrink-0 rounded-[22%] ring-1 ring-inset ring-black/10 md:size-[120px] dark:ring-white/10"
+            className="size-24 shrink-0 rounded-[22%] ring-1 ring-inset ring-black/10 md:size-[120px] dark:ring-white/10"
           />
-          <div className="min-w-0 flex-1">
-            <h1 className="text-2xl/tight font-bold tracking-tight md:text-4xl/tight">{listing.name}</h1>
-            <p className="mt-1 text-lg text-text-muted">{listing.tagline}</p>
-            <a href={developerUrl} rel="noopener" className={`mt-2 inline-block text-accent ${FOCUS}`}>
+          <div className="min-w-0 flex-1 space-y-0.5 leading-snug">
+            <h1 className="text-xl font-bold tracking-tight md:text-4xl/tight">{listing.name}</h1>
+            <p className="text-sm text-text-muted md:text-lg">{listing.tagline}</p>
+            <a href={developerUrl} rel="noopener" className={`inline-block text-sm text-accent ${FOCUS}`}>
               {listing.developer.name}
             </a>
           </div>

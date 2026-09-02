@@ -11,7 +11,7 @@ export function pageHead({
   title,
   description,
   path,
-  image = '/favicon.png',
+  image = '/og/default.png',
   locale,
 }: {
   title: string
@@ -36,8 +36,10 @@ export function pageHead({
       { property: 'og:description', content: description },
       { property: 'og:url', content: canonical },
       { property: 'og:image', content: ogImage },
+      { property: 'og:image:width', content: '1200' },
+      { property: 'og:image:height', content: '630' },
       { property: 'og:locale', content: locale === 'ja' ? 'ja_JP' : 'en_US' },
-      { name: 'twitter:card', content: 'summary' },
+      { name: 'twitter:card', content: 'summary_large_image' },
       { name: 'twitter:title', content: fullTitle },
       { name: 'twitter:description', content: description },
       { name: 'twitter:image', content: ogImage },

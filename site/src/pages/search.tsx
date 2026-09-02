@@ -20,6 +20,7 @@ export function searchRoute(locale: Locale) {
         title: t.search.title,
         description: t.search.metaDescription,
         path: localePath(locale, '/search'),
+        image: '/og/default.png',
         locale,
       })
     },
