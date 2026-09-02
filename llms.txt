@@ -3,12 +3,12 @@
 apps.humation.app is the showcase of apps and web services built with Humation
 (https://humation.app), the hand-drawn deterministic avatar engine. Every
 listing is a directory in the public GitHub repository
-https://github.com/humation-labs/apps. Anyone whose app depends on a Humation
+https://github.com/humation-labs/apps.humation.app. Anyone whose app depends on a Humation
 package can add it by opening a pull request. Listings are reviewed by
 maintainers before they go live.
 
 Site: https://apps.humation.app
-Repository: https://github.com/humation-labs/apps
+Repository: https://github.com/humation-labs/apps.humation.app
 Listing schema: https://apps.humation.app/schema/app.schema.json
 Humation docs: https://humation.app/docs and https://github.com/humation-labs/humation
 
@@ -77,7 +77,7 @@ developer before writing files. A short question is better than a wrong listing.
 ### Step 3. Fork, add the files, validate
 
 ```bash
-gh repo fork humation-labs/apps --clone --default-branch-only
+gh repo fork humation-labs/apps.humation.app --clone --default-branch-only
 cd apps.humation.app
 git checkout -b add-<slug>
 mkdir -p apps/<slug>/screenshots
@@ -96,7 +96,7 @@ error and rerun until it passes. Do not modify files outside `apps/<slug>/`.
 git add apps/<slug>
 git commit -m "Add <App name>"
 git push -u origin add-<slug>
-gh pr create --repo humation-labs/apps --title "Add <App name>" --body "$(cat <<'MD'
+gh pr create --repo humation-labs/apps.humation.app --title "Add <App name>" --body "$(cat <<'MD'
 ## Listing
 - App: <App name> — <url>
 - Developer: @<github login>

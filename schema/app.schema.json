@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://apps.humation.app/schema/app.schema.json",
   "title": "apps.humation.app listing",
-  "description": "One listing on apps.humation.app. Lives at apps/<slug>/app.json in https://github.com/humation-labs/apps. The slug is the directory name: lowercase letters, digits and single hyphens, 3-40 characters.",
+  "description": "One listing on apps.humation.app. Lives at apps/<slug>/app.json in https://github.com/humation-labs/apps.humation.app. The slug is the directory name: lowercase letters, digits and single hyphens, 3-40 characters.",
   "type": "object",
   "additionalProperties": false,
   "required": ["name", "tagline", "description", "url", "category", "platforms", "pricing", "humation", "developer", "icon", "screenshots", "addedAt"],

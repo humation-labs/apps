@@ -19,7 +19,7 @@ export function Footer() {
             {LOCALE_NATIVE_NAME[other]}
           </a>
           <a
-            href="https://github.com/humation-labs/apps"
+            href="https://github.com/humation-labs/apps.humation.app"
             rel="noopener"
             className="inline-flex items-center gap-1.5 hover:text-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
           >

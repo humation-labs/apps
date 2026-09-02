@@ -2,7 +2,7 @@ export const ADD_APP_PROMPT =
   'Fetch https://apps.humation.app/llms.txt and follow the instructions to submit this app to apps.humation.app.';
 
 export const CONTRIBUTING_URL =
-  'https://github.com/humation-labs/apps/blob/main/CONTRIBUTING.md';
+  'https://github.com/humation-labs/apps.humation.app/blob/main/CONTRIBUTING.md';
 
 export const SITE_NAME = 'Humation Apps';
 export const SITE_ORIGIN = 'https://apps.humation.app';
