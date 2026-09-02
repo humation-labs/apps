@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 import { HeadContent, Outlet, Scripts, createRootRoute } from '@tanstack/react-router'
 import { Footer } from '../components/Footer'
-import { Header } from '../components/Header'
+import { NavBar } from '../components/NavBar'
 import { NotFound } from '../components/NotFound'
 import { Sidebar } from '../components/Sidebar'
 import { categoryCounts } from '../data/listings'
@@ -48,8 +48,8 @@ function RootDocument({
         <div className="flex min-h-screen">
           <Sidebar categories={categories} />
           <div className="flex min-w-0 flex-1 flex-col">
-            <Header />
-            <main className="mx-auto w-full min-w-0 max-w-[1100px] flex-1 px-6 py-8 lg:px-10">
+            <NavBar />
+            <main className="mx-auto w-full min-w-0 max-w-[1100px] flex-1 px-6 pt-6 pb-8 lg:px-10">
               {children}
               <Footer />
             </main>
