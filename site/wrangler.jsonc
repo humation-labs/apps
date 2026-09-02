@@ -4,7 +4,8 @@
   "account_id": "2bde4c78cf8549b660bce308f8bd5a2a",
   "assets": {
     "directory": "./dist/client",
-    "not_found_handling": "404-page"
+    "not_found_handling": "404-page",
+    "html_handling": "drop-trailing-slash"
   },
   "routes": [
     {
