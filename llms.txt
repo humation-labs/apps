@@ -78,7 +78,7 @@ developer before writing files. A short question is better than a wrong listing.
 
 ```bash
 gh repo fork humation-labs/apps --clone --default-branch-only
-cd apps
+cd apps.humation.app
 git checkout -b add-<slug>
 mkdir -p apps/<slug>/screenshots
 # write apps/<slug>/app.json, copy icon.png and screenshots/ into place
