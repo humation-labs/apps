@@ -75,17 +75,12 @@ function FeaturedCard({ app, index }: { app: Listing; index: number }) {
               className="absolute inset-0 h-full w-full max-w-full object-cover object-top"
             />
           )}
-          {isPortrait ? (
-            <div
-              className={`pointer-events-none absolute inset-x-0 bottom-0 h-[60%] bg-gradient-to-t to-transparent md:h-[55%] ${
-                darkBg
-                  ? 'from-black/75 via-black/40 md:from-black/55 md:via-transparent'
-                  : 'from-white/75 via-white/40 md:from-white/55 md:via-transparent'
-              }`}
-            />
-          ) : (
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
-          )}
+          <div
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-[60%] md:h-[55%]"
+            style={{
+              background: `linear-gradient(to top, ${brand} 0%, ${brand}E6 30%, ${brand}80 60%, transparent 100%)`,
+            }}
+          />
           <div
             className={`absolute inset-x-0 bottom-0 flex max-w-full flex-col justify-end p-6 md:max-w-[55%] md:p-10 ${
               isPortrait ? '' : 'text-white'
