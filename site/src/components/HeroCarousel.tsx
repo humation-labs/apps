@@ -41,7 +41,7 @@ function HeroCard({ app }: { app: Listing }) {
     <Link
       to="/apps/$slug"
       params={{ slug: app.slug }}
-      className="relative aspect-video max-h-[480px] w-full min-w-0 shrink-0 snap-center overflow-hidden rounded-2xl"
+      className="relative aspect-[4/5] w-full min-w-0 shrink-0 snap-center overflow-hidden rounded-2xl md:aspect-video md:max-h-[480px]"
     >
       <img
         src={screenshotSrc(app.slug, shot.file)}
@@ -50,11 +50,11 @@ function HeroCard({ app }: { app: Listing }) {
         height={height}
         className="absolute inset-0 h-full w-full max-w-full object-cover object-top"
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent" />
-      <div className="absolute inset-0 flex min-w-0 flex-col justify-end p-6 md:p-10">
+      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/10" />
+      <div className="absolute inset-0 flex min-w-0 flex-col justify-end p-6 drop-shadow md:p-10">
         <p className="text-xs tracking-wide text-white/80 uppercase">{categoryLabel(app.category)}</p>
-        <h2 className="text-3xl font-bold text-white md:text-5xl">{app.name}</h2>
-        <p className="mt-1 text-white/90">{app.tagline}</p>
+        <h2 className="text-3xl font-bold text-white drop-shadow md:text-5xl">{app.name}</h2>
+        <p className="mt-1 text-white/90 drop-shadow">{app.tagline}</p>
         <div className="mt-4 flex min-w-0 items-center gap-3">
           <img
             src={iconSrc(app.slug)}

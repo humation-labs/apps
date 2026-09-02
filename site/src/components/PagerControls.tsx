@@ -2,7 +2,7 @@ import { IconChevronLeft, IconChevronRight } from '@tabler/icons-react'
 import { IconLine } from './IconLine'
 
 const buttonClass =
-  'absolute top-1/2 z-10 flex size-10 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-surface text-text shadow-sm'
+  'absolute top-1/2 z-10 flex size-10 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-surface text-text shadow-sm focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none'
 
 export function PagerArrows({
   onPrev,
@@ -41,7 +41,7 @@ export function PagerDots({
           aria-label={`Go to slide ${i + 1}`}
           aria-current={i === index || undefined}
           onClick={() => onDot(i)}
-          className={`h-1.5 rounded-full ${i === index ? 'w-4 bg-text' : 'w-1.5 bg-text-muted/50'}`}
+          className={`h-1.5 rounded-full focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none ${i === index ? 'w-4 bg-text' : 'w-1.5 bg-text-muted/50'}`}
         />
       ))}
     </div>

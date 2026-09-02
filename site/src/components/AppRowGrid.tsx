@@ -15,8 +15,8 @@ function Grid({ apps }: { apps: Listing[] }) {
   )
 }
 
-export function AppRowGrid({ apps }: { apps: Listing[] }) {
-  if (apps.length <= 9) {
+export function AppRowGrid({ apps, paged = true }: { apps: Listing[]; paged?: boolean }) {
+  if (!paged || apps.length <= 9) {
     return <Grid apps={apps} />
   }
 

@@ -1,5 +1,7 @@
+import { IconChevronRight } from '@tabler/icons-react'
 import { Link, createFileRoute, notFound } from '@tanstack/react-router'
-import { AppCard } from '../components/AppCard'
+import { AppRowGrid } from '../components/AppRowGrid'
+import { CategoryIcon } from '../components/CategoryIcon'
 import { CATEGORY_LABELS, categoryLabel } from '../lib/constants'
 import { pageHead } from '../lib/head'
 import { byCategory } from '../data/listings'
@@ -30,19 +32,21 @@ function CategoryPage() {
   const countLabel = `${apps.length} ${apps.length === 1 ? 'app' : 'apps'}`
 
   return (
-    <div className="mx-auto max-w-5xl px-4 py-10">
-      <p className="mb-4 text-sm text-zinc-600 dark:text-zinc-400">
-        <Link to="/" className="text-blue-600">
+    <div className="min-w-0">
+      <nav aria-label="Breadcrumb" className="mb-4 flex items-center gap-1 text-sm">
+        <Link to="/" className="hover:text-accent">
           Apps
-        </Link>{' '}
-        / {title}
-      </p>
-      <h1 className="text-3xl font-bold tracking-tight">{title}</h1>
-      <p className="mb-6 mt-1 text-zinc-600 dark:text-zinc-400">{countLabel}</p>
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {apps.map((app) => (
-          <AppCard key={app.slug} app={app} />
-        ))}
+        </Link>
+        <IconChevronRight size={16} className="text-text-muted" aria-hidden />
+        <span className="text-text-muted">{title}</span>
+      </nav>
+      <h1 className="flex items-center gap-3 text-3xl font-bold">
+        <CategoryIcon category={category} size={32} />
+        {title}
+      </h1>
+      <p className="mt-1 text-text-muted">{countLabel}</p>
+      <div className="mt-6 min-w-0">
+        <AppRowGrid apps={apps} paged={false} />
       </div>
     </div>
   )

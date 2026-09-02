@@ -1,7 +1,8 @@
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import { IconSearch } from '@tabler/icons-react'
-import { createFileRoute } from '@tanstack/react-router'
-import { AppCard } from '../components/AppCard'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import { AppRow } from '../components/AppRow'
+import { categoryLabel } from '../lib/constants'
 import { pageHead } from '../lib/head'
 import { allListings } from '../data/listings'
 
@@ -21,40 +22,57 @@ export const Route = createFileRoute('/search')({
 
 function SearchPage() {
   const apps = Route.useLoaderData()
-  const [query, setQuery] = useState('')
+  const { q } = Route.useSearch()
+  const navigate = useNavigate({ from: '/search' })
+  const query = q ?? ''
+  const trimmed = query.trim()
 
   const filtered = useMemo(() => {
-    const q = query.trim().toLowerCase()
-    if (!q) return apps
+    const needle = trimmed.toLowerCase()
+    if (!needle) return []
     return apps.filter((app) => {
-      const haystack = [app.name, app.tagline, app.description, app.developer.name]
+      const haystack = [app.name, app.tagline, app.developer.name, categoryLabel(app.category)]
         .join(' ')
         .toLowerCase()
-      return haystack.includes(q)
+      return haystack.includes(needle)
     })
-  }, [apps, query])
+  }, [apps, trimmed])
 
   return (
-    <div className="mx-auto max-w-5xl px-4 py-10">
-      <h1 className="text-3xl font-bold tracking-tight">Search</h1>
-      <label className="mt-6 flex items-center gap-2 rounded-xl border border-zinc-200 px-3 py-2 dark:border-zinc-800">
-        <IconSearch size={20} aria-hidden />
+    <div className="min-w-0">
+      <h1 className="text-3xl font-bold">Search</h1>
+      <label className="mt-6 flex items-center gap-3 rounded-2xl bg-surface px-4 py-3.5 focus-within:ring-2 focus-within:ring-accent">
+        <IconSearch size={22} className="shrink-0 text-text-muted" aria-hidden />
         <input
           type="search"
+          name="q"
           value={query}
-          onChange={(event) => setQuery(event.target.value)}
-          placeholder="Search apps"
-          className="w-full bg-transparent outline-none"
+          onChange={(event) => {
+            const next = event.target.value
+            void navigate({
+              search: { q: next === '' ? undefined : next },
+              replace: true,
+            })
+          }}
+          placeholder="Search"
+          autoFocus
+          aria-label="Search apps"
+          className="w-full min-w-0 bg-transparent text-lg outline-none placeholder:text-text-muted"
         />
       </label>
-      <p className="mt-3 text-sm text-zinc-600 dark:text-zinc-400">
-        {filtered.length} {filtered.length === 1 ? 'app' : 'apps'}
-      </p>
-      <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {filtered.map((app) => (
-          <AppCard key={app.slug} app={app} />
-        ))}
-      </div>
+      {trimmed === '' ? (
+        <p className="mt-6 text-text-muted">
+          Search apps by name, tagline, developer or category.
+        </p>
+      ) : filtered.length === 0 ? (
+        <p className="mt-6 text-text-muted">No apps match "{trimmed}".</p>
+      ) : (
+        <div className="mt-6 min-w-0">
+          {filtered.map((app) => (
+            <AppRow key={app.slug} app={app} />
+          ))}
+        </div>
+      )}
     </div>
   )
 }
