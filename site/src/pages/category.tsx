@@ -60,7 +60,7 @@ function CategoryPage() {
         <span className="text-text-muted">{title}</span>
       </nav>
       <h1 className="flex items-center gap-3 text-4xl/tight font-bold tracking-tight">
-        <CategoryIcon category={category} size={20} className="icon-align" />
+        <CategoryIcon category={category} size={40} className="icon-align" />
         {title}
       </h1>
       <p className="mt-1 text-text-muted tabular">{t.category.appsCount(apps.length)}</p>

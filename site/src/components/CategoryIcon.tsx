@@ -27,6 +27,9 @@ function boxClass(size: number) {
   if (size <= 16) return 'size-4'
   if (size <= 20) return 'size-5'
   if (size <= 24) return 'size-6'
+  if (size <= 28) return 'size-7'
+  if (size <= 32) return 'size-8'
+  if (size <= 40) return 'size-10'
   return ''
 }
 
@@ -40,7 +43,7 @@ export function CategoryIcon({
   className?: string
 }) {
   const Glyph = CATEGORY_ICONS[category] ?? IconApps
-  const stroke = size <= 16 ? 1.75 : 1.5
+  const stroke = size <= 16 ? 1.75 : size >= 28 ? 2 : 1.5
   const box = boxClass(size)
   return (
     <span
