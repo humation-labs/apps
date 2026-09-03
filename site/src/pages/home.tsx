@@ -118,7 +118,7 @@ function Home() {
             <h2 className="text-2xl font-bold tracking-tight md:text-3xl">{t.home.ctaHeading}</h2>
             <p className="mt-2 max-w-[48ch] text-base text-text-muted">{t.home.ctaBody}</p>
           </div>
-          <div className="flex flex-col items-center gap-3 self-center justify-self-end">
+          <div className="flex w-full flex-col items-center gap-3 self-center justify-self-end md:w-auto">
             <CopyButton
               text={ADD_APP_PROMPT}
               label={t.home.copyPrompt}
