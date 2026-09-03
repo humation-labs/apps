@@ -260,32 +260,6 @@ function listingTree({ name, tagline, brand, iconDataUrl, shot }) {
             },
             'Apps',
           ),
-          el(
-            'div',
-            {
-              style: {
-                display: 'flex',
-                fontFamily: 'Inter',
-                fontWeight: 400,
-                fontSize: 26,
-                color: withAlpha(fg, 0.6),
-              },
-            },
-            '·',
-          ),
-          el(
-            'div',
-            {
-              style: {
-                display: 'flex',
-                fontFamily: 'Inter',
-                fontWeight: 400,
-                fontSize: 26,
-                color: withAlpha(fg, 0.6),
-              },
-            },
-            'apps.humation.app',
-          ),
         ],
       ),
     ],
@@ -388,19 +362,6 @@ function defaultTree(iconUrls) {
               'Apps built with Humation',
             ),
           ]),
-          el(
-            'div',
-            {
-              style: {
-                display: 'flex',
-                fontFamily: 'Inter',
-                fontWeight: 400,
-                fontSize: 28,
-                color: 'rgba(255,255,255,0.6)',
-              },
-            },
-            'apps.humation.app',
-          ),
         ],
       ),
       icons.length > 0
