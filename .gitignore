@@ -10,3 +10,5 @@ site/src/generated
 .wrangler
 .DS_Store
 *.log
+site/.env
+site/.env.*.local

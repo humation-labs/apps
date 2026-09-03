@@ -48,6 +48,14 @@ Pushes to `main` are built and deployed automatically by Cloudflare Workers Buil
 is connected in the Cloudflare dashboard; build command `bun run build`, deploy command
 `bun run --cwd site deploy`). No GitHub secrets are involved.
 
+### Google Analytics
+
+The site loads GA4 (gtag.js) only when the build variable `VITE_GA_ID` is set to a GA4
+measurement ID (`G-XXXXXXXXXX`). Set it under Workers & Pages → humation-apps → Settings →
+Build → Variables and secrets in the Cloudflare dashboard (and in your shell for a manual
+`bun run deploy`). When it is unset the generated HTML contains no analytics code at all; a
+malformed value fails the build.
+
 ## License
 
 Code in this repository is MIT licensed. Listing content (names, icons, screenshots)
