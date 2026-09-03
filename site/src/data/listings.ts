@@ -77,12 +77,11 @@ export function byCategory(category: string): Listing[] {
     .sort((a, b) => a.name.localeCompare(b.name))
 }
 
-export function newest(limit = 12): Listing[] {
-  return [...listings]
-    .sort(
-      (a, b) => b.addedAt.localeCompare(a.addedAt) || a.name.localeCompare(b.name),
-    )
-    .slice(0, limit)
+export function newest(limit?: number): Listing[] {
+  const sorted = [...listings].sort(
+    (a, b) => b.addedAt.localeCompare(a.addedAt) || a.name.localeCompare(b.name),
+  )
+  return limit === undefined ? sorted : sorted.slice(0, limit)
 }
 
 export function featured(): Listing[] {

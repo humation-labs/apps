@@ -30,9 +30,11 @@ export default defineConfig(({ mode }) => {
         },
         pages: [
           { path: '/' },
+          { path: '/new' },
           { path: '/search' },
           { path: '/404', prerender: { enabled: true, outputPath: '/404.html' } },
           { path: '/ja' },
+          { path: '/ja/new' },
           { path: '/ja/search' },
           { path: '/ja/404', prerender: { enabled: true, outputPath: '/ja/404.html' } },
         ],
