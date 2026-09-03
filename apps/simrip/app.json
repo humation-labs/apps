@@ -1,0 +1,45 @@
+{
+  "$schema": "https://apps.humation.app/schema/app.schema.json",
+  "name": "simrip",
+  "tagline": "Plan itineraries, packing, bookings, and expenses without signing up",
+  "description": "simrip is an iPhone and iPad travel planning app for organizing domestic and international itineraries without signing up. Keep local dates, time zones, packing lists, booking notes, and expenses together for each trip.\n\nHumation avatars appear in Edit together to identify the owner and other participants.",
+  "url": "https://simrip.app/en/",
+  "category": "lifestyle",
+  "platforms": ["ios"],
+  "pricing": "freemium",
+  "humation": {
+    "packages": ["@humation/core", "@humation/assets-humation-1"],
+    "usage": "Participant avatars in Edit together"
+  },
+  "developer": {
+    "name": "SAKURAKO AYABE",
+    "github": "pipkchu"
+  },
+  "icon": "icon.png",
+  "screenshots": [
+    {
+      "file": "screenshots/01-home.webp",
+      "alt": "simrip home screen with sample itinerary and create trip actions"
+    },
+    {
+      "file": "screenshots/02-itinerary.webp",
+      "alt": "Sample trip itinerary arranged by day and time"
+    },
+    {
+      "file": "screenshots/03-packing.webp",
+      "alt": "Packing checklist with categories, completed items, and reorder controls"
+    },
+    {
+      "file": "screenshots/04-expenses.webp",
+      "alt": "Trip expenses screen showing the sample total and one itinerary expense"
+    },
+    {
+      "file": "screenshots/05-collaboration.webp",
+      "alt": "Collaboration screen with Humation avatars and participant roles"
+    }
+  ],
+  "links": {
+    "appStore": "https://apps.apple.com/jp/app/id6780345249"
+  },
+  "addedAt": "2026-09-03"
+}
