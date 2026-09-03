@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { PagerArrows } from './PagerControls'
+import { ShimmerImage } from './ShimmerImage'
 
 type Shot = {
   file: string
@@ -71,13 +72,14 @@ export function ScreenshotGallery({ shots }: { shots: Shot[] }) {
         {shots.map((shot, i) => {
           const landscape = shot.width >= shot.height
           const img = (
-            <img
+            <ShimmerImage
               src={shot.src}
               alt={shot.alt}
               width={shot.width}
               height={shot.height}
               loading={i === 0 ? 'eager' : 'lazy'}
               fetchPriority={i === 0 ? 'high' : undefined}
+              wrapperClassName="w-full"
               className="h-auto w-full object-top"
             />
           )

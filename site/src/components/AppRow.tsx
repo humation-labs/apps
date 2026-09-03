@@ -2,6 +2,7 @@ import { iconSrc } from '../lib/constants'
 import { localePath, useLocale, useT } from '../i18n'
 import type { Listing } from '../data/listings'
 import { LocaleLink } from './LocaleLink'
+import { ShimmerImage } from './ShimmerImage'
 
 export function AppRow({ app }: { app: Listing }) {
   const locale = useLocale()
@@ -12,12 +13,13 @@ export function AppRow({ app }: { app: Listing }) {
       href={localePath(locale, `/${app.slug}`)}
       className="-mx-2 flex items-center gap-4 rounded-lg px-2 py-2 hover:bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
     >
-      <img
+      <ShimmerImage
         src={iconSrc(app.slug)}
         alt=""
         width={64}
         height={64}
-        className="size-16 shrink-0 rounded-[24%] ring-1 ring-inset ring-black/10 dark:ring-white/10"
+        wrapperClassName="size-16 shrink-0 rounded-[24%]"
+        className="size-full rounded-[24%] ring-1 ring-inset ring-black/10 dark:ring-white/10"
       />
       <div className="min-w-0 flex-1 self-center">
         <p className="truncate text-[14px]/5 font-medium">{app.name}</p>

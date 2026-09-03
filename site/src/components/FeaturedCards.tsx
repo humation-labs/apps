@@ -3,6 +3,7 @@ import { categoryLabel, localePath, useLocale, useT } from '../i18n'
 import { iconColor, imageDimensions } from '../lib/images'
 import type { Listing } from '../data/listings'
 import { LocaleLink } from './LocaleLink'
+import { ShimmerImage } from './ShimmerImage'
 
 export function FeaturedCards({ apps }: { apps: Listing[] }) {
   const cards = apps.filter((app) => app.screenshots[0]).slice(0, 1)
@@ -69,7 +70,7 @@ export function FeaturedCard({
             >
               <div className="h-full w-full [container-type:inline-size]">
                 <div className="h-full w-full overflow-hidden rounded-[14cqw] border border-border/70 ring-1 ring-black/10 dark:border-white/15">
-                  <img
+                  <ShimmerImage
                     src={src}
                     alt={shot.alt}
                     width={width}
@@ -77,13 +78,14 @@ export function FeaturedCard({
                     loading={loading}
                     fetchPriority={fetchPriority}
                     decoding="async"
+                    wrapperClassName="h-full w-full"
                     className="h-full w-full object-cover object-top"
                   />
                 </div>
               </div>
             </div>
           ) : (
-            <img
+            <ShimmerImage
               src={src}
               alt={shot.alt}
               width={width}
@@ -91,7 +93,8 @@ export function FeaturedCard({
               loading={loading}
               fetchPriority={fetchPriority}
               decoding="async"
-              className="absolute inset-0 h-full w-full max-w-full object-cover object-top"
+              wrapperClassName="absolute inset-0"
+              className="h-full w-full max-w-full object-cover object-top"
             />
           )}
           <div
@@ -133,7 +136,7 @@ export function FeaturedCard({
             darkBg ? 'bg-black/15' : 'bg-white/25'
           }`}
         >
-          <img
+          <ShimmerImage
             src={iconSrc(app.slug)}
             alt=""
             width={iconSize}
@@ -141,7 +144,8 @@ export function FeaturedCard({
             loading={loading}
             fetchPriority={fetchPriority}
             decoding="async"
-            className={`${compact ? 'size-10' : 'size-12'} shrink-0 rounded-[22%] ring-1 ring-inset ring-white/20`}
+            wrapperClassName={`${compact ? 'size-10' : 'size-12'} shrink-0 rounded-[22%]`}
+            className="size-full rounded-[22%] ring-1 ring-inset ring-white/20"
           />
           <div className="min-w-0 flex-1">
             <p className="truncate text-[15px] font-semibold">{app.name}</p>

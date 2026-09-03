@@ -104,3 +104,30 @@ body {
   -webkit-mask-image: linear-gradient(to right, transparent, black);
   mask-image: linear-gradient(to right, transparent, black);
 }
+
+/* Image placeholder while an <img> is still loading. currentColor keeps it legible on brand-colored cards and in dark mode. */
+@keyframes shimmer {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+
+.shimmer {
+  background-image: linear-gradient(
+    90deg,
+    color-mix(in srgb, currentColor 8%, transparent) 0%,
+    color-mix(in srgb, currentColor 16%, transparent) 50%,
+    color-mix(in srgb, currentColor 8%, transparent) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shimmer {
+    animation: none;
+  }
+}
