@@ -13,11 +13,13 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as SlugRouteImport } from './routes/$slug'
 import { Route as R404RouteImport } from './routes/404'
 import { Route as JaRouteImport } from './routes/ja'
+import { Route as NewRouteImport } from './routes/new'
 import { Route as SearchRouteImport } from './routes/search'
 import { Route as CategoryCategoryRouteImport } from './routes/category.$category'
 import { Route as JaIndexRouteImport } from './routes/ja.index'
 import { Route as JaSlugRouteImport } from './routes/ja.$slug'
 import { Route as Ja404RouteImport } from './routes/ja.404'
+import { Route as JaNewRouteImport } from './routes/ja.new'
 import { Route as JaSearchRouteImport } from './routes/ja.search'
 import { Route as JaCategoryCategoryRouteImport } from './routes/ja.category.$category'
 
@@ -39,6 +41,11 @@ const R404Route = R404RouteImport.update({
 const JaRoute = JaRouteImport.update({
   id: '/ja',
   path: '/ja',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NewRoute = NewRouteImport.update({
+  id: '/new',
+  path: '/new',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SearchRoute = SearchRouteImport.update({
@@ -66,6 +73,11 @@ const Ja404Route = Ja404RouteImport.update({
   path: '/404',
   getParentRoute: () => JaRoute,
 } as any)
+const JaNewRoute = JaNewRouteImport.update({
+  id: '/new',
+  path: '/new',
+  getParentRoute: () => JaRoute,
+} as any)
 const JaSearchRoute = JaSearchRouteImport.update({
   id: '/search',
   path: '/search',
@@ -82,10 +94,12 @@ export interface FileRoutesByFullPath {
   '/$slug': typeof SlugRoute
   '/404': typeof R404Route
   '/ja': typeof JaRouteWithChildren
+  '/new': typeof NewRoute
   '/search': typeof SearchRoute
   '/category/$category': typeof CategoryCategoryRoute
   '/ja/$slug': typeof JaSlugRoute
   '/ja/404': typeof Ja404Route
+  '/ja/new': typeof JaNewRoute
   '/ja/search': typeof JaSearchRoute
   '/ja/': typeof JaIndexRoute
   '/ja/category/$category': typeof JaCategoryCategoryRoute
@@ -94,10 +108,12 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$slug': typeof SlugRoute
   '/404': typeof R404Route
+  '/new': typeof NewRoute
   '/search': typeof SearchRoute
   '/category/$category': typeof CategoryCategoryRoute
   '/ja/$slug': typeof JaSlugRoute
   '/ja/404': typeof Ja404Route
+  '/ja/new': typeof JaNewRoute
   '/ja/search': typeof JaSearchRoute
   '/ja': typeof JaIndexRoute
   '/ja/category/$category': typeof JaCategoryCategoryRoute
@@ -108,10 +124,12 @@ export interface FileRoutesById {
   '/$slug': typeof SlugRoute
   '/404': typeof R404Route
   '/ja': typeof JaRouteWithChildren
+  '/new': typeof NewRoute
   '/search': typeof SearchRoute
   '/category/$category': typeof CategoryCategoryRoute
   '/ja/$slug': typeof JaSlugRoute
   '/ja/404': typeof Ja404Route
+  '/ja/new': typeof JaNewRoute
   '/ja/search': typeof JaSearchRoute
   '/ja/': typeof JaIndexRoute
   '/ja/category/$category': typeof JaCategoryCategoryRoute
@@ -123,10 +141,12 @@ export interface FileRouteTypes {
     | '/$slug'
     | '/404'
     | '/ja'
+    | '/new'
     | '/search'
     | '/category/$category'
     | '/ja/$slug'
     | '/ja/404'
+    | '/ja/new'
     | '/ja/search'
     | '/ja/'
     | '/ja/category/$category'
@@ -135,10 +155,12 @@ export interface FileRouteTypes {
     | '/'
     | '/$slug'
     | '/404'
+    | '/new'
     | '/search'
     | '/category/$category'
     | '/ja/$slug'
     | '/ja/404'
+    | '/ja/new'
     | '/ja/search'
     | '/ja'
     | '/ja/category/$category'
@@ -148,10 +170,12 @@ export interface FileRouteTypes {
     | '/$slug'
     | '/404'
     | '/ja'
+    | '/new'
     | '/search'
     | '/category/$category'
     | '/ja/$slug'
     | '/ja/404'
+    | '/ja/new'
     | '/ja/search'
     | '/ja/'
     | '/ja/category/$category'
@@ -162,6 +186,7 @@ export interface RootRouteChildren {
   SlugRoute: typeof SlugRoute
   R404Route: typeof R404Route
   JaRoute: typeof JaRouteWithChildren
+  NewRoute: typeof NewRoute
   SearchRoute: typeof SearchRoute
   CategoryCategoryRoute: typeof CategoryCategoryRoute
 }
@@ -194,6 +219,13 @@ declare module '@tanstack/react-router' {
       path: '/ja'
       fullPath: '/ja'
       preLoaderRoute: typeof JaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/new': {
+      id: '/new'
+      path: '/new'
+      fullPath: '/new'
+      preLoaderRoute: typeof NewRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/search': {
@@ -231,6 +263,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof Ja404RouteImport
       parentRoute: typeof JaRoute
     }
+    '/ja/new': {
+      id: '/ja/new'
+      path: '/new'
+      fullPath: '/ja/new'
+      preLoaderRoute: typeof JaNewRouteImport
+      parentRoute: typeof JaRoute
+    }
     '/ja/search': {
       id: '/ja/search'
       path: '/search'
@@ -251,6 +290,7 @@ declare module '@tanstack/react-router' {
 interface JaRouteChildren {
   JaSlugRoute: typeof JaSlugRoute
   Ja404Route: typeof Ja404Route
+  JaNewRoute: typeof JaNewRoute
   JaSearchRoute: typeof JaSearchRoute
   JaIndexRoute: typeof JaIndexRoute
   JaCategoryCategoryRoute: typeof JaCategoryCategoryRoute
@@ -259,6 +299,7 @@ interface JaRouteChildren {
 const JaRouteChildren: JaRouteChildren = {
   JaSlugRoute: JaSlugRoute,
   Ja404Route: Ja404Route,
+  JaNewRoute: JaNewRoute,
   JaSearchRoute: JaSearchRoute,
   JaIndexRoute: JaIndexRoute,
   JaCategoryCategoryRoute: JaCategoryCategoryRoute,
@@ -271,6 +312,7 @@ const rootRouteChildren: RootRouteChildren = {
   SlugRoute: SlugRoute,
   R404Route: R404Route,
   JaRoute: JaRouteWithChildren,
+  NewRoute: NewRoute,
   SearchRoute: SearchRoute,
   CategoryCategoryRoute: CategoryCategoryRoute,
 }

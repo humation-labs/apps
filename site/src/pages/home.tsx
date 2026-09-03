@@ -81,7 +81,7 @@ function Home() {
         </div>
       ) : null}
 
-      <Section title={t.home.new} subtitle={t.home.recentlyAdded} href={localePath(locale, '/')}>
+      <Section title={t.home.new} subtitle={t.home.recentlyAdded} href={localePath(locale, '/new')}>
         {newestApps.length === 0 ? (
           <p className="text-text-muted">{t.home.noListings}</p>
         ) : (

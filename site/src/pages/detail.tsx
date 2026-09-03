@@ -12,6 +12,7 @@ import {
 import { notFound } from '@tanstack/react-router'
 import { CopyButton } from '../components/AddAppButton'
 import { AppRowGrid } from '../components/AppRowGrid'
+import { CategoryIcon } from '../components/CategoryIcon'
 import { LocaleLink } from '../components/LocaleLink'
 import { ScreenshotGallery } from '../components/ScreenshotGallery'
 import { Section } from '../components/Section'
@@ -161,8 +162,9 @@ function AppDetail() {
           <InfoRow label={t.detail.category}>
             <LocaleLink
               href={localePath(locale, `/category/${listing.category}`)}
-              className={`text-accent ${FOCUS}`}
+              className={`inline-flex items-center gap-1.5 text-accent ${FOCUS}`}
             >
+              <CategoryIcon category={listing.category} size={16} className="icon-align" />
               {category}
             </LocaleLink>
           </InfoRow>
