@@ -1,0 +1,44 @@
+{
+  "$schema": "https://apps.humation.app/schema/app.schema.json",
+  "name": "nokki",
+  "tagline": "A quiet music journal: today's song, your mood and a short note",
+  "description": "nokki turns the music you listen to into a diary. Pick the song of the day, tap the mood that fits it and add a short note; one record takes about thirty seconds. The days pile up in a calendar of hand-painted stamps, and you can look back through a memory timeline, a random memory jar, listening stats and an AI reflection that gently sums up your month.\n\nIt is not a social network. Every record is private by default, and you add a few friends by QR code to share only what you choose with them. Songs are picked from Apple Music on iPhone and from a catalog search on Android.\n\nEveryone in nokki has a hand-drawn Humation avatar built with humation-swift, designed part by part during onboarding and rendered on the device from the saved part IDs rather than stored as an image. It appears in the home header, in the row of friends who recorded today, on the profile page over the watercolor header, in the friends list, and next to every post, comment and like.",
+  "url": "https://nokki-ja.web.app/",
+  "category": "lifestyle",
+  "platforms": ["ios", "android"],
+  "pricing": "freemium",
+  "humation": {
+    "packages": ["humation-swift"],
+    "usage": "Profile avatars in the home header, the friends-who-recorded-today row, the profile page, the friends list, and beside every post, comment and like"
+  },
+  "developer": { "name": "TsuzuKit", "github": "tsuzukihashi" },
+  "icon": "icon.png",
+  "screenshots": [
+    {
+      "file": "screenshots/01-home.png",
+      "alt": "The home screen with the user's Humation avatar in the header and friends' avatars in the row of people who recorded today"
+    },
+    {
+      "file": "screenshots/02-post.png",
+      "alt": "Creating a record: the chosen song, a grid of mood cards and a short note field"
+    },
+    {
+      "file": "screenshots/03-calendar.png",
+      "alt": "The record calendar, where every day with a log carries a hand-painted stamp, and the selected day's song and mood"
+    },
+    {
+      "file": "screenshots/04-song.png",
+      "alt": "A song page with artwork, album details and the moods that were logged for that song"
+    },
+    {
+      "file": "screenshots/05-profile.png",
+      "alt": "A profile page with a large Humation avatar over the watercolor header and a list of recently recorded songs"
+    }
+  ],
+  "links": {
+    "appStore": "https://apps.apple.com/jp/app/id6790164642",
+    "playStore": "https://play.google.com/store/apps/details?id=com.tsuzukit.nokki",
+    "x": "https://x.com/tsuzuki817"
+  },
+  "addedAt": "2026-09-03"
+}
