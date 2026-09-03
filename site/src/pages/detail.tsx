@@ -15,6 +15,7 @@ import { AppRowGrid } from '../components/AppRowGrid'
 import { LocaleLink } from '../components/LocaleLink'
 import { ScreenshotGallery } from '../components/ScreenshotGallery'
 import { Section } from '../components/Section'
+import { ShimmerImage } from '../components/ShimmerImage'
 import { byCategory, bySlug } from '../data/listings'
 import type { Listing } from '../data/listings'
 import {
@@ -114,12 +115,13 @@ function AppDetail() {
     <article className="min-w-0">
       <header className="flex flex-col md:flex-row md:items-center md:gap-8">
         <div className="flex items-center gap-5 md:gap-8 md:contents">
-          <img
+          <ShimmerImage
             src={iconSrc(listing.slug)}
             alt={listing.name}
             width={120}
             height={120}
-            className="size-24 shrink-0 rounded-[22%] ring-1 ring-inset ring-black/10 md:size-[120px] dark:ring-white/10"
+            wrapperClassName="size-24 shrink-0 rounded-[22%] md:size-[120px]"
+            className="size-full rounded-[22%] ring-1 ring-inset ring-black/10 dark:ring-white/10"
           />
           <div className="min-w-0 flex-1 space-y-0.5 leading-snug">
             <h1 className="text-xl font-bold tracking-tight md:text-4xl/tight">{listing.name}</h1>
