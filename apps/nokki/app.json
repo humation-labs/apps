@@ -11,7 +11,11 @@
     "packages": ["humation-swift"],
     "usage": "Profile avatars in the home header, the friends-who-recorded-today row, the profile page, the friends list, and beside every post, comment and like"
   },
-  "developer": { "name": "TsuzuKit", "github": "tsuzukihashi" },
+  "developer": {
+    "name": "TsuzuKit",
+    "github": "tsuzukihashi",
+    "url": "https://tsuzukit.com/"
+  },
   "icon": "icon.png",
   "screenshots": [
     {
