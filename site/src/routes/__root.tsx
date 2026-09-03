@@ -1,12 +1,14 @@
 import type { ReactNode } from 'react'
 import { HeadContent, Outlet, Scripts, createRootRoute } from '@tanstack/react-router'
 import { Footer } from '../components/Footer'
+import { GoogleAnalytics } from '../components/GoogleAnalytics'
 import { NavBar } from '../components/NavBar'
 import { NotFound } from '../components/NotFound'
 import { Sidebar } from '../components/Sidebar'
 import { categoryCounts } from '../data/listings'
 import { useLocale } from '../i18n'
 import { SIDEBAR_ENABLED } from '../lib/constants'
+import { GA_INIT_SCRIPT, GA_SCRIPT_SRC, IS_GATAG } from '../lib/gtag'
 import { THEME_INIT_SCRIPT } from '../lib/theme'
 import appCss from '../styles/app.css?url'
 
@@ -23,6 +25,12 @@ export const Route = createRootRoute({
       { rel: 'stylesheet', href: appCss },
       { rel: 'icon', href: '/favicon.png', type: 'image/png' },
     ],
+    scripts: IS_GATAG
+      ? [
+          { src: GA_SCRIPT_SRC, async: true },
+          { children: GA_INIT_SCRIPT },
+        ]
+      : [],
   }),
   notFoundComponent: NotFound,
   component: RootComponent,
@@ -64,6 +72,7 @@ function RootDocument({
             </main>
           </div>
         </div>
+        <GoogleAnalytics />
         <Scripts />
       </body>
     </html>
