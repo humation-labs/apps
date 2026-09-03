@@ -10,10 +10,15 @@ const satori = satoriImport.default ?? satoriImport
 const SITE_ROOT = join(dirname(fileURLToPath(import.meta.url)), '..')
 const REPO_ROOT = join(SITE_ROOT, '..')
 const APPS_SRC = join(REPO_ROOT, 'apps')
-const OG_DIR = join(SITE_ROOT, 'public', 'og')
+const PUBLIC_DIR = join(SITE_ROOT, 'public')
+const OG_DIR = join(PUBLIC_DIR, 'og')
 const FONTS_DIR = join(SITE_ROOT, 'scripts', 'fonts')
 const IMAGES_JSON = join(SITE_ROOT, 'src', 'generated', 'images.json')
 const FEATURED_JSON = join(SITE_ROOT, 'src', 'data', 'featured.json')
+const SYMBOL_PATH = join(PUBLIC_DIR, 'favicon.png')
+const WORDMARK_BLACK_PATH = join(PUBLIC_DIR, 'logo_humation.svg')
+const WORDMARK_WHITE_PATH = join(PUBLIC_DIR, 'logo_humation_dk.svg')
+const WORDMARK_RATIO = 102 / 16
 
 const WIDTH = 1200
 const HEIGHT = 630
@@ -41,6 +46,47 @@ function el(type, props = {}, children) {
 /** @param {string} filePath */
 function pngDataUrl(filePath) {
   return `data:image/png;base64,${readFileSync(filePath).toString('base64')}`
+}
+
+/** @param {string} filePath */
+function svgDataUrl(filePath) {
+  return `data:image/svg+xml;base64,${readFileSync(filePath).toString('base64')}`
+}
+
+const SYMBOL_SRC = pngDataUrl(SYMBOL_PATH)
+const WORDMARK_BLACK_SRC = svgDataUrl(WORDMARK_BLACK_PATH)
+const WORDMARK_WHITE_SRC = svgDataUrl(WORDMARK_WHITE_PATH)
+
+/** @param {number} height */
+function wordmarkDims(height) {
+  return { width: Math.round(height * WORDMARK_RATIO), height }
+}
+
+/**
+ * @param {number} size
+ * @param {number} radius
+ */
+function symbolImg(size, radius) {
+  return el('img', {
+    src: SYMBOL_SRC,
+    width: size,
+    height: size,
+    style: { width: size, height: size, borderRadius: radius },
+  })
+}
+
+/**
+ * @param {boolean} darkBg
+ * @param {number} height
+ */
+function wordmarkImg(darkBg, height) {
+  const { width } = wordmarkDims(height)
+  return el('img', {
+    src: darkBg ? WORDMARK_WHITE_SRC : WORDMARK_BLACK_SRC,
+    width,
+    height,
+    style: { width, height },
+  })
 }
 
 /** @param {string} hex */
@@ -193,13 +239,54 @@ function listingTree({ name, tagline, brand, iconDataUrl, shot }) {
         {
           style: {
             display: 'flex',
-            fontFamily: 'Inter',
-            fontWeight: 400,
-            fontSize: 28,
-            color: fgLabel,
+            flexDirection: 'row',
+            alignItems: 'center',
+            gap: 12,
           },
         },
-        'apps.humation.app',
+        [
+          symbolImg(44, 10),
+          wordmarkImg(darkBg, 22),
+          el(
+            'div',
+            {
+              style: {
+                display: 'flex',
+                fontFamily: 'Inter',
+                fontWeight: 400,
+                fontSize: 26,
+                color: fgLabel,
+              },
+            },
+            'Apps',
+          ),
+          el(
+            'div',
+            {
+              style: {
+                display: 'flex',
+                fontFamily: 'Inter',
+                fontWeight: 400,
+                fontSize: 26,
+                color: withAlpha(fg, 0.6),
+              },
+            },
+            '·',
+          ),
+          el(
+            'div',
+            {
+              style: {
+                display: 'flex',
+                fontFamily: 'Inter',
+                fontWeight: 400,
+                fontSize: 26,
+                color: withAlpha(fg, 0.6),
+              },
+            },
+            'apps.humation.app',
+          ),
+        ],
       ),
     ],
   )
@@ -258,35 +345,34 @@ function defaultTree(iconUrls) {
         },
         [
           el('div', { style: { display: 'flex', flexDirection: 'column' } }, [
-            el('div', { style: { display: 'flex', flexDirection: 'row', alignItems: 'baseline' } }, [
-              el(
-                'div',
-                {
-                  style: {
-                    display: 'flex',
-                    fontFamily: 'Inter',
-                    fontWeight: 700,
-                    fontSize: 72,
-                    color: '#ffffff',
-                  },
+            el(
+              'div',
+              {
+                style: {
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  gap: 20,
                 },
-                'Humation',
-              ),
-              el(
-                'div',
-                {
-                  style: {
-                    display: 'flex',
-                    fontFamily: 'Inter',
-                    fontWeight: 400,
-                    fontSize: 72,
-                    color: 'rgba(255,255,255,0.6)',
-                    marginLeft: 18,
+              },
+              [
+                symbolImg(96, 22),
+                wordmarkImg(true, 64),
+                el(
+                  'div',
+                  {
+                    style: {
+                      display: 'flex',
+                      fontFamily: 'Inter',
+                      fontWeight: 400,
+                      fontSize: 64,
+                      color: 'rgba(255,255,255,0.6)',
+                    },
                   },
-                },
-                'Apps',
-              ),
-            ]),
+                  'Apps',
+                ),
+              ],
+            ),
             el(
               'div',
               {
