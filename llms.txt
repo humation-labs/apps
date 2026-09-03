@@ -21,6 +21,12 @@ from the project or from the developer; ask instead.
 
 ### Step 0. Preconditions
 
+- The app must be public. apps.humation.app is a public catalog backed by a
+  public GitHub repository, and everything you push in Step 5 becomes public
+  immediately, before any review. The app's `url` must be reachable by anyone
+  without a login, VPN or invitation. If the app is internal to a company,
+  still private, behind an intranet, or not yet released, stop and tell the
+  developer it cannot be listed yet.
 - `gh` is installed and authenticated. Run `gh auth status`. If it fails, stop
   and ask the developer to run `gh auth login`, then resume.
 - `bun` (or Node.js 20+) is installed; the validator needs one of them.
@@ -90,7 +96,20 @@ bun run validate apps/<slug>
 dimensions and sizes, the slug, and that `url` responds. Fix every reported
 error and rerun until it passes. Do not modify files outside `apps/<slug>/`.
 
-### Step 4. Open the pull request
+### Step 4. Show the developer what will be published
+
+Pushing to the fork in the next step makes the files public immediately, before
+any maintainer review, so get an explicit approval first:
+
+- Show the developer the full contents of `apps/<slug>/app.json` and the path
+  of every image file, and let them open the images.
+- Ask them to confirm that the screenshots contain no real user data,
+  credentials, tokens, internal hostnames or unreleased features, and that the
+  description and links reveal nothing confidential.
+- Wait for an explicit yes. If they want changes, apply them, rerun
+  `bun run validate apps/<slug>` and ask again. Never push without the approval.
+
+### Step 5. Open the pull request
 
 ```bash
 git add apps/<slug>
@@ -110,7 +129,7 @@ MD
 )"
 ```
 
-### Step 5. Report back
+### Step 6. Report back
 
 Tell the developer:
 - the pull request URL
