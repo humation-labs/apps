@@ -69,16 +69,23 @@ developer before writing files. A short question is better than a wrong listing.
 - `icon.png`: PNG, exactly 512x512, at most 512 KB, square with no rounded
   corner mask. Use the app's existing icon or logo. Resize with the tools you
   have (sharp, ImageMagick, sips on macOS). Do not generate a new icon.
-- `screenshots/01.png` ... up to five files: PNG, JPEG or WebP; shorter side
-  at least 640 px, longer side at most 3000 px, at most 2 MB each; one
-  orientation for all of them. File names are lowercase letters, digits and
-  hyphens. Each needs an `alt` text of 5-140 characters.
-- Capture real screens of the running app. Web: a headless browser or the
-  browser tools available to you at 1440x900 or a mobile viewport. iOS:
-  `xcrun simctl io booted screenshot`. If you cannot capture screenshots in
-  this environment, ask the developer to place image files in a folder and
-  tell you the path, then continue. Never use placeholder, stock or generated
-  images.
+- `screenshots/01.png` ... up to five files: PNG, JPEG or WebP, at most 2 MB
+  each. All screenshots share one orientation and one fixed aspect ratio:
+  portrait is 9:19.5 (a modern iPhone screen, e.g. 1320x2868 or 1206x2622),
+  landscape is 16:10 (e.g. 1440x900 or 2880x1800), within 1%. Shorter side at
+  least 640 px, longer side at most 3000 px. File names are lowercase letters,
+  digits and hyphens. Each needs an `alt` text of 5-140 characters.
+- If the app has a mobile version (iOS or Android), use portrait screenshots
+  of the mobile app, even when a web or desktop version also exists. Use
+  landscape screenshots only for web or desktop-only products.
+- Capture real screens of the running app. iOS: `xcrun simctl io booted
+  screenshot` on a 6.9-inch iPhone simulator (1320x2868). Android: a 9:19.5
+  emulator such as a recent Pixel. Web: a headless browser or the browser
+  tools available to you, at a 9:19.5 mobile viewport (e.g. 440x956 at 3x) for
+  apps that also run on phones, or 1440x900 for desktop-only products. If you
+  cannot capture screenshots in this environment, ask the developer to place
+  image files in a folder and tell you the path, then continue. Never use
+  placeholder, stock or generated images.
 
 ### Step 3. Fork, add the files, validate
 
