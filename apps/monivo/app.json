@@ -1,0 +1,28 @@
+{
+  "$schema": "https://apps.humation.app/schema/app.schema.json",
+  "name": "Monivo",
+  "tagline": "Wake up to a 15-second voice from a friend, a partner or a stranger",
+  "description": "Monivo is a voice alarm and reminder app. Record a voice up to 15 seconds long and send it to a friend or your partner, and their voice becomes the sound your alarm rings with. It is built on AlarmKit, so it rings at the exact time even when the app is closed or the phone is on silent.\n\nNo friends on it yet? Global Voices carries recordings from people around the world, matched by time of day and tag, so a different stranger wakes you each morning. You can ask someone for the kind of voice you want, react with a stamp, and save the ones you like to pin to any alarm.\n\nEveryone in Monivo has a hand-drawn Humation avatar built with humation-swift. You design yours during onboarding and can redraw it whenever you like. It appears next to every voice that arrives on the home screen, on each alarm row so you can see at a glance whose voice will wake you, beside each poster in Global Voices, in the friends list, and on profile pages. The Android build follows the same seed rules, so one person looks the same on both.",
+  "url": "https://monivo-pj.web.app",
+  "category": "productivity",
+  "platforms": ["ios", "android"],
+  "pricing": "freemium",
+  "humation": {
+    "packages": ["humation-swift"],
+    "usage": "Every voice card on the home screen, each alarm row, Global Voices posts, the friends list and profile pages"
+  },
+  "developer": { "name": "TsuzuKit", "github": "tsuzukihashi", "url": "https://tsuzukit.com" },
+  "icon": "icon.png",
+  "screenshots": [
+    { "file": "screenshots/01-alarm.png", "alt": "The alarm editor with a friend's hand-drawn avatar marking whose voice will play" },
+    { "file": "screenshots/02-global.png", "alt": "The Global Voices feed with a hand-drawn avatar beside each person who posted" },
+    { "file": "screenshots/03-avatar.png", "alt": "The avatar creator with hair, clothes and accessory tabs above a live preview" },
+    { "file": "screenshots/04-profile.png", "alt": "A friend's profile page with a large hand-drawn avatar, bio, tags and a link" }
+  ],
+  "links": {
+    "appStore": "https://apps.apple.com/app/id6793626358",
+    "playStore": "https://play.google.com/store/apps/details?id=com.tsuzukit.monivo",
+    "x": "https://x.com/tsuzuki817"
+  },
+  "addedAt": "2026-09-03"
+}
