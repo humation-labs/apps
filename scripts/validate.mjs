@@ -33,6 +33,10 @@ const RESERVED_SLUGS = new Set([
 ]);
 const ICON_MAX = 512 * 1024;
 const SCREENSHOT_MAX = 2 * 1024 * 1024;
+// Screenshots must match one of two fixed aspect ratios so cards, galleries and OG images lay out predictably.
+const PORTRAIT_RATIO = 9 / 19.5; // modern iPhone screen, e.g. 1320x2868
+const LANDSCAPE_RATIO = 16 / 10; // desktop browser, e.g. 1440x900
+const RATIO_TOLERANCE = 0.01;
 const URL_TIMEOUT_MS = 10_000;
 
 const PNG_MAGIC = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]);
@@ -102,6 +106,11 @@ function expectedFormat(filename) {
 function orientation(width, height) {
   if (width === height) return 'square';
   return width > height ? 'landscape' : 'portrait';
+}
+
+function ratioMatches(width, height, target) {
+  // target is PORTRAIT_RATIO (9/19.5) or LANDSCAPE_RATIO (16/10)
+  return Math.abs(width / height - target) / target <= RATIO_TOLERANCE;
 }
 
 function formatLabel(fmt) {
@@ -286,6 +295,12 @@ function checkScreenshots(dir, data, err) {
     }
     if (longer > 3000) {
       err(`${rel} longer side must be at most 3000px (got ${width}x${height})`);
+    }
+    const target = height > width ? PORTRAIT_RATIO : LANDSCAPE_RATIO;
+    if (!ratioMatches(width, height, target)) {
+      err(
+        `${rel} must be 9:19.5 portrait (e.g. 1320x2868) or 16:10 landscape (e.g. 1440x900); got ${width}x${height}`,
+      );
     }
     orientations.add(orientation(width, height));
   }

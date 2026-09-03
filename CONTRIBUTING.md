@@ -22,8 +22,11 @@ forks this repository, runs the validator and opens the pull request.
 3. Write `apps/<slug>/app.json` following [`schema/app.schema.json`](schema/app.schema.json).
    The example in [`llms.txt`](llms.txt) is a good starting point.
 4. Add `icon.png` (PNG, 512x512, at most 512 KB) and one to five screenshots under
-   `screenshots/` (PNG, JPEG or WebP; shorter side at least 640 px, longer side at most
-   3000 px, at most 2 MB each).
+   `screenshots/` (PNG, JPEG or WebP, at most 2 MB each). Screenshots share one orientation
+   and a fixed aspect ratio: portrait 9:19.5 (a modern iPhone screen, e.g. 1320x2868) or
+   landscape 16:10 (e.g. 1440x900), within 1%; shorter side at least 640 px, longer side at
+   most 3000 px. If the app has a mobile version, use portrait screenshots of the mobile app;
+   landscape is for web or desktop-only products.
 5. Run `bun install` then `bun run validate apps/<slug>` until it passes.
 6. Open a pull request that changes only `apps/<slug>/`.
 
