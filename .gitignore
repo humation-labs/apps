@@ -4,6 +4,7 @@ site/.tanstack
 site/.output
 site/public/apps
 site/public/og
+site/public/badge
 site/public/llms.txt
 site/public/schema
 site/src/generated
@@ -12,3 +13,4 @@ site/src/generated
 *.log
 site/.env
 site/.env.*.local
+.claude/

@@ -7,11 +7,19 @@ export const CONTRIBUTING_URL =
 export const SITE_NAME = 'Humation Apps';
 export const SITE_ORIGIN = 'https://apps.humation.app';
 
+/**
+ * Avatars exported on humation.app: GA4 event count of `export_avatar`
+ * (property "humation.app", 2025-01-01 to 2026-09-04). Updated by hand; shown in the nav next to the avatar link.
+ */
+export const HUMATION_AVATAR_EXPORTS = 467_919;
+
 /** Catalog is still small; keep the sidebar in the tree but do not render it. */
 export const SIDEBAR_ENABLED = false;
 
 export const RESERVED_SLUGS = [
   'apps',
+  'og',
+  'badge',
   'app',
   'search',
   'category',
@@ -21,6 +29,7 @@ export const RESERVED_SLUGS = [
   'schema',
   'llms.txt',
   'favicon.png',
+  'favicon.svg',
   'assets',
   '404',
   'api',

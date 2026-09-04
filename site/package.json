@@ -3,13 +3,13 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "predev": "node scripts/sync-assets.mjs && node scripts/og.mjs",
+    "predev": "node scripts/sync-assets.mjs && node scripts/og.mjs && node scripts/badge.mjs",
     "dev": "vite dev",
-    "prebuild": "node scripts/sync-assets.mjs && node scripts/og.mjs",
+    "prebuild": "node scripts/sync-assets.mjs && node scripts/og.mjs && node scripts/badge.mjs",
     "build": "vite build",
     "postbuild": "node scripts/copy-404.mjs",
     "preview": "vite preview",
-    "pretypecheck": "node scripts/sync-assets.mjs",
+    "pretypecheck": "node scripts/sync-assets.mjs && node scripts/badge.mjs",
     "typecheck": "tsc --noEmit",
     "deploy": "wrangler deploy"
   },

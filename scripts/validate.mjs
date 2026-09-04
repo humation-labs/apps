@@ -13,6 +13,8 @@ const SCHEMA_PATH = join(ROOT, 'schema', 'app.schema.json');
 const SLUG_RE = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 const RESERVED_SLUGS = new Set([
   'apps',
+  'og',
+  'badge',
   'app',
   'search',
   'category',
@@ -22,6 +24,7 @@ const RESERVED_SLUGS = new Set([
   'schema',
   'llms.txt',
   'favicon.png',
+  'favicon.svg',
   'assets',
   '404',
   'api',
