@@ -1,0 +1,38 @@
+{
+  "$schema": "https://apps.humation.app/schema/app.schema.json",
+  "name": "conca",
+  "tagline": "Download cards that deliver your digital content",
+  "description": "conca is a Japanese service for creating original download cards. Artists, creators and companies upload their music, video, ebooks or images, and conca prints cards carrying a download URL and a unique serial code, so fans can redeem the content from a physical card.\n\nChoose a card plan that covers both printing and delivery, a code-only plan for digital distribution alone, a card-only plan, or an original NFC card. A free sample set is available before ordering.\n\nHumation avatars appear in the member area. Every comment a fan leaves after redeeming a serial code is shown with an avatar rendered deterministically from that code, so each supporter keeps a stable face across the comment list and the serial code detail view without revealing who they are.",
+  "url": "https://conca.cc",
+  "category": "business",
+  "platforms": ["web"],
+  "pricing": "paid",
+  "humation": {
+    "packages": ["@humation/web-component", "@humation/assets-humation-1"],
+    "usage": "Comment avatars in the member area, on the comment list and in the serial code detail modal"
+  },
+  "developer": {
+    "name": "ButterflyCode Inc.",
+    "github": "butterflycode",
+    "url": "https://butterflycode.co.jp"
+  },
+  "icon": "icon.png",
+  "screenshots": [
+    {
+      "file": "screenshots/01.png",
+      "alt": "The conca home page, with a hero message about delivering your video on a single download card"
+    },
+    {
+      "file": "screenshots/02.png",
+      "alt": "The member area comment list, where every fan comment is shown with a Humation avatar"
+    },
+    {
+      "file": "screenshots/03.png",
+      "alt": "The plan page comparing the card plan, sample set, code-only, card-only and NFC card options"
+    }
+  ],
+  "links": {
+    "x": "https://x.com/conca_cc"
+  },
+  "addedAt": "2026-09-04"
+}
