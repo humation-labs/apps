@@ -159,6 +159,17 @@ const GITHUB_NULL = {
   fetchedAt: null,
 };
 
+const NPM_PACKAGE = '@humation/core';
+const NPM_SINCE = '2026-06-01';
+const NPM_JSON = join(GENERATED_DIR, 'npm.json');
+const NPM_FALLBACK_FILE = join(SITE_ROOT, 'src', 'data', 'npm-downloads.json');
+const NPM_NULL = {
+  package: NPM_PACKAGE,
+  downloads: null,
+  since: NPM_SINCE,
+  fetchedAt: null,
+};
+
 function writeGithubJson(payload) {
   writeFileSync(GITHUB_JSON, JSON.stringify(payload, null, 2) + '\n');
 }
@@ -212,4 +223,78 @@ async function syncGithubStars() {
   }
 }
 
+function writeNpmJson(payload) {
+  writeFileSync(NPM_JSON, JSON.stringify(payload, null, 2) + '\n');
+}
+
+/** @param {string} ymd */
+function parseUtcYmd(ymd) {
+  return new Date(`${ymd}T00:00:00.000Z`);
+}
+
+/** @param {Date} d */
+function utcYmd(d) {
+  return d.toISOString().slice(0, 10);
+}
+
+/**
+ * @param {string} ymd
+ * @param {number} days
+ */
+function addDaysYmd(ymd, days) {
+  const d = parseUtcYmd(ymd);
+  d.setUTCDate(d.getUTCDate() + days);
+  return utcYmd(d);
+}
+
+async function syncNpmDownloads() {
+  try {
+    const today = utcYmd(new Date());
+    let start = NPM_SINCE;
+    let downloads = 0;
+    while (start <= today) {
+      const windowEnd = addDaysYmd(start, 539);
+      const end = windowEnd <= today ? windowEnd : today;
+      const url = `https://api.npmjs.org/downloads/range/${start}:${end}/${NPM_PACKAGE}`;
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), 8000);
+      let res;
+      try {
+        res = await fetch(url, { signal: controller.signal });
+      } finally {
+        clearTimeout(timer);
+      }
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const body = await res.json();
+      if (!Array.isArray(body.downloads)) {
+        throw new Error('missing downloads array');
+      }
+      downloads += body.downloads.reduce((a, d) => a + d.downloads, 0);
+      start = addDaysYmd(end, 1);
+    }
+    const payload = {
+      package: NPM_PACKAGE,
+      downloads,
+      since: NPM_SINCE,
+      fetchedAt: new Date().toISOString(),
+    };
+    const json = JSON.stringify(payload, null, 2) + '\n';
+    writeFileSync(NPM_JSON, json);
+    writeFileSync(NPM_FALLBACK_FILE, json);
+    console.log(`npm: ${payload.downloads} downloads (@humation/core since 2026-06-01)`);
+  } catch (err) {
+    const reason = err instanceof Error ? err.message : String(err);
+    try {
+      const raw = readFileSync(NPM_FALLBACK_FILE, 'utf8');
+      const fallback = JSON.parse(raw);
+      writeFileSync(NPM_JSON, raw.endsWith('\n') ? raw : `${raw}\n`);
+      console.log(`npm: using fallback (${fallback.downloads} downloads from ${fallback.fetchedAt})`);
+    } catch {
+      writeNpmJson(NPM_NULL);
+      console.log(`npm: wrote null npm.json (${reason})`);
+    }
+  }
+}
+
 await syncGithubStars();
+await syncNpmDownloads();

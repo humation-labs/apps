@@ -1,12 +1,14 @@
 import { IconBrandGithub } from '@tabler/icons-react'
 import { localePath, useLocale, useT } from '../i18n'
+import { HUMATION_AVATAR_EXPORTS } from '../lib/constants'
 import { formatStars, githubStars, useGitHubStars } from '../lib/github'
 import { CopyForAgentButton } from './CopyForAgentButton'
+import { HumationSymbolIcon } from './HumationSymbolIcon'
 import { LocaleLink } from './LocaleLink'
 import { NavMenu } from './NavMenu'
 import { Wordmark } from './Wordmark'
 
-const githubLinkClass =
+const statLinkClass =
   'inline-flex size-9 items-center justify-center rounded-full hover:bg-surface-3/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg sm:h-9 sm:w-auto sm:gap-1.5 sm:px-3 sm:text-[13px] sm:font-semibold'
 
 export function NavBar() {
@@ -25,11 +27,24 @@ export function NavBar() {
         </LocaleLink>
         <div className="flex shrink-0 items-center gap-1.5">
           <a
+            href="https://humation.app/avatar"
+            target="_blank"
+            rel="noopener"
+            aria-label={t.shell.createAvatar}
+            className={statLinkClass}
+          >
+            <span className="icon-align inline-flex h-4 w-5 shrink-0 items-center justify-center">
+              <HumationSymbolIcon size={20} />
+            </span>
+            <span className="hidden sm:inline">{t.shell.avatar}</span>
+            <span className="hidden tabular sm:inline">{formatStars(HUMATION_AVATAR_EXPORTS)}</span>
+          </a>
+          <a
             href="https://github.com/humation-labs/humation"
             target="_blank"
             rel="noopener"
             aria-label={stars != null ? `GitHub · ${stars} stars` : t.shell.github}
-            className={githubLinkClass}
+            className={statLinkClass}
           >
             <span className="icon-align inline-flex size-4 shrink-0 items-center justify-center">
               <IconBrandGithub size={16} stroke={1.75} aria-hidden />

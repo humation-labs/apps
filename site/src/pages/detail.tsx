@@ -6,12 +6,10 @@ import {
   IconBrandGithub,
   IconBrandGooglePlay,
   IconBrandX,
-  IconCheck,
-  IconLink,
 } from '@tabler/icons-react'
 import { notFound } from '@tanstack/react-router'
-import { CopyButton } from '../components/AddAppButton'
 import { AppRowGrid } from '../components/AppRowGrid'
+import { BadgeEmbed } from '../components/BadgeEmbed'
 import { CategoryIcon } from '../components/CategoryIcon'
 import { LocaleLink } from '../components/LocaleLink'
 import { ScreenshotGallery } from '../components/ScreenshotGallery'
@@ -31,7 +29,6 @@ import {
   type Locale,
 } from '../i18n'
 import {
-  SITE_ORIGIN,
   descriptionParagraphs,
   developerHref,
   iconSrc,
@@ -108,7 +105,6 @@ function AppDetail() {
   const moreInCategory = byCategory(listing.category)
     .filter((app) => app.slug !== listing.slug)
     .slice(0, 9)
-  const snippet = `<a href="${SITE_ORIGIN}/${listing.slug}">${t.detail.featuredOn}</a>`
   const presentLinks = LINK_DEFS.filter((def) => listing.links?.[def.key])
   const category = categoryLabel(listing.category, t)
 
@@ -213,36 +209,8 @@ function AppDetail() {
             <span className="tabular">{formatDate(listing.addedAt, locale)}</span>
           </InfoRow>
         </dl>
+        <BadgeEmbed slug={listing.slug} />
       </section>
-
-      <div className="mt-8 rounded-xl bg-surface p-6 md:p-8">
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-[minmax(0,1fr)_auto] md:items-center md:gap-8">
-          <div className="min-w-0">
-            <h2 className="text-lg font-semibold">{t.detail.linkBack}</h2>
-            <p className="mt-1 text-sm text-text-muted">{t.detail.linkBackBody}</p>
-          </div>
-          <div className="flex w-full flex-col items-center gap-3 self-center justify-self-end md:w-auto">
-            <CopyButton
-              text={snippet}
-              label={t.detail.copyLinkTag}
-              className="inline-flex h-10 w-full items-center justify-center gap-1.5 rounded-full bg-surface-2 px-5 text-sm font-semibold hover:bg-surface-3 md:w-auto"
-            >
-              {(copied) => (
-                <>
-                  <span className="icon-align inline-flex size-4 shrink-0 items-center justify-center">
-                    {copied ? (
-                      <IconCheck size={16} stroke={1.75} aria-hidden />
-                    ) : (
-                      <IconLink size={16} stroke={1.75} aria-hidden />
-                    )}
-                  </span>
-                  {copied ? t.shell.copied : t.detail.copyLinkTag}
-                </>
-              )}
-            </CopyButton>
-          </div>
-        </div>
-      </div>
 
       {moreInCategory.length > 0 ? (
         <Section
