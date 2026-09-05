@@ -19,7 +19,7 @@ export function AppRow({ app }: { app: Listing }) {
         width={64}
         height={64}
         wrapperClassName="size-16 shrink-0 rounded-[24%]"
-        className="size-full rounded-[24%] ring-1 ring-inset ring-black/10 dark:ring-white/10"
+        className="size-full rounded-[24%] border border-border/70 dark:border-white/15"
       />
       <div className="min-w-0 flex-1 self-center">
         <p className="truncate text-[14px]/5 font-medium">{app.name}</p>
