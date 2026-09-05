@@ -1,0 +1,52 @@
+{
+  "$schema": "https://apps.humation.app/schema/app.schema.json",
+  "name": "픽플 (Pick&Play)",
+  "tagline": "A daily musical pick, the shows around it, and the people talking",
+  "description": "픽플 is a Korean daily guide to musicals and plays. Each day opens with a PICK: a short question about theatre life that anyone can vote on and then argue about in the comments. Around it sit the shows currently running, upcoming openings, festival line-ups, weekly popularity rankings and ticket discounts, each with cast, venue and dates.\n\nPeople keep their own record too. A ticket book collects everything they have seen, reviews capture the numbers and scenes that stayed with them, and an editor track carries longer write-ups into the public feed.\n\nEvery account wears a hand-drawn Humation avatar instead of a photo. It is built inside the app with @humation/core and the Humation 1 asset set: pick a hairstyle, an outfit and an accessory, then hair, skin, clothes and background colors, or roll a random one. The avatar appears in the navigation drawer, on the profile page, beside the author of every PICK topic, and next to every comment and review.",
+  "url": "https://pickplay.today",
+  "category": "entertainment",
+  "platforms": [
+    "web",
+    "ios"
+  ],
+  "pricing": "free",
+  "humation": {
+    "packages": [
+      "@humation/core",
+      "@humation/assets-humation-1"
+    ],
+    "usage": "Profile avatars in the navigation drawer, on the profile page, on PICK topic authors, and beside every comment and review"
+  },
+  "developer": {
+    "name": "Youngyun Jeong",
+    "github": "youngyunjeong",
+    "url": "https://pickplay.today"
+  },
+  "icon": "icon.png",
+  "screenshots": [
+    {
+      "file": "screenshots/01-menu.png",
+      "alt": "The mobile navigation drawer with the user's hand-drawn Humation avatar at the top"
+    },
+    {
+      "file": "screenshots/02-avatar.png",
+      "alt": "The avatar editor dialog with hairstyle, outfit and accessory pickers over a live preview"
+    },
+    {
+      "file": "screenshots/03-home.webp",
+      "alt": "The home feed's weekly play ranking and recent reactions, each with the writer's hand-drawn Humation avatar"
+    },
+    {
+      "file": "screenshots/04-pick.webp",
+      "alt": "A PICK review post with the writer's hand-drawn Humation avatar above the article body"
+    },
+    {
+      "file": "screenshots/05-play.webp",
+      "alt": "The PLAY catalog of currently running musicals and plays as a grid of posters"
+    }
+  ],
+  "links": {
+    "appStore": "https://apps.apple.com/kr/app/id6761530224"
+  },
+  "addedAt": "2026-09-05"
+}
