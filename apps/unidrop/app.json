@@ -1,0 +1,39 @@
+{
+  "$schema": "https://apps.humation.app/schema/app.schema.json",
+  "name": "UniDrop",
+  "tagline": "AI tools and campus connections for University of Tsukuba students",
+  "description": "UniDrop helps University of Tsukuba students navigate campus life with AI assistance, course and graduation planning, a student marketplace, and optional weekly introductions.\n\nFor students without a profile photo, Humation provides hand-drawn avatars from a few handpicked seeds, with distinct styles for men and women.",
+  "url": "https://unidropjp.com",
+  "category": "social",
+  "platforms": ["web"],
+  "pricing": "free",
+  "humation": {
+    "packages": ["@humation/core", "@humation/assets-humation-1"],
+    "usage": "Default profile avatars from handpicked seeds, with distinct styles for men and women"
+  },
+  "developer": { "name": "Youest, Inc.", "github": "Yuboku111" },
+  "icon": "icon.png",
+  "screenshots": [
+    {
+      "file": "screenshots/01-home.jpg",
+      "alt": "Landing page hero with sign-up form for University of Tsukuba students"
+    },
+    {
+      "file": "screenshots/02-about.jpg",
+      "alt": "About page explaining why UniDrop was built"
+    },
+    {
+      "file": "screenshots/03-algorithm.jpg",
+      "alt": "How matching works page describing the six compatibility axes"
+    },
+    {
+      "file": "screenshots/04-news.jpg",
+      "alt": "UniDrop Journal news index with product update articles"
+    },
+    {
+      "file": "screenshots/05-auth.png",
+      "alt": "Login screen with university email and password fields"
+    }
+  ],
+  "addedAt": "2026-09-05"
+}
