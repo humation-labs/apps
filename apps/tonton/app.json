@@ -1,6 +1,6 @@
 {
   "$schema": "https://apps.humation.app/schema/app.schema.json",
-  "name": "Tonton",
+  "name": "とんとん (Tonton)",
   "tagline": "Log what each of you paid and always know who owes whom",
   "description": "Tonton is a shared expense tracker for couples living together in Japan. Each person logs what they paid, picks a category and adjusts the split, and the home screen keeps one number in view: who owes whom, and how much. Settle up whenever you like and the balance resets to zero.\n\nRecurring costs such as rent and utilities post themselves each month, receipts are read on the device with the camera, and a monthly report turns the breakdown into a square card you can share. A pair links by invite code, and both phones stay in sync.\n\nBoth partners are hand-drawn Humation avatars. Each person builds their own in the icon editor, choosing hair, skin, outfit and accessory parts and a color for each; the app stores the part IDs and hex colors and composes the avatar on the device from the humation-1 asset set. The avatars mark who paid on every row of the history, stand on either side of the split card when you add an expense, appear on the home balance card and in the settings, and head the monthly share image.",
   "url": "https://tontonjp.com",
