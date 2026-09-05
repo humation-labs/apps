@@ -1,17 +1,17 @@
 {
   "$schema": "https://apps.humation.app/schema/app.schema.json",
   "name": "UniDrop",
-  "tagline": "Campus tools and weekly matching for University of Tsukuba students",
-  "description": "UniDrop is a campus app limited to University of Tsukuba students. It combines student-life tools such as graduation-requirement checking and a course-consultation AI with a weekly matching drop: once a week at 21:00 JST, each participant receives one highly compatible person chosen from a 55-question values quiz, so there is no swiping or endless searching.\n\nSign-up requires a university email address verified with a one-time code, and real names are never shown. Matched members talk in the built-in chat without exchanging personal contact details, with block, report and exclusion settings for safety.\n\nMembers who have not set a profile photo are shown a hand-drawn Humation avatar, deterministically generated from their user ID and gender with @humation/core and the Humation 1 asset set, so every member has a consistent face across drop, chat and profile screens.",
+  "tagline": "AI tools and campus connections for University of Tsukuba students",
+  "description": "UniDrop helps University of Tsukuba students navigate campus life with AI assistance, course and graduation planning, a student marketplace, and optional weekly introductions.\n\nFor students without a profile photo, Humation provides hand-drawn avatars from a few handpicked seeds, with distinct styles for men and women.",
   "url": "https://unidropjp.com",
   "category": "social",
   "platforms": ["web"],
   "pricing": "free",
   "humation": {
     "packages": ["@humation/core", "@humation/assets-humation-1"],
-    "usage": "Default avatars for members without a profile photo, shown across drop, chat and profile screens"
+    "usage": "Default profile avatars from handpicked seeds, with distinct styles for men and women"
   },
-  "developer": { "name": "UniDrop", "github": "Yuboku111" },
+  "developer": { "name": "Youest, Inc.", "github": "Yuboku111" },
   "icon": "icon.png",
   "screenshots": [
     {
