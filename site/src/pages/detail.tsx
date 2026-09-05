@@ -118,7 +118,7 @@ function AppDetail() {
             width={120}
             height={120}
             wrapperClassName="size-24 shrink-0 rounded-[22%] md:size-[120px]"
-            className="size-full rounded-[22%] ring-1 ring-inset ring-black/10 dark:ring-white/10"
+            className="size-full rounded-[22%] border border-border/70 dark:border-white/15"
           />
           <div className="min-w-0 flex-1 space-y-0.5 leading-snug">
             <h1 className="text-xl font-bold tracking-tight md:text-4xl/tight">{listing.name}</h1>
